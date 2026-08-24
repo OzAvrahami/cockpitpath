@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=20.9.0"
+    "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:migrate": "node --env-file=.env.local ./node_modules/node-pg-migrate/bin/node-pg-migrate.js up --database-url-var DATABASE_URL_UNPOOLED --migrations-dir migrations --migrations-schema cockpitpath_migrations --create-migrations-schema",
+    "db:migrate:create": "node ./node_modules/node-pg-migrate/bin/node-pg-migrate.js create --migrations-dir migrations --migration-file-language sql",
+    "db:migrate:down": "node --env-file=.env.local ./node_modules/node-pg-migrate/bin/node-pg-migrate.js down --database-url-var DATABASE_URL_UNPOOLED --migrations-dir migrations --migrations-schema cockpitpath_migrations --create-migrations-schema"
   },
   "dependencies": {
     "next": "^16.3.2",
@@ -20,6 +23,8 @@
   "devDependencies": {
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.2",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.0",
     "vitest": "^4.1.11"
   }
 }
