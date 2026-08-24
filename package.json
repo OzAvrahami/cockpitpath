@@ -11,9 +11,10 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
-    "db:migrate": "node --env-file=.env.local ./node_modules/node-pg-migrate/bin/node-pg-migrate.js up --database-url-var DATABASE_URL_UNPOOLED --migrations-dir migrations --migrations-schema cockpitpath_migrations --create-migrations-schema",
+    "db:migrate": "node --env-file=.env.local scripts/run-db-migration.cjs up",
     "db:migrate:create": "node ./node_modules/node-pg-migrate/bin/node-pg-migrate.js create --migrations-dir migrations --migration-file-language sql",
-    "db:migrate:down": "node --env-file=.env.local ./node_modules/node-pg-migrate/bin/node-pg-migrate.js down --database-url-var DATABASE_URL_UNPOOLED --migrations-dir migrations --migrations-schema cockpitpath_migrations --create-migrations-schema"
+    "db:migrate:down": "node --env-file=.env.local scripts/run-db-migration.cjs down",
+    "db:test": "node --env-file=.env.local scripts/db-test.cjs"
   },
   "dependencies": {
     "@neondatabase/auth": "0.5.0-beta",

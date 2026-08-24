@@ -50,3 +50,12 @@ The local application is available at `http://localhost:3000` by default.
 
 Use `npm test`, `npm run lint`, and `npm run build` to run the current quality
 checks.
+
+Database migrations and integration tests use the unpooled connection configured
+in `.env.local`. Both commands are intended for the linked Neon development branch;
+the database test command refuses production or an unknown branch.
+
+```bash
+npm run db:migrate
+npm run db:test
+```
