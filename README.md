@@ -35,7 +35,11 @@ All repository documentation, code-related artifacts, schemas, and project files
 
 ## Local development
 
-CockpitPath requires Node.js 20.9 or newer and uses npm.
+CockpitPath uses npm and a Node.js version compatible with the `engines` field in
+`package.json`.
+
+Copy `.env.example` to `.env.local`, then provide the development Neon Auth
+configuration named in that file. Keep `.env.local` private and untracked.
 
 ```bash
 npm install

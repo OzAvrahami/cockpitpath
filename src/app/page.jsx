@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <main>
@@ -7,6 +9,10 @@ export default function HomePage() {
         <p className="foundation__summary">
           The production application scaffold is ready for intentional product
           implementation.
+        </p>
+        <p>
+          <Link href="/auth/sign-in">Sign in</Link> or{" "}
+          <Link href="/auth/sign-up">create an account</Link>.
         </p>
       </section>
     </main>

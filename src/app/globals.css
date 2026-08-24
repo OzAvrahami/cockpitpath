@@ -14,3 +14,42 @@ body {
 main {
   padding: 2rem;
 }
+
+button,
+input {
+  font: inherit;
+}
+
+.auth-panel {
+  max-width: 32rem;
+}
+
+.auth-panel__eyebrow {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.auth-form {
+  display: grid;
+  gap: 0.75rem;
+  margin-block: 1.5rem;
+}
+
+.auth-form input {
+  padding: 0.625rem;
+}
+
+.auth-form button,
+.auth-panel button {
+  width: fit-content;
+  padding: 0.625rem 1rem;
+}
+
+.auth-message {
+  padding: 0.75rem;
+  border: 1px solid currentColor;
+}
+
+.auth-message--error {
+  color: #9f1239;
+}

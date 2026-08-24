@@ -16,6 +16,7 @@
     "db:migrate:down": "node --env-file=.env.local ./node_modules/node-pg-migrate/bin/node-pg-migrate.js down --database-url-var DATABASE_URL_UNPOOLED --migrations-dir migrations --migrations-schema cockpitpath_migrations --create-migrations-schema"
   },
   "dependencies": {
+    "@neondatabase/auth": "0.5.0-beta",
     "next": "^16.3.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
