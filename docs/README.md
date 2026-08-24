@@ -3,7 +3,11 @@
 **Status:** Foundation v0.1<br>
 **Last updated:** 2026-08-24
 
-This directory is the implementation source of truth for CockpitPath product, UX, design, content, and architecture decisions. Repository documentation and project artifacts are written in English. CockpitPath v0.1 uses plain JavaScript; TypeScript is not a project requirement.
+This directory is the documentation source of truth for CockpitPath product, UX, design, content, and architecture decisions. Repository documentation and project artifacts are written in English. CockpitPath v0.1 uses plain JavaScript; TypeScript is not a project requirement.
+
+## Implementation
+
+- [Implementation dashboard](implementation/README.md) — The current technical implementation status and execution sequence.
 
 ## Source-of-truth order
 
