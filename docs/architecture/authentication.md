@@ -24,21 +24,30 @@ sequenceDiagram
     participant B as Browser
     participant N as Next.js application
     participant A as Neon Auth
+    participant API as Neon Data API
     participant D as Neon Postgres
 
     B->>N: Submit sign-in
     N->>A: Authenticate
-    A-->>N: Session tokens
+    A-->>N: Session and Neon-issued JWT
     N-->>B: Secure session cookies
     B->>N: Request learning route
     N->>A: Validate or refresh session
-    A-->>N: Authenticated user ID
-    N->>D: Authorized data request
-    D-->>N: Content and user-owned progress
+    A-->>N: Authenticated identity and JWT
+    N->>N: Domain authorization
+    N->>API: User-scoped request with JWT
+    API->>D: Validated identity as authenticated role
+    D->>D: RLS evaluates auth.user_id()
+    D-->>API: Authorized private rows
+    API-->>N: User-owned data
     N-->>B: Render response
 ```
 
-Use the current supported Neon Auth server-rendering integration at implementation time. Cookie creation, refresh, and deletion must occur only in contexts that can write response cookies. Exact SDK calls and session adapters are Phase 1B implementation decisions rather than architecture contracts.
+Neon Auth owns authentication identity and sessions. Phase 1B.2 proved that authenticated user-scoped database operations can carry a Neon-issued JWT through the Neon Data API, which validates the token and exposes the trusted subject to PostgreSQL through `auth.user_id()` for RLS evaluation.
+
+This remains a server-first flow: browser requests cross the Next.js application boundary, Next.js performs domain authorization, and its user-scoped data access uses the Data API. Data API browser capability does not make the browser an authorization boundary.
+
+Use the current supported Neon Auth server-rendering integration at implementation time. Cookie creation, refresh, and deletion must occur only in contexts that can write response cookies. Exact SDK calls, session adapters, and Data API client APIs belong to Phase 1B.3 rather than this architecture contract.
 
 ## Branch-aware identity
 
@@ -51,8 +60,10 @@ This supports realistic development and test environments, but copied authentica
 - Treat every browser-supplied user ID as untrusted. Derive the acting user from the validated session.
 - Never accept an ownership field that allows a client to write progress for another user.
 - Browser route guards improve UX but are not authorization controls.
-- Privileged Neon database credentials and R2 credentials remain server-only.
+- Privileged Neon database credentials and R2 credentials remain server-only. Database owner or `BYPASSRLS` credentials are never used for normal user runtime operations.
 - Do not store passwords or duplicate credential data in CockpitPath tables.
+
+User-owned schema must use a column type compatible with the actual Neon Auth subject returned by `auth.user_id()`. Do not assume that the identity is a UUID; verify the contract during final SQL schema design.
 
 ## Route behavior
 

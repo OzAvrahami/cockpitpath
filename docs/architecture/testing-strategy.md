@@ -42,16 +42,24 @@ Use fixed clocks and deterministic IDs/hashes where time or identity affects ass
 
 ## Database and RLS matrix
 
-For every exposed table, test anonymous, User A, User B, and privileged publisher roles as relevant. Required negative cases include:
+Phase 1B.2 proved the security-testing contract with real Neon Auth users, Neon-issued JWTs, Data API validation, the non-owner authenticated database path, and PostgreSQL RLS. Future reusable tests must preserve that identity-to-database path rather than substituting manually injected user IDs or unverified claims.
 
-- User A cannot select, insert, update, or delete User B progress.
-- A forged `user_id` cannot pass write checks.
-- Anonymous actors cannot access authenticated records.
+For every exposed user-owned table, test unauthenticated access, User A, User B, and privileged roles as relevant. At minimum, cover:
+
+- Unauthenticated access behavior.
+- Each user can access their own permitted rows.
+- Cross-user reads are isolated.
+- Cross-user inserts fail ownership checks.
+- Cross-user updates cannot affect another user's rows.
+- Ownership transfer to another user is blocked.
+- Delete isolation where the table supports deletion.
+- Invalid or tampered authentication tokens are rejected.
+- A forged `user_id` or owner field cannot pass write checks.
 - Draft, review, verified-but-unpublished, and archived content are unavailable to runtime roles.
 - Published public versus authenticated content follows policy.
 - Privileged publishing cannot be reached with a normal session.
 
-Run tests against a real isolated Neon Postgres branch or another explicitly approved PostgreSQL test environment using the selected Neon Auth identity path; mocks do not prove RLS. Tests must exercise the same identity-to-database contract used by the application rather than setting an unverified user identifier and calling that sufficient.
+Run tests against a real isolated Neon Postgres branch using the selected Neon Auth → Data API → PostgreSQL RLS path; mocks do not prove RLS. The primary security contract is verified identity plus PostgreSQL RLS behavior. Exact HTTP status mappings are assertions only when an application or provider API contract explicitly requires them.
 
 Neon branches should provide isolated migration and integration-test targets where useful. Exact branch creation, reset, cleanup, and CI automation remain Phase 1B decisions. The testing strategy does not require a provider-specific local Docker stack and does not adopt Neon Local.
 

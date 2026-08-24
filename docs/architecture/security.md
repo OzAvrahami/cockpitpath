@@ -55,7 +55,18 @@ CORS is not a substitute for authorization. Keep allowed origins narrow for any 
 - Preserve audit context for privileged publication.
 - Treat database views/functions as security surfaces and review their execution privileges.
 
-The Phase 1B access-path decision must document how a verified Neon Auth identity is represented inside PostgreSQL for RLS. No policy may trust an unverified browser claim. If the Neon Data API is selected for any client-accessible path, every exposed table requires reviewed grants and RLS before exposure. Direct PostgreSQL access must preserve equivalent per-request identity and least privilege. Do not depend on the legacy Neon RLS / Neon Authorize product.
+Phase 1B.2 established the v0.1 trust chain after a real Auth-to-RLS proof:
+
+1. Neon Auth validates authentication and owns the user identity and session.
+2. Next.js validates the requested operation and performs server/domain authorization.
+3. For user-owned data, the Neon Data API validates the Neon-issued JWT and enters PostgreSQL through the non-owner authenticated path.
+4. PostgreSQL RLS enforces ownership using the trusted subject exposed by `auth.user_id()`.
+
+RLS is defense in depth, not a replacement for server authorization. No policy or server operation may trust a browser-provided owner ID merely because it matches request input.
+
+Published-content reads use a dedicated least-privileged direct PostgreSQL role. Content publishing uses a separate server-only narrowly privileged role. Privileged direct database credentials must never enter browser code. In particular, `neondb_owner` or any other owner/`BYPASSRLS` credential must not be used for normal runtime user operations; owner access is reserved for migrations and necessary administration.
+
+Every Data API-exposed user-owned table requires reviewed grants, RLS policies, and write checks before exposure. Do not depend on the legacy Neon RLS / Neon Authorize product. See [ADR-0012](../decisions/ADR-0012-user-scoped-data-api-and-server-postgres-access.md).
 
 ## Branch security
 

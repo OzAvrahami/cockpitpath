@@ -78,6 +78,7 @@ ADRs record both the accepted v0.1 baseline and later supersessions. A new ADR s
 - [ADR-0009 — Dynamic Hotspots over Base Images](decisions/ADR-0009-dynamic-hotspots-over-base-images.md)
 - [ADR-0010 — Repository-Based Content Authoring](decisions/ADR-0010-repository-based-content-authoring.md)
 - [ADR-0011 — Neon Postgres and Neon Auth Platform](decisions/ADR-0011-neon-postgres-and-neon-auth-platform.md)
+- [ADR-0012 — User-Scoped Data API and Server PostgreSQL Access](decisions/ADR-0012-user-scoped-data-api-and-server-postgres-access.md)
 
 ## Scope boundaries
 

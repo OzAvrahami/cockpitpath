@@ -71,9 +71,15 @@ RLS is mandatory defense in depth for every exposed user-owned table.
 
 Published content is loaded through server-controlled data access in v0.1. If direct browser or Neon Data API reads are later exposed, their grants and RLS must implement the same publication and access policy first; a client-accessible endpoint or key is not authorization.
 
-The exact database expression that represents the authenticated Neon Auth user depends on the access path selected in Phase 1B. Direct PostgreSQL access and the Neon Data API are both candidates. The implementation must prove how verified identity enters the database session before defining policy expressions; it must not trust a browser-supplied user ID or copy a provider-specific helper by analogy. The legacy product historically called Neon RLS or Neon Authorize is not selected.
+Phase 1B.2 proved and selected the user-scoped path: Next.js performs server/domain authorization, then sends the verified Neon Auth JWT through the Neon Data API. The Data API validates the token, uses the non-owner `authenticated` PostgreSQL role, and makes the trusted subject available to RLS through `auth.user_id()`.
 
-Privileged publishing uses a server-only administrative credential and bypasses user RLS only for the narrow publishing operation.
+The browser does not become the authorization boundary and does not directly establish ownership. Browser-provided `user_id`, `owner_user_id`, or equivalent values are untrusted application input. Policies must derive or verify ownership against `auth.user_id()`, and writes require appropriate `WITH CHECK` policies.
+
+User-owned identity columns must use a type compatible with the actual Neon Auth subject. Final SQL design must verify that contract and must not carry forward an unverified UUID assumption.
+
+Published content uses server-only direct PostgreSQL access through a dedicated least-privileged read role. Privileged publishing uses a separate server-only, narrowly privileged role. The database owner is reserved for migrations and necessary administration; it is not a normal application runtime credential. See [ADR-0012](../decisions/ADR-0012-user-scoped-data-api-and-server-postgres-access.md).
+
+The legacy product historically called Neon RLS or Neon Authorize is not selected.
 
 ## Future entitlements
 

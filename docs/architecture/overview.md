@@ -422,7 +422,18 @@ CockpitPath should not depend unnecessarily on every Neon product. Primary cockp
 
 CockpitPath should initially use explicit PostgreSQL access rather than introducing an ORM by default.
 
-Phase 1B must evaluate the current Neon Data API and direct PostgreSQL access as possible data paths. It must select how verified Neon Auth identity reaches the database session before defining RLS identity expressions. The legacy Neon RLS / Neon Authorize product is not an application dependency.
+Phase 1B.2 resolved the previously deferred runtime access decision through a successful real Neon Auth-to-RLS proof. The v0.1 responsibility boundary is:
+
+| Data responsibility | Runtime path |
+| --- | --- |
+| Private user-owned data | Browser → Next.js server/domain authorization → Neon Data API with a verified Neon Auth JWT → PostgreSQL RLS using `auth.user_id()` |
+| Published learning content | Next.js server → direct PostgreSQL through a dedicated least-privileged read role |
+| Content publishing | Server-only publishing process → direct PostgreSQL through a dedicated narrowly privileged publishing role |
+| Migrations and necessary administration | Privileged database owner connection |
+
+The Data API's browser capability does not change the server-first architecture: the browser does not directly become CockpitPath's authorization boundary. The database owner or any `BYPASSRLS` role must not be used for normal runtime application access. See [ADR-0012 — User-Scoped Data API and Server PostgreSQL Access](../decisions/ADR-0012-user-scoped-data-api-and-server-postgres-access.md).
+
+User-owned schema must use an identity type compatible with the actual Neon Auth subject returned by `auth.user_id()`. Final SQL design must verify that contract rather than assuming user IDs are UUIDs.
 
 Schema and access logic should remain clear through:
 
@@ -560,7 +571,7 @@ RLS policies should be tested.
 
 # 19. Privileged Database Access
 
-Administrative or publishing operations may require privileged server access.
+Administrative or publishing operations require explicit server-only access paths. Runtime published-content reads use a dedicated least-privileged read role. Content publishing uses a separate narrowly privileged publishing role. The database owner is reserved for migrations and administration where owner privileges are actually required.
 
 Privileged credentials must:
 
@@ -568,7 +579,7 @@ Privileged credentials must:
 * Never appear in browser bundles
 * Never be exposed through public environment variables
 
-Privileged access should only be used when user-scoped access is inappropriate.
+Privileged access should only be used when user-scoped access is inappropriate. The database owner and roles with `BYPASSRLS` must never serve normal user runtime operations.
 
 ---
 
@@ -1818,6 +1829,7 @@ ADR-0008 — Entitlement-Ready Access Model
 ADR-0009 — Dynamic Hotspots over Base Images
 ADR-0010 — Repository-Based Content Authoring
 ADR-0011 — Neon Postgres and Neon Auth Platform
+ADR-0012 — User-Scoped Data API and Server PostgreSQL Access
 ```
 
 ---
