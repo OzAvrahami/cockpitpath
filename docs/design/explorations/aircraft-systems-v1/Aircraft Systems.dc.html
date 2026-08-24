@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9E8E5; color:#14161A; font-family:'Archivo',system-ui,sans-serif; }
+  a { color:#0E6A70; text-decoration:none; }
+  a:hover { color:#0A4F54; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; text-align: left; }
+</style>
+</helmet>
+
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">AIRCRAFT SYSTEMS &middot; v1 &middot; SIMULATOR COMPANION &mdash; REFINED v2</div>
+    <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em">Aircraft Systems &mdash; Electrical</div>
+    <div style="font-size:16px;line-height:1.55;color:#4A4C50;text-wrap:pretty">Same shell as Guide Mode, the Aircraft Page and Cockpit Explorer. The diagram is conceptual, not live telemetry &mdash; cyan means selected/focused, never powered. The desktop frame is live: click a diagram node, a related-control row, or a section chip to see the component detail and learning sections update.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start">
+
+    <!-- ===================== WIDE DESKTOP (interactive) ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">WIDE DESKTOP &middot; 1440 &times; 1320 &middot; LIVE SELECTION</div>
+      <div data-screen-label="Desktop Aircraft Systems" style="width:1440px;height:1320px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+        <div style="flex:none;height:52px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 28px;border-bottom:1px solid #15181C">
+          <div style="display:flex;align-items:center;gap:26px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8">CP</span>
+            <div style="display:flex;align-items:center;gap:22px">
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480;padding:16px 0" style-hover="color:#D7DCE1">AIRCRAFT</button>
+              <button style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#F2F4F6;padding:16px 0">LEARN<div style="position:absolute;left:0;right:0;bottom:0;height:2px;background:#57E0E8;border-radius:1px"></div></button>
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480;padding:16px 0" style-hover="color:#D7DCE1">PROGRESS</button>
+            </div>
+          </div>
+          <div style="width:28px;height:28px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;flex:none">AB</div>
+        </div>
+
+        <div style="flex:none;height:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 28px;border-bottom:1px solid #12151A">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.1em;color:#6B7480;white-space:nowrap;flex:none">SYSTEMS &rarr; <span style="color:#57E0E8">ELECTRICAL</span></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#57E0E8;border:1px solid #17282B;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">ELECTRICAL</button>
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9AA3AC;border:1px solid #22282E;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">FUEL</button>
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#9AA3AC;border:1px solid #22282E;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">HYDRAULICS</button>
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#4E5762;border:1px dashed #1F252B;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">PNEUMATICS &middot; SOON</button>
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#4E5762;border:1px dashed #1F252B;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">AIR COND &middot; SOON</button>
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#4E5762;border:1px dashed #1F252B;border-radius:5px;padding:7px 10px;white-space:nowrap;flex:none">FLIGHT CONTROLS &middot; SOON</button>
+          </div>
+        </div>
+
+        <div style="flex:none;padding:24px 28px 0;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;flex-direction:column;gap:8px;max-width:760px">
+            <div style="font-size:30px;font-weight:600;letter-spacing:-0.015em;color:#FFFFFF">Electrical</div>
+            <div style="font-size:15px;line-height:1.5;color:#9AA3AC">The electrical system supplies power to aircraft equipment using several available sources, then distributes that power through the aircraft&rsquo;s electrical buses.</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+            <button onClick="{{ setSec01 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec01Color }};border:1px solid {{ sec01Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">01 BIG PICTURE</button>
+            <button onClick="{{ setSec02 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec02Color }};border:1px solid {{ sec02Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">02 POWER SOURCES</button>
+            <button onClick="{{ setSec03 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec03Color }};border:1px solid {{ sec03Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">03 AC / DC</button>
+            <button onClick="{{ setSec04 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec04Color }};border:1px solid {{ sec04Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">04 DISTRIBUTION</button>
+            <button onClick="{{ setSec05 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec05Color }};border:1px solid {{ sec05Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">05 STANDBY</button>
+            <button onClick="{{ setSec06 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec06Color }};border:1px solid {{ sec06Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">06 CONTROLS</button>
+            <button onClick="{{ setSec07 }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:{{ sec07Color }};border:1px solid {{ sec07Border }};border-radius:5px;padding:6px 9px;white-space:nowrap;flex:none">07 OPERATIONS</button>
+          </div>
+        </div>
+
+        <div style="flex:none;height:420px;display:grid;grid-template-columns:1fr 400px;gap:28px;padding:20px 28px 0">
+          <div style="min-width:0;background:#0E1114;border:1px solid #17282B;border-radius:10px;padding:14px 20px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="flex:none;display:flex;align-items:baseline;gap:10px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#6B7480;white-space:nowrap;flex:none">CONCEPT MAP &middot; SELECTED RELATIONSHIP</span>
+              <span style="font-size:11.5px;color:#4E5762;white-space:nowrap;flex:none">Not live aircraft state</span>
+            </div>
+            <div style="flex:1;min-height:0">
+              <dc-import name="SystemDiagram" layout="full" selected="{{ selected }}" on-select="{{ selectComponent }}" hint-size="100%,100%"></dc-import>
+            </div>
+          </div>
+
+          <div style="min-width:0;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding-right:4px">
+
+            <sc-if value="{{ isBattery }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Aircraft Battery</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Provides an initial source of electrical power and supports specific aircraft electrical functions.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">The battery allows essential electrical power to be available before another electrical source is connected.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED COCKPIT CONTROL</span>
+                  <button style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-radius:6px;background:#0C1315;border:1px solid #17282B" style-hover="border-color:#3B767B">
+                    <span style="font-size:14.5px;color:#F2F4F6">Battery Switch</span>
+                    <span style="font-size:13px;color:#57E0E8;white-space:nowrap">View in Cockpit Explorer &rarr;</span>
+                  </button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">DC POWER</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">STANDBY POWER</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Shutdown</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isGround }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Ground Power</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Supplies external AC power to the aircraft from a ground power unit before engines or the APU are running.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">Ground Power lets the crew run aircraft systems during preparation without draining the battery or starting the APU.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED COCKPIT CONTROL</span>
+                  <button style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-radius:6px;background:#0C1315;border:1px solid #17282B" style-hover="border-color:#3B767B">
+                    <span style="font-size:14.5px;color:#F2F4F6">Ground Power Switch</span>
+                    <span style="font-size:13px;color:#57E0E8;white-space:nowrap">View in Cockpit Explorer &rarr;</span>
+                  </button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">AC POWER</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isApu }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">APU Generator</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Supplies AC power from the Auxiliary Power Unit once it is running, independent of ground equipment or engines.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">The APU Generator gives the aircraft a self-contained power source, useful where ground power is unavailable.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED COCKPIT CONTROL</span>
+                  <button style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-radius:6px;background:#0C1315;border:1px solid #17282B" style-hover="border-color:#3B767B">
+                    <span style="font-size:14.5px;color:#F2F4F6">APU Generator Switch</span>
+                    <span style="font-size:13px;color:#57E0E8;white-space:nowrap">View in Cockpit Explorer &rarr;</span>
+                  </button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">AC POWER</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Engine Start</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isEnginegen }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Engine Generators</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Supply AC power from the engine-driven generators once the engines are running.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">Engine generators become the aircraft&rsquo;s primary power source in flight, once Ground Power or the APU are no longer needed.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED COCKPIT CONTROL</span>
+                  <button style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-radius:6px;background:#0C1315;border:1px solid #17282B" style-hover="border-color:#3B767B">
+                    <span style="font-size:14.5px;color:#F2F4F6">Generator Switches</span>
+                    <span style="font-size:13px;color:#57E0E8;white-space:nowrap">View in Cockpit Explorer &rarr;</span>
+                  </button>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">AC POWER</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">After Start</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isDc }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">ELECTRICAL DOMAIN</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">DC Power</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Carries lower-voltage direct current power for essential equipment such as instruments and standby systems.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">DC Power keeps critical equipment running even from a single source like the battery.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">STANDBY POWER</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isAc }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">ELECTRICAL DOMAIN</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">AC Power</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Carries higher-power alternating current used by most aircraft systems, supplied by Ground Power, the APU, or the engines.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">AC Power runs the majority of aircraft equipment and requires an active generator source to stay available.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">GENERATOR</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Engine Start</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isDistribution }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:18px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">DISTRIBUTION</span>
+                  <div style="font-size:26px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Distribution / Buses</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">WHAT IT DOES</span>
+                  <div style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Routes AC and DC power from the available sources to the aircraft systems that need it.</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">WHY IT MATTERS</span>
+                  <div style="font-size:14px;line-height:1.55;color:#9AA3AC">Electrical buses determine which equipment stays powered if a source is lost.</div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#6B7480">RELATED CONCEPTS</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:7px">
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">ELECTRICAL BUS</button>
+                    <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC;border:1px dashed #2A3238;border-radius:4px;padding:5px 9px" style-hover="border-color:#57E0E8;color:#57E0E8">STANDBY POWER</button>
+                  </div>
+                </div>
+                <div style="height:1px;background:#15181C"></div>
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">USED IN PROCEDURES</span>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Power Up</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                  <button style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:6px;background:#0E1114" style-hover="background:#131719"><span style="flex:1;font-size:14.5px;color:#F2F4F6">Shutdown</span><span style="font-size:13px;color:#57E0E8;white-space:nowrap">View procedure &rarr;</span></button>
+                </div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854;padding-top:4px">MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</div>
+              </div>
+            </sc-if>
+
+          </div>
+        </div>
+
+        <div style="flex:none;margin:20px 28px 0;background:#0C1315;border:1px solid #17282B;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:24px">
+          <div style="display:flex;flex-direction:column;gap:4px;flex:none">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8FB6BA">LEARNING SCENARIO</span>
+            <span style="font-size:14px;font-weight:600;color:#F2F4F6;white-space:nowrap">APU Providing Power</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex:none">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:#F2F4F6;background:#0F2A2D;border:1.5px solid #57E0E8;border-radius:6px;padding:8px 12px;white-space:nowrap">APU GENERATOR</div>
+            <span style="color:#57E0E8;font-size:14px">&rarr;</span>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:#CBD3DC;background:#0E1114;border:1.5px solid #3B767B;border-radius:6px;padding:8px 12px;white-space:nowrap">AC POWER</div>
+            <span style="color:#57E0E8;font-size:14px">&rarr;</span>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:#CBD3DC;background:#0E1114;border:1.5px solid #3B767B;border-radius:6px;padding:8px 12px;white-space:nowrap">DISTRIBUTION</div>
+          </div>
+          <div style="font-size:12.5px;line-height:1.4;color:#79838F;flex:1;min-width:0">A conceptual example, not live aircraft state &mdash; CockpitPath v0.1 has no simulator telemetry.</div>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow:hidden;margin:20px 28px 24px;background:#0E1114;border:1px solid #15181C;border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:2px">
+
+          <button onClick="{{ setSec01 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec01Color }};width:120px;flex:none">01 BIG PICTURE</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">What the electrical system does</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec01Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec01 }}" hint-placeholder-val="{{ true }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">The electrical system supplies power to aircraft equipment using several available sources, then distributes that power through the aircraft&rsquo;s electrical buses so the right equipment stays powered in every phase of flight.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec02 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec02Color }};width:120px;flex:none">02 POWER SOURCES</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">Battery, Ground Power, APU Generator, and engine generators</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec02Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec02 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">Four sources can supply the aircraft: the battery, external Ground Power, the APU Generator, and the engine-driven generators. Only one combination is typically active at a time.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec03 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec03Color }};width:120px;flex:none">03 AC / DC</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">Two electrical domains used for different equipment</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec03Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec03 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">DC Power runs from the battery and covers essential low-power equipment. AC Power runs from Ground Power, the APU, or the engines, and covers most of the aircraft&rsquo;s systems.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec04 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec04Color }};width:120px;flex:none">04 DISTRIBUTION</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">How buses carry power to aircraft systems</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec04Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec04 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">Electrical buses distribute AC and DC power to the equipment that needs it, and determine what stays powered if a source is lost.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec05 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec05Color }};width:120px;flex:none">05 STANDBY</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">Backup power for essential equipment</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec05Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec05 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">Standby Power keeps essential flight instruments and equipment running from the battery if the normal AC and DC sources are lost.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec06 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec06Color }};width:120px;flex:none">06 CONTROLS</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">Where the pilot interacts with the system</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec06Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec06 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">The Battery Switch, Ground Power Switch, APU Generator Switch and Generator Switches on the Overhead panel let the pilot select which source powers the aircraft.</div>
+          </sc-if>
+
+          <button onClick="{{ setSec07 }}" style="display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:6px" style-hover="background:#131719">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:{{ sec07Color }};width:120px;flex:none">07 OPERATIONS</span>
+            <span style="flex:1;font-size:14px;color:#D7DCE1">How the system behaves during startup and shutdown</span>
+            <span style="color:#6B7480;font-size:13px">{{ sec07Chevron }}</span>
+          </button>
+          <sc-if value="{{ isSec07 }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:0 14px 16px 148px;font-size:14px;line-height:1.55;color:#9AA3AC;max-width:760px">A typical Power Up moves from Battery, to Ground Power or the APU, and eventually to the engine generators once the engines are running &mdash; which is why the startup procedure sequences those switches in that order.</div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== IPAD LANDSCAPE ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">IPAD LANDSCAPE &middot; 1180 &times; 820 &middot; TOUCH-FIRST, BOTTOM SHEET</div>
+      <div data-screen-label="iPad Aircraft Systems" style="width:1180px;height:820px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;height:56px;display:flex;align-items:center;gap:20px;padding:0 24px;border-bottom:1px solid #15181C">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8;flex:none">CP</span>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:#6B7480;white-space:nowrap">SYSTEMS &rarr; <span style="color:#57E0E8">ELECTRICAL</span></div>
+        </div>
+        <div style="flex:none;height:50px;display:flex;align-items:center;gap:8px;padding:0 24px;border-bottom:1px solid #12151A;overflow-x:auto">
+          <button style="height:36px;padding:0 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#57E0E8;border:1px solid #17282B;flex:none;white-space:nowrap">ELECTRICAL</button>
+          <button style="height:36px;padding:0 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#9AA3AC;border:1px solid #22282E;flex:none;white-space:nowrap">FUEL</button>
+          <button style="height:36px;padding:0 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#9AA3AC;border:1px solid #22282E;flex:none;white-space:nowrap">HYDRAULICS</button>
+          <button style="height:36px;padding:0 12px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#4E5762;border:1px dashed #1F252B;flex:none;white-space:nowrap">PNEUMATICS &middot; SOON</button>
+        </div>
+        <div style="flex:none;height:44px;display:flex;align-items:center;gap:6px;padding:0 24px;border-bottom:1px solid #12151A;overflow-x:auto">
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#57E0E8;border:1px solid #17282B;flex:none;white-space:nowrap">01 BIG PICTURE</button>
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#6B7480;border:1px solid #1A1F25;flex:none;white-space:nowrap">02 SOURCES</button>
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#6B7480;border:1px solid #1A1F25;flex:none;white-space:nowrap">03 AC / DC</button>
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#6B7480;border:1px solid #1A1F25;flex:none;white-space:nowrap">04 DISTRIBUTION</button>
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#6B7480;border:1px solid #1A1F25;flex:none;white-space:nowrap">05 STANDBY</button>
+          <button style="height:30px;padding:0 10px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.06em;color:#6B7480;border:1px solid #1A1F25;flex:none;white-space:nowrap">06 CONTROLS</button>
+        </div>
+
+        <div style="flex:1;min-height:0;padding:16px 24px 0">
+          <div style="height:100%;background:#0E1114;border:1px solid #17282B;border-radius:10px;padding:12px 16px 16px;display:flex;flex-direction:column;gap:8px">
+            <div style="flex:none;display:flex;align-items:baseline;gap:10px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#6B7480;white-space:nowrap;flex:none">CONCEPT MAP &middot; SELECTED RELATIONSHIP</span>
+              <span style="font-size:11.5px;color:#4E5762;white-space:nowrap;flex:none">Not live aircraft state</span>
+            </div>
+            <div style="flex:1;min-height:0">
+              <dc-import name="SystemDiagram" layout="full" selected="battery" hint-size="100%,100%"></dc-import>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:none;margin-top:14px;background:#0E1114;border-top:1px solid #1A2028;border-radius:16px 16px 0 0;padding:12px 26px 20px;display:flex;flex-direction:column;gap:12px">
+          <div style="width:40px;height:4px;border-radius:2px;background:#2A323C;align-self:center"></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px">
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+              <div style="font-size:22px;font-weight:600;color:#FFFFFF">Aircraft Battery</div>
+            </div>
+            <button style="flex:none;height:46px;padding:0 18px;border:1px solid #2A323C;border-radius:9px;font-size:13.5px;color:#D7DCE1;display:flex;align-items:center;gap:9px;white-space:nowrap">Expand details <span style="color:#6B7480">&uarr;</span></button>
+          </div>
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:14.5px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Provides an initial source of electrical power and supports specific aircraft electrical functions.</div>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <button style="display:flex;align-items:center;gap:8px;font-size:13px;color:#57E0E8;white-space:nowrap">Battery Switch &middot; View in Cockpit Explorer &rarr;</button>
+            <span style="font-size:13px;color:#9AA3AC;white-space:nowrap">Used in Power Up, Shutdown</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== MOBILE ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">MOBILE &middot; 390 &times; 844 &middot; SIMPLIFIED DIAGRAM, BOTTOM SHEET</div>
+      <div data-screen-label="Mobile Aircraft Systems" style="width:390px;height:844px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;padding:14px 16px 12px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid #15181C">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8">CP &middot; SYSTEMS</span>
+              <button style="display:flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#57E0E8;border:1px solid #17282B;border-radius:5px;padding:4px 8px;white-space:nowrap;flex:none">ELECTRICAL <span style="font-size:9px">&#9662;</span></button>
+            </div>
+            <button style="font-size:16px;color:#6B7480">&#9776;</button>
+          </div>
+          <div style="font-size:20px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Electrical</div>
+          <div style="font-size:13px;line-height:1.5;color:#9AA3AC">Power sources, distribution, and the buses that keep equipment running.</div>
+        </div>
+
+        <div style="flex:none;padding:14px 16px 0">
+          <div style="height:250px;background:#0E1114;border:1px solid #17282B;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+            <div style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#6B7480;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">CONCEPT MAP &middot; <span style="color:#4E5762">not live aircraft state</span></div>
+            <div style="flex:1;min-height:0">
+              <dc-import name="SystemDiagram" layout="stacked" selected="battery" hint-size="100%,100%"></dc-import>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;min-height:0;margin-top:14px;background:#0E1114;border-top:1px solid #1A2028;border-radius:16px 16px 0 0;padding:12px 16px 20px;display:flex;flex-direction:column;gap:12px;overflow-y:auto">
+          <div style="width:36px;height:4px;border-radius:2px;background:#2A323C;align-self:center;flex:none"></div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#6B7480">POWER SOURCE</span>
+            <div style="font-size:20px;font-weight:600;color:#FFFFFF">Aircraft Battery</div>
+          </div>
+          <div style="font-family:'Source Serif 4',Georgia,serif;font-size:14px;line-height:1.5;color:#C3CAD1;text-wrap:pretty">Provides an initial source of electrical power and supports specific aircraft electrical functions.</div>
+          <button style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:7px;background:#0C1315;border:1px solid #17282B">
+            <span style="font-size:13px;color:#F2F4F6">Battery Switch</span>
+            <span style="font-size:12.5px;color:#57E0E8;white-space:nowrap">Cockpit Explorer &rarr;</span>
+          </button>
+          <button style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:7px;background:#0E1114">
+            <span style="font-size:13px;color:#F2F4F6">Used in Power Up, Shutdown</span>
+            <span style="color:#57E0E8;font-size:13px">&rarr;</span>
+          </button>
+          <button style="display:flex;align-items:center;justify-content:space-between;padding:2px 0">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6B7480">LEARNING SECTIONS &middot; 01&ndash;07</span>
+            <span style="color:#4E5762;font-size:13px">&rarr;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { selected: 'battery', section: '01' };
+  select(id) { this.setState({ selected: id }); }
+  setSection(id) { this.setState({ section: id }); }
+  renderVals() {
+    const s = this.state;
+    const secColor = (id) => s.section === id ? '#57E0E8' : '#9AA3AC';
+    const secBorder = (id) => s.section === id ? '#17282B' : '#22282E';
+    const chevron = (id) => s.section === id ? '\u2212' : '+';
+    return {
+      selected: s.selected,
+      isBattery: s.selected === 'battery',
+      isGround: s.selected === 'ground',
+      isApu: s.selected === 'apu',
+      isEnginegen: s.selected === 'enginegen',
+      isDc: s.selected === 'dc',
+      isAc: s.selected === 'ac',
+      isDistribution: s.selected === 'distribution',
+      selectComponent: (id) => this.select(id),
+      sec01Color: secColor('01'), sec01Border: secBorder('01'), isSec01: s.section === '01', sec01Chevron: chevron('01'), setSec01: () => this.setSection('01'),
+      sec02Color: secColor('02'), sec02Border: secBorder('02'), isSec02: s.section === '02', sec02Chevron: chevron('02'), setSec02: () => this.setSection('02'),
+      sec03Color: secColor('03'), sec03Border: secBorder('03'), isSec03: s.section === '03', sec03Chevron: chevron('03'), setSec03: () => this.setSection('03'),
+      sec04Color: secColor('04'), sec04Border: secBorder('04'), isSec04: s.section === '04', sec04Chevron: chevron('04'), setSec04: () => this.setSection('04'),
+      sec05Color: secColor('05'), sec05Border: secBorder('05'), isSec05: s.section === '05', sec05Chevron: chevron('05'), setSec05: () => this.setSection('05'),
+      sec06Color: secColor('06'), sec06Border: secBorder('06'), isSec06: s.section === '06', sec06Chevron: chevron('06'), setSec06: () => this.setSection('06'),
+      sec07Color: secColor('07'), sec07Border: secBorder('07'), isSec07: s.section === '07', sec07Chevron: chevron('07'), setSec07: () => this.setSection('07')
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="width:100%;height:100%;min-height:0;display:flex;flex-direction:column;font-family:'Archivo',sans-serif">
+
+  <sc-if value="{{ isFull }}" hint-placeholder-val="{{ true }}">
+    <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 30px 1fr 30px 1.1fr;grid-template-rows:repeat(4,1fr);gap:10px 0">
+
+      <button onClick="{{ goBattery }}" style="grid-column:1;grid-row:1;background:{{ batteryStyle.bg }};border:1.5px solid {{ batteryStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ batteryStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ batteryStyle.text }}">BATTERY</span>
+        <span style="font-size:10.5px;color:{{ batteryStyle.sub }}">Power source</span>
+      </button>
+      <button onClick="{{ goGround }}" style="grid-column:1;grid-row:2;background:{{ groundStyle.bg }};border:1.5px solid {{ groundStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ groundStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ groundStyle.text }}">GROUND POWER</span>
+        <span style="font-size:10.5px;color:{{ groundStyle.sub }}">Power source</span>
+      </button>
+      <button onClick="{{ goApu }}" style="grid-column:1;grid-row:3;background:{{ apuStyle.bg }};border:1.5px solid {{ apuStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ apuStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ apuStyle.text }}">APU GENERATOR</span>
+        <span style="font-size:10.5px;color:{{ apuStyle.sub }}">Power source</span>
+      </button>
+      <button onClick="{{ goEnginegen }}" style="grid-column:1;grid-row:4;background:{{ enginegenStyle.bg }};border:1.5px solid {{ enginegenStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ enginegenStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ enginegenStyle.text }}">ENGINE GENERATORS</span>
+        <span style="font-size:10.5px;color:{{ enginegenStyle.sub }}">Power source &middot; 1 &amp; 2</span>
+      </button>
+
+      <div style="grid-column:2;grid-row:1;display:flex;align-items:center;justify-content:center;font-size:16px;color:{{ arrowBatteryDCColor }}">&rarr;</div>
+      <div style="grid-column:2;grid-row:2 / 5;display:flex;align-items:center;justify-content:center;font-size:16px;color:{{ arrowACGroupColor }}">&rarr;</div>
+
+      <button onClick="{{ goDc }}" style="grid-column:3;grid-row:1;background:{{ dcStyle.bg }};border:1.5px solid {{ dcStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ dcStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ dcStyle.text }}">DC POWER</span>
+        <span style="font-size:10.5px;color:{{ dcStyle.sub }}">Electrical domain</span>
+      </button>
+      <button onClick="{{ goAc }}" style="grid-column:3;grid-row:2 / 5;background:{{ acStyle.bg }};border:1.5px solid {{ acStyle.border }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;text-align:left;opacity:{{ acStyle.op }};margin:2px 10px 2px 0">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.06em;color:{{ acStyle.text }}">AC POWER</span>
+        <span style="font-size:10.5px;color:{{ acStyle.sub }}">Electrical domain</span>
+      </button>
+
+      <div style="grid-column:4;grid-row:1;display:flex;align-items:center;justify-content:center;font-size:16px;color:{{ arrowDCDistColor }}">&rarr;</div>
+      <div style="grid-column:4;grid-row:2 / 5;display:flex;align-items:center;justify-content:center;font-size:16px;color:{{ arrowACDistColor }}">&rarr;</div>
+
+      <button onClick="{{ goDistribution }}" style="grid-column:5;grid-row:1 / 5;background:{{ distStyle.bg }};border:1.5px solid {{ distStyle.border }};border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:4px;text-align:left;opacity:{{ distStyle.op }}">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:0.06em;color:{{ distStyle.text }}">DISTRIBUTION</span>
+        <span style="font-size:11px;color:{{ distStyle.sub }}">Electrical buses</span>
+      </button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isStacked }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:8px">
+      <div style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#6B7480">SOURCES</div>
+      <div style="flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:7px">
+        <button onClick="{{ goBattery }}" style="background:{{ batteryStyle.bg }};border:1.5px solid {{ batteryStyle.border }};border-radius:7px;padding:9px 11px;text-align:left;opacity:{{ batteryStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:{{ batteryStyle.text }}">BATTERY</span></button>
+        <button onClick="{{ goGround }}" style="background:{{ groundStyle.bg }};border:1.5px solid {{ groundStyle.border }};border-radius:7px;padding:9px 11px;text-align:left;opacity:{{ groundStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:{{ groundStyle.text }}">GROUND PWR</span></button>
+        <button onClick="{{ goApu }}" style="background:{{ apuStyle.bg }};border:1.5px solid {{ apuStyle.border }};border-radius:7px;padding:9px 11px;text-align:left;opacity:{{ apuStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:{{ apuStyle.text }}">APU GEN</span></button>
+        <button onClick="{{ goEnginegen }}" style="background:{{ enginegenStyle.bg }};border:1.5px solid {{ enginegenStyle.border }};border-radius:7px;padding:9px 11px;text-align:left;opacity:{{ enginegenStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:{{ enginegenStyle.text }}">ENGINE GEN</span></button>
+      </div>
+      <div style="flex:none;display:flex;justify-content:center;font-size:15px;color:#3B767B">&darr;</div>
+      <div style="flex:none;display:grid;grid-template-columns:repeat(2,1fr);gap:7px">
+        <button onClick="{{ goDc }}" style="background:{{ dcStyle.bg }};border:1.5px solid {{ dcStyle.border }};border-radius:7px;padding:10px 12px;text-align:left;opacity:{{ dcStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ dcStyle.text }}">DC POWER</span></button>
+        <button onClick="{{ goAc }}" style="background:{{ acStyle.bg }};border:1.5px solid {{ acStyle.border }};border-radius:7px;padding:10px 12px;text-align:left;opacity:{{ acStyle.op }}"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ acStyle.text }}">AC POWER</span></button>
+      </div>
+      <div style="flex:none;display:flex;justify-content:center;font-size:15px;color:#3B767B">&darr;</div>
+      <button onClick="{{ goDistribution }}" style="background:{{ distStyle.bg }};border:1.5px solid {{ distStyle.border }};border-radius:7px;padding:11px 13px;text-align:left;opacity:{{ distStyle.op }}">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:{{ distStyle.text }}">DISTRIBUTION / BUSES</span>
+      </button>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:760,&quot;height&quot;:460},&quot;selected&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;battery&quot;,&quot;ground&quot;,&quot;apu&quot;,&quot;enginegen&quot;,&quot;dc&quot;,&quot;ac&quot;,&quot;distribution&quot;],&quot;default&quot;:&quot;battery&quot;,&quot;tsType&quot;:&quot;'battery'|'ground'|'apu'|'enginegen'|'dc'|'ac'|'distribution'&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;full&quot;,&quot;stacked&quot;],&quot;default&quot;:&quot;full&quot;,&quot;tsType&quot;:&quot;'full'|'stacked'&quot;},&quot;onSelect&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;(id: string) =&gt; void&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const selected = this.props.selected ?? 'battery';
+    const layout = this.props.layout ?? 'full';
+    const onSelect = this.props.onSelect;
+    const dcPath = ['battery', 'dc', 'distribution'];
+    const acPath = ['ground', 'apu', 'enginegen', 'ac', 'distribution'];
+    const onBatteryChain = dcPath.includes(selected);
+    const onACChain = acPath.includes(selected);
+    const isOnPath = (id) => (onBatteryChain && dcPath.includes(id)) || (onACChain && acPath.includes(id));
+    const style = (id) => {
+      if (id === selected) return { border: '#57E0E8', text: '#F2F4F6', bg: '#0F2A2D', sub: '#8FB6BA', op: '1' };
+      if (isOnPath(id)) return { border: '#3B767B', text: '#CBD3DC', bg: '#0E1114', sub: '#79838F', op: '1' };
+      return { border: '#20262D', text: '#5B6470', bg: '#0E1114', sub: '#454E59', op: '0.6' };
+    };
+    const arrowColor = (active) => active ? '#57E0E8' : '#2A3238';
+    const go = (id) => () => { if (onSelect) onSelect(id); };
+    return {
+      isFull: layout === 'full',
+      isStacked: layout === 'stacked',
+      batteryStyle: style('battery'),
+      groundStyle: style('ground'),
+      apuStyle: style('apu'),
+      enginegenStyle: style('enginegen'),
+      dcStyle: style('dc'),
+      acStyle: style('ac'),
+      distStyle: style('distribution'),
+      arrowBatteryDCColor: arrowColor(onBatteryChain),
+      arrowACGroupColor: arrowColor(onACChain),
+      arrowDCDistColor: arrowColor(onBatteryChain),
+      arrowACDistColor: arrowColor(onACChain),
+      goBattery: go('battery'),
+      goGround: go('ground'),
+      goApu: go('apu'),
+      goEnginegen: go('enginegen'),
+      goDc: go('dc'),
+      goAc: go('ac'),
+      goDistribution: go('distribution')
+    };
+  }
+}
+
+</script>
+</body>
+</html>

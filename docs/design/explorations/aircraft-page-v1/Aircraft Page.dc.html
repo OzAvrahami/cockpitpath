@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9E8E5; color:#14161A; font-family:'Archivo',system-ui,sans-serif; }
+  a { color:#0E6A70; text-decoration:none; }
+  a:hover { color:#0A4F54; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; text-align: left; }
+</style>
+</helmet>
+
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">AIRCRAFT PAGE &middot; v1 &middot; SIMULATOR COMPANION &mdash; REFINED v2</div>
+    <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em">Aircraft Page &mdash; Boeing 737 MAX 8</div>
+    <div style="font-size:16px;line-height:1.55;color:#4A4C50;text-wrap:pretty">Same shell as Guide Mode: low-glare surfaces, cyan reserved for the one action that matters, mono only for aircraft values and counts. Continue Learning borrows the step vocabulary directly from Guide Mode, so returning to an unfinished guide reads as the same object. Procedures are a grouped operational list rather than a card wall, and Learn the Aircraft is one connected stack with Cockpit Explorer as its entry point.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:56px;align-items:flex-start">
+
+    <!-- ===================== WIDE DESKTOP ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">WIDE DESKTOP &middot; 1440 &times; 1520</div>
+      <div data-screen-label="Desktop Aircraft Page" style="width:1440px;height:1520px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+        <div style="flex:none;height:52px;display:flex;align-items:center;justify-content:space-between;gap:28px;padding:0 28px;border-bottom:1px solid #15181C">
+          <div style="display:flex;align-items:center;gap:26px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8">CP</span>
+            <div style="display:flex;align-items:center;gap:22px">
+              <button style="position:relative;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#F2F4F6;padding:16px 0">AIRCRAFT<div style="position:absolute;left:0;right:0;bottom:0;height:2px;background:#57E0E8;border-radius:1px"></div></button>
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480;padding:16px 0" style-hover="color:#D7DCE1">LEARN</button>
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480;padding:16px 0" style-hover="color:#D7DCE1">PROGRESS</button>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <button style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480" style-hover="color:#D7DCE1">SWITCH AIRCRAFT</button>
+            <div style="width:28px;height:28px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#9AA3AC">AB</div>
+          </div>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow:hidden;padding:30px 40px 0;display:flex;flex-direction:column;gap:26px">
+
+          <div style="flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:40px">
+            <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#6B7480">AIRCRAFT</div>
+              <div style="font-size:42px;font-weight:600;letter-spacing:-0.02em;line-height:1;color:#FFFFFF">Boeing 737 MAX 8</div>
+              <div style="display:flex;align-items:stretch;gap:24px;padding-top:4px">
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#5B6470">IMPLEMENTATION</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#D7DCE1">iFly</span>
+                </div>
+                <div style="width:1px;background:#1C2126"></div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#5B6470">SIMULATOR</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#D7DCE1">Microsoft Flight Simulator 2024</span>
+                </div>
+                <div style="width:1px;background:#1C2126"></div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#5B6470">CONTENT</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#8FB6BA">17 procedures &middot; 1 journey</span>
+                </div>
+              </div>
+            </div>
+            <div style="flex:none;width:300px;height:132px;background:repeating-linear-gradient(135deg,#12161A 0 8px,#0F1216 8px 16px);border:1px solid #1C2126;border-radius:8px;display:flex;flex-direction:column;justify-content:flex-end;padding:11px 13px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#79838F">COCKPIT OVERVIEW &middot; 737 MAX 8</span>
+            </div>
+          </div>
+
+          <sc-if value="{{ returning }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:10px;padding:24px 28px;display:flex;align-items:center;gap:36px">
+              <div style="flex:1;display:flex;flex-direction:column;gap:14px;min-width:0">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px">CONTINUE</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.14em;color:#6B7480">JOURNEY &middot; IN PROGRESS</span>
+                </div>
+                <div style="font-size:30px;font-weight:600;letter-spacing:-0.015em;line-height:1.05;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#5B6470">JOURNEY POSITION</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#79838F">SECTION 01 <span style="color:#454E59">/ 14</span></span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:14px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#57E0E8;flex:none">POWER UP</span>
+                    <sc-if value="{{ segmented }}" hint-placeholder-val="{{ true }}">
+                      <div style="flex:1;display:flex;align-items:flex-end;gap:3px;height:10px;max-width:460px">
+                        <sc-for list="{{ ticksDone }}" as="t" hint-placeholder-count="3"><div style="flex:1;height:4px;border-radius:2px;background:#2E6E73"></div></sc-for>
+                        <div style="flex:1;height:10px;border-radius:2px;background:#57E0E8"></div>
+                        <sc-for list="{{ ticksTodo }}" as="t" hint-placeholder-count="12"><div style="flex:1;height:4px;border-radius:2px;background:#1B1F24"></div></sc-for>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ plainBar }}" hint-placeholder-val="{{ false }}">
+                      <div style="flex:1;max-width:460px;height:4px;border-radius:2px;background:#1B1F24;overflow:hidden"><div style="width:25%;height:100%;background:#57E0E8;border-radius:2px"></div></div>
+                    </sc-if>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:#D7DCE1;flex:none">STEP 04 <span style="color:#5B6470">/ 16</span></span>
+                  </div>
+                </div>
+              </div>
+              <div style="flex:none;width:1px;align-self:stretch;background:#17282B"></div>
+              <div style="flex:none;display:flex;align-items:center;gap:22px">
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">NEXT STEP</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></span>
+                  <span style="font-size:13px;color:#6B7480">Overhead &rarr; Electrical</span>
+                </div>
+                <button style="width:212px;height:76px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:21px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px" style-hover="background:#7DEAF0">Continue &nbsp;&rarr;</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ starting }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:10px;padding:24px 28px;display:flex;align-items:center;gap:36px">
+              <div style="flex:1;display:flex;flex-direction:column;gap:12px;min-width:0">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">START HERE</span>
+                <div style="font-size:30px;font-weight:600;letter-spacing:-0.015em;line-height:1.05;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6B7480">14 SECTIONS &middot; 146 STEPS &middot; FOUNDATIONAL</div>
+              </div>
+              <button style="flex:none;width:250px;height:76px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:21px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px" style-hover="background:#7DEAF0">Start Journey &nbsp;&rarr;</button>
+            </div>
+          </sc-if>
+
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 380px;gap:32px">
+
+            <div style="min-width:0;display:flex;flex-direction:column;gap:26px">
+
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">JOURNEYS</span>
+                  <div style="flex:1;height:1px;background:#15181C"></div>
+                </div>
+                <button style="display:flex;align-items:center;gap:18px;background:#0E1114;border-radius:8px;padding:15px 18px" style-hover="background:#121619">
+                  <div style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0">
+                    <span style="font-size:17px;font-weight:500;color:#F2F4F6">Cold &amp; Dark &rarr; Takeoff</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#5B6470">14 SECTIONS &middot; 146 STEPS &middot; FOUNDATIONAL</span>
+                  </div>
+                  <div style="flex:none;display:flex;align-items:center;gap:12px">
+                    <div style="width:96px;height:4px;border-radius:2px;background:#1B1F24;overflow:hidden"><div style="width:6%;height:100%;background:#57E0E8;border-radius:2px"></div></div>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#57E0E8;width:88px">IN PROGRESS</span>
+                  </div>
+                  <span style="flex:none;color:#4E5762;font-size:15px">&rarr;</span>
+                </button>
+                <sc-if value="{{ showComingSoon }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed #1F252B;border-radius:7px;padding:11px 14px">
+                      <span style="font-size:14px;color:#6B7480">Gate to Gate</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed #1F252B;border-radius:7px;padding:11px 14px">
+                      <span style="font-size:14px;color:#6B7480">Full Flight</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed #1F252B;border-radius:7px;padding:11px 14px">
+                      <span style="font-size:14px;color:#6B7480">Approach Training</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed #1F252B;border-radius:7px;padding:11px 14px">
+                      <span style="font-size:14px;color:#6B7480">Recurrent Practice</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">PROCEDURES</span>
+                  <div style="flex:1;height:1px;background:#15181C"></div>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">2 COMPLETE &middot; 1 IN PROGRESS &middot; 17 TOTAL</span>
+                </div>
+
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <div style="display:flex;align-items:center;gap:12px;padding:2px 4px 6px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">POWER &amp; PREFLIGHT</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#3F4854">7</span>
+                  </div>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px;background:#0E1114" style-hover="background:#131719">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#57E0E8;width:22px">01</span>
+                    <span style="flex:1;font-size:15px;color:#FFFFFF">Power Up</span>
+                    <div style="display:flex;align-items:center;gap:9px">
+                      <div style="width:64px;height:3px;border-radius:2px;background:#1B1F24;overflow:hidden"><div style="width:25%;height:100%;background:#57E0E8"></div></div>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#57E0E8">04 / 16</span>
+                    </div>
+                    <span style="color:#57E0E8;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">02</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">IRS &amp; Navigation</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">9 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">03</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Overhead Preparation</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">22 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">04</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">FMC Initialization</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">14 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">05</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Route Setup</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">11 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">06</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Performance Setup</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">8 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">07</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">MCP Preparation</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">10 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+
+                  <div style="display:flex;align-items:center;gap:12px;padding:14px 4px 6px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">DEPARTURE</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#3F4854">7</span>
+                  </div>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">08</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Before Pushback</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">7 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">09</span>
+                    <span style="flex:1;font-size:15px;color:#9AA3AC">Pushback</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8FB6BA">&#10003; COMPLETE</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">10</span>
+                    <span style="flex:1;font-size:15px;color:#9AA3AC">Engine Start</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#8FB6BA">&#10003; COMPLETE</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">11</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">After Start</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">9 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">12</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Taxi</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">6 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">13</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Before Takeoff</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">10 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+                  <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">14</span>
+                    <span style="flex:1;font-size:15px;color:#E4E8EC">Takeoff</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">7 STEPS</span>
+                    <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                  </button>
+
+                  <sc-if value="{{ arrivalClosed }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ openArrival }}" style="display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:6px;border:1px dashed #1F252B" style-hover="border-color:#3B767B">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">ARRIVAL &amp; SHUTDOWN</span>
+                      <span style="flex:1;font-size:13.5px;color:#5B6470">ILS Approach, Landing, Shutdown</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#9AA3AC">SHOW 3 &nbsp;&darr;</span>
+                    </button>
+                  </sc-if>
+                  <sc-if value="{{ arrivalOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:4px">
+                      <button onClick="{{ closeArrival }}" style="display:flex;align-items:center;gap:12px;padding:14px 4px 6px">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">ARRIVAL &amp; SHUTDOWN</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#3F4854">3</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#4E5762">&uarr;</span>
+                      </button>
+                      <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">15</span>
+                        <span style="flex:1;font-size:15px;color:#E4E8EC">ILS Approach</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">15 STEPS</span>
+                        <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                      </button>
+                      <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">16</span>
+                        <span style="flex:1;font-size:15px;color:#E4E8EC">Landing</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">9 STEPS</span>
+                        <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                      </button>
+                      <button style="display:flex;align-items:center;gap:14px;padding:11px 14px;border-radius:6px" style-hover="background:#0E1114">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">17</span>
+                        <span style="flex:1;font-size:15px;color:#E4E8EC">Shutdown</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">11 STEPS</span>
+                        <span style="color:#3F4854;font-size:14px">&rarr;</span>
+                      </button>
+                    </div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+
+            <div style="min-width:0;display:flex;flex-direction:column;gap:26px">
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">LEARN THE AIRCRAFT</span>
+                  <div style="flex:1;height:1px;background:#15181C"></div>
+                </div>
+
+                <button style="display:flex;flex-direction:column;gap:12px;background:#0E1114;border:1px solid #17282B;border-radius:8px;padding:16px 18px" style-hover="border-color:#3B767B">
+                  <div style="width:100%;height:104px;background:repeating-linear-gradient(135deg,#12161A 0 8px,#0F1216 8px 16px);border-radius:6px;display:flex;flex-direction:column;justify-content:flex-end;padding:9px 11px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#79838F">COCKPIT &middot; forward panel</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:9px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#57E0E8">COCKPIT EXPLORER</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#5B6470">6 PANELS</span>
+                  </div>
+                  <span style="font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.4;color:#C3CAD1;text-wrap:pretty">Explore the cockpit and learn what each control does.</span>
+                  <span style="font-size:14px;color:#57E0E8">Open Cockpit Explorer &rarr;</span>
+                </button>
+
+                <div style="background:#0E1114;border-radius:8px;overflow:hidden">
+                  <button style="display:flex;align-items:center;gap:14px;width:100%;padding:15px 18px" style-hover="background:#121619">
+                    <div style="flex:1;display:flex;flex-direction:column;gap:4px;min-width:0">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#9AA3AC">SYSTEMS</span>
+                      <span style="font-size:13.5px;color:#6B7480">How the aircraft works behind the switches</span>
+                    </div>
+                    <span style="color:#4E5762;font-size:14px">&rarr;</span>
+                  </button>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#D7DCE1;border:1px solid #22282E;border-radius:4px;padding:5px 8px">ELECTRICAL</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#D7DCE1;border:1px solid #22282E;border-radius:4px;padding:5px 8px">FUEL</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#D7DCE1;border:1px solid #22282E;border-radius:4px;padding:5px 8px">HYDRAULICS</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#6B7480;border:1px dashed #1F252B;border-radius:4px;padding:5px 8px">PNEUMATICS &middot; SOON</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#6B7480;border:1px dashed #1F252B;border-radius:4px;padding:5px 8px">AIR COND &middot; SOON</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#6B7480;border:1px dashed #1F252B;border-radius:4px;padding:5px 8px">FLIGHT CONTROLS &middot; SOON</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">PROGRESS</span>
+                  <div style="flex:1;height:1px;background:#15181C"></div>
+                </div>
+                <div style="background:#0E1114;border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:13px">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                    <span style="font-size:14px;color:#9AA3AC">Cold &amp; Dark &rarr; Takeoff</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#D7DCE1">6%</span>
+                  </div>
+                  <div style="height:4px;border-radius:2px;background:#1B1F24;overflow:hidden"><div style="width:6%;height:100%;background:#57E0E8;border-radius:2px"></div></div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
+                    <span style="font-size:14px;color:#9AA3AC">Procedures complete</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#D7DCE1">2 <span style="color:#5B6470">/ 17</span></span>
+                  </div>
+                  <div style="height:1px;background:#15181C"></div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#5B6470">LAST SESSION</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#9AA3AC">POWER UP &middot; STEP 04</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ showVerification }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:none;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#3F4854;border-top:1px solid #12151A">
+            <span>MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</span>
+            <span>ALL CONTENT FREE DURING BETA</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ===================== IPAD LANDSCAPE ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">IPAD LANDSCAPE &middot; 1180 &times; 1080</div>
+      <div data-screen-label="iPad Aircraft Page" style="width:1180px;height:1080px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+        <div style="flex:none;height:60px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 24px;border-bottom:1px solid #15181C">
+          <div style="display:flex;align-items:center;gap:24px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8">CP</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#F2F4F6;height:44px;padding:0 14px;border-radius:6px;background:#141A1C">AIRCRAFT</button>
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6B7480;height:44px;padding:0 14px;border-radius:6px">LEARN</button>
+              <button style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:#6B7480;height:44px;padding:0 14px;border-radius:6px">PROGRESS</button>
+            </div>
+          </div>
+          <div style="width:34px;height:34px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA3AC">AB</div>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow:hidden;padding:24px 26px 0;display:flex;flex-direction:column;gap:22px">
+
+          <div style="flex:none;display:flex;align-items:flex-end;justify-content:space-between;gap:26px">
+            <div style="display:flex;flex-direction:column;gap:11px;min-width:0">
+              <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em;line-height:1;color:#FFFFFF">Boeing 737 MAX 8</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.1em;color:#6B7480;white-space:nowrap">IFLY &nbsp;&middot;&nbsp; MSFS 2024 &nbsp;&middot;&nbsp; <span style="color:#8FB6BA">17 PROCEDURES &middot; 1 JOURNEY</span></div>
+            </div>
+            <div style="flex:none;width:236px;height:96px;background:repeating-linear-gradient(135deg,#12161A 0 8px,#0F1216 8px 16px);border:1px solid #1C2126;border-radius:8px;display:flex;flex-direction:column;justify-content:flex-end;padding:9px 11px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#79838F">COCKPIT OVERVIEW</span>
+            </div>
+          </div>
+
+          <sc-if value="{{ returning }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:10px;padding:20px 22px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:20px">
+                <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+                  <div style="display:flex;align-items:center;gap:11px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px">CONTINUE</span>
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.12em;color:#6B7480;white-space:nowrap">POWER UP</span>
+                  </div>
+                  <div style="font-size:27px;font-weight:600;letter-spacing:-0.015em;line-height:1.05;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+                </div>
+                <div style="flex:none;display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#6B7480">NEXT STEP</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#5B6470">JOURNEY POSITION</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#79838F">SECTION 01 <span style="color:#454E59">/ 14</span></span>
+              </div>
+              <div style="display:flex;align-items:center;gap:14px">
+                <div style="flex:1;display:flex;align-items:flex-end;gap:3px;height:10px">
+                  <sc-for list="{{ ticksDone }}" as="t" hint-placeholder-count="3"><div style="flex:1;height:4px;border-radius:2px;background:#2E6E73"></div></sc-for>
+                  <div style="flex:1;height:10px;border-radius:2px;background:#57E0E8"></div>
+                  <sc-for list="{{ ticksTodo }}" as="t" hint-placeholder-count="12"><div style="flex:1;height:4px;border-radius:2px;background:#1B1F24"></div></sc-for>
+                </div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:#D7DCE1;flex:none">STEP 04 <span style="color:#5B6470">/ 16</span></span>
+              </div>
+              <button style="height:76px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px">Continue &nbsp;&rarr;</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ starting }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:10px;padding:20px 22px;display:flex;flex-direction:column;gap:14px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">START HERE</span>
+              <div style="font-size:27px;font-weight:600;letter-spacing:-0.015em;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6B7480">14 SECTIONS &middot; 146 STEPS &middot; FOUNDATIONAL</div>
+              <button style="height:76px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">Start Journey &nbsp;&rarr;</button>
+            </div>
+          </sc-if>
+
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 340px;gap:24px">
+            <div style="min-width:0;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:14px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">PROCEDURES</span>
+                <div style="flex:1;height:1px;background:#15181C"></div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">17 TOTAL</span>
+              </div>
+              <div style="display:flex;gap:8px;padding-bottom:4px">
+                <button onClick="{{ tabPreflightOn }}" style="height:44px;padding:0 14px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#D7DCE1;background:#141A1C">POWER &amp; PREFLIGHT &middot; 7</button>
+                <button onClick="{{ tabDepartureOn }}" style="height:44px;padding:0 14px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6B7480">DEPARTURE &middot; 7</button>
+                <button onClick="{{ tabArrivalOn }}" style="height:44px;padding:0 14px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#6B7480">ARRIVAL &middot; 3</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px;background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#57E0E8;width:22px">01</span>
+                  <span style="flex:1;font-size:16px;color:#FFFFFF">Power Up</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#57E0E8">04 / 16</span>
+                  <span style="color:#57E0E8;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">02</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">IRS &amp; Navigation</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">9 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">03</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">Overhead Preparation</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">22 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">04</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">FMC Initialization</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">14 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">05</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">Route Setup</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">11 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">06</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">Performance Setup</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">8 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <button style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:7px" style-hover="background:#0E1114">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4E5762;width:22px">07</span>
+                  <span style="flex:1;font-size:16px;color:#E4E8EC">MCP Preparation</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#5B6470">10 STEPS</span>
+                  <span style="color:#3F4854;font-size:15px">&rarr;</span>
+                </button>
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#4E5762">
+                  <span>DEPARTURE &amp; ARRIVAL SECTIONS AVAILABLE ABOVE</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="min-width:0;display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">LEARN THE AIRCRAFT</span>
+                  <div style="flex:1;height:1px;background:#15181C"></div>
+                </div>
+                <button style="display:flex;flex-direction:column;gap:11px;background:#0E1114;border:1px solid #17282B;border-radius:8px;padding:15px 16px">
+                  <div style="width:100%;height:92px;background:repeating-linear-gradient(135deg,#12161A 0 8px,#0F1216 8px 16px);border-radius:6px;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#79838F">COCKPIT &middot; forward panel</span>
+                  </div>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#57E0E8">COCKPIT EXPLORER</span>
+                  <span style="font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.4;color:#C3CAD1;text-wrap:pretty">Explore the cockpit and learn what each control does.</span>
+                </button>
+                <div style="background:#0E1114;border-radius:8px;overflow:hidden">
+                  <button style="display:flex;align-items:center;gap:12px;width:100%;padding:15px 16px">
+                    <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#9AA3AC">SYSTEMS</span>
+                      <span style="font-size:13px;color:#6B7480">3 of 6 available</span>
+                    </div>
+                    <span style="color:#4E5762;font-size:14px">&rarr;</span>
+                  </button>
+                </div>
+              </div>
+
+              <sc-if value="{{ showComingSoon }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:14px">
+                    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">MORE JOURNEYS</span>
+                    <div style="flex:1;height:1px;background:#15181C"></div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:7px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;border:1px dashed #1F252B;border-radius:7px;padding:12px 14px">
+                      <span style="font-size:14px;color:#6B7480">Gate to Gate</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;border:1px dashed #1F252B;border-radius:7px;padding:12px 14px">
+                      <span style="font-size:14px;color:#6B7480">Full Flight</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;border:1px dashed #1F252B;border-radius:7px;padding:12px 14px">
+                      <span style="font-size:14px;color:#6B7480">Approach Training</span>
+                      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#4E5762">SOON</span>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ showVerification }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:none;height:34px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#3F4854;border-top:1px solid #12151A">
+            <span>MSFS 2024 &middot; IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</span>
+            <span>ALL CONTENT FREE DURING BETA</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- ===================== MOBILE ===================== -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">MOBILE &middot; 390 &times; 1120</div>
+      <div data-screen-label="Mobile Aircraft Page" style="width:390px;height:1120px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+        <div style="flex:none;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #15181C">
+          <div style="display:flex;align-items:center;gap:12px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.14em;color:#57E0E8">CP</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#6B7480">AIRCRAFT</span>
+          </div>
+          <button style="font-size:16px;color:#6B7480;padding:6px 4px">&#9776;</button>
+        </div>
+
+        <div style="flex:1;min-height:0;overflow:hidden;padding:18px 16px 0;display:flex;flex-direction:column;gap:20px">
+
+          <div style="flex:none;display:flex;flex-direction:column;gap:9px">
+            <div style="font-size:26px;font-weight:600;letter-spacing:-0.02em;line-height:1.05;color:#FFFFFF">Boeing 737 MAX 8</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#6B7480">IFLY &middot; MSFS 2024</div>
+          </div>
+
+          <sc-if value="{{ returning }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:9px;padding:16px;display:flex;flex-direction:column;gap:13px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:3px 7px;border-radius:3px">CONTINUE</span>
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#6B7480">POWER UP</span>
+                </div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#454E59">SEC 01 <span style="color:#3A424C">/ 14</span></span>
+              </div>
+              <div style="font-size:21px;font-weight:600;letter-spacing:-0.01em;line-height:1.15;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="flex:1;display:flex;align-items:flex-end;gap:2px;height:8px">
+                  <sc-for list="{{ ticksDone }}" as="t" hint-placeholder-count="3"><div style="flex:1;height:3px;border-radius:2px;background:#2E6E73"></div></sc-for>
+                  <div style="flex:1;height:8px;border-radius:2px;background:#57E0E8"></div>
+                  <sc-for list="{{ ticksTodo }}" as="t" hint-placeholder-count="12"><div style="flex:1;height:3px;border-radius:2px;background:#1B1F24"></div></sc-for>
+                </div>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#D7DCE1;flex:none">04 <span style="color:#5B6470">/ 16</span></span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.16em;color:#6B7480">NEXT STEP</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:19px;font-weight:600;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></span>
+              </div>
+              <button style="height:60px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:19px;font-weight:600;display:flex;align-items:center;justify-content:center">Continue &nbsp;&rarr;</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{ starting }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;background:#0D1417;border:1px solid #17282B;border-radius:9px;padding:16px;display:flex;flex-direction:column;gap:12px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#8FB6BA">START HERE</span>
+              <div style="font-size:21px;font-weight:600;line-height:1.15;color:#FFFFFF">Cold &amp; Dark &rarr; Takeoff</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">14 SECTIONS &middot; FOUNDATIONAL</div>
+              <button style="height:60px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:19px;font-weight:600;display:flex;align-items:center;justify-content:center">Start Journey &nbsp;&rarr;</button>
+            </div>
+          </sc-if>
+
+          <div style="flex:none;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.18em;color:#8FB6BA">PROCEDURES</span>
+              <div style="flex:1;height:1px;background:#15181C"></div>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#5B6470">17</span>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button onClick="{{ tabPreflightOn }}" style="flex:1;height:44px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#D7DCE1;background:#141A1C;display:flex;align-items:center;justify-content:center">PREFLIGHT</button>
+              <button onClick="{{ tabDepartureOn }}" style="flex:1;height:44px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#6B7480;display:flex;align-items:center;justify-content:center">DEPARTURE</button>
+              <button onClick="{{ tabArrivalOn }}" style="flex:1;height:44px;border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#6B7480;display:flex;align-items:center;justify-content:center">ARRIVAL</button>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px">
+              <button style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:7px;background:#0E1114">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#57E0E8;width:20px">01</span>
+                <span style="flex:1;font-size:15px;color:#FFFFFF">Power Up</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#57E0E8">04 / 16</span>
+              </button>
+              <button style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:7px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4E5762;width:20px">02</span>
+                <span style="flex:1;font-size:15px;color:#E4E8EC">IRS &amp; Navigation</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5B6470">9</span>
+              </button>
+              <button style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:7px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4E5762;width:20px">03</span>
+                <span style="flex:1;font-size:15px;color:#E4E8EC">Overhead Preparation</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5B6470">22</span>
+              </button>
+              <button style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:7px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4E5762;width:20px">04</span>
+                <span style="flex:1;font-size:15px;color:#E4E8EC">FMC Initialization</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5B6470">14</span>
+              </button>
+              <button style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:7px;border:1px dashed #1F252B;margin-top:5px">
+                <span style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:#6B7480">SHOW 3 MORE IN PREFLIGHT</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA3AC">&darr;</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="flex:none;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.18em;color:#8FB6BA">LEARN THE AIRCRAFT</span>
+              <div style="flex:1;height:1px;background:#15181C"></div>
+            </div>
+            <button style="display:flex;flex-direction:column;gap:10px;background:#0E1114;border:1px solid #17282B;border-radius:8px;padding:14px">
+              <div style="width:100%;height:82px;background:repeating-linear-gradient(135deg,#12161A 0 8px,#0F1216 8px 16px);border-radius:6px;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#79838F">COCKPIT &middot; forward panel</span>
+              </div>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#57E0E8">COCKPIT EXPLORER</span>
+              <span style="font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.4;color:#C3CAD1;text-wrap:pretty">Explore the cockpit and learn what each control does.</span>
+            </button>
+            <div style="background:#0E1114;border-radius:8px;overflow:hidden">
+              <button style="display:flex;align-items:center;gap:12px;width:100%;padding:14px">
+                <span style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#9AA3AC">SYSTEMS</span>
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#5B6470">3 / 6</span>
+                <span style="color:#4E5762;font-size:14px">&rarr;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ showVerification }}" hint-placeholder-val="{{ true }}">
+          <div style="flex:none;height:32px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#3F4854;border-top:1px solid #12151A">
+            <span>IFLY 737 MAX 8 &middot; VERIFICATION STATUS: PENDING</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;learnerState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;returning&quot;,&quot;new&quot;],&quot;default&quot;:&quot;returning&quot;,&quot;tsType&quot;:&quot;'returning'|'new'&quot;,&quot;section&quot;:&quot;Progress state&quot;},&quot;progressStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;segmented&quot;,&quot;bar&quot;],&quot;default&quot;:&quot;segmented&quot;,&quot;tsType&quot;:&quot;'segmented'|'bar'&quot;,&quot;section&quot;:&quot;Progress state&quot;},&quot;showComingSoon&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;},&quot;showVerification&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  state = { arrival: false, tab: 'preflight' };
+  renderVals() {
+    const learner = this.props.learnerState ?? 'returning';
+    const style = this.props.progressStyle ?? 'segmented';
+    return {
+      returning: learner === 'returning',
+      starting: learner === 'new',
+      segmented: style === 'segmented',
+      plainBar: style === 'bar',
+      showComingSoon: this.props.showComingSoon ?? true,
+      showVerification: this.props.showVerification ?? true,
+      ticksDone: [1, 2, 3],
+      ticksTodo: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      arrivalOpen: this.state.arrival,
+      arrivalClosed: !this.state.arrival,
+      openArrival: () => this.setState({ arrival: true }),
+      closeArrival: () => this.setState({ arrival: false }),
+      tabPreflightOn: () => this.setState({ tab: 'preflight' }),
+      tabDepartureOn: () => this.setState({ tab: 'departure' }),
+      tabArrivalOn: () => this.setState({ tab: 'arrival' })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
