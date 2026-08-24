@@ -4,7 +4,7 @@ CockpitPath is a connected aircraft-learning platform for flight simulation user
 
 ## Status
 
-**Product foundation complete. Phase 1A application scaffold active.**
+**Platform foundation complete. Phase 2 content platform is current.**
 
 ## Initial supported target
 
@@ -59,3 +59,17 @@ the database test command refuses production or an unknown branch.
 npm run db:migrate
 npm run db:test
 ```
+
+Repository-authored YAML content is validated before publication. Publication
+commands are guarded to the linked development/test environment; the dry run is
+the normal review entry point.
+
+```bash
+npm run content:validate
+npm run content:publish:dry-run
+npm run content:publish
+npm run content:test:integration
+```
+
+See the [content authoring guide](docs/content/authoring-guide.md) and
+[publishing workflow](docs/content/publishing-workflow.md) for the full policy.

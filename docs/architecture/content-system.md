@@ -106,6 +106,16 @@ Rollback republishes a known validated repository revision. It does not mutate a
 
 Runtime queries return published, access-allowed records and their resolved relationships. Draft and review content is available only to explicitly privileged preview tooling. UI code must not infer missing graph relationships from slugs or hard-coded maps.
 
+The Phase 2 database boundary exposes security-barrier views in the
+`cockpitpath_published` schema to the NOLOGIN
+`cockpitpath_content_reader` capability role. Those views include only entities
+whose canonical Content Record is `PUBLISHED`, and relationship views require all
+referenced endpoints to be published. The capability has no direct editorial-table
+access. A separate NOLOGIN `cockpitpath_publisher` capability can perform the
+narrow table and relationship mutations required by the repository publisher; it
+is not an owner and cannot update immutable Verification Events or delete logical
+entities. Credentialed runtime roles remain an external deployment concern.
+
 Published content may be cached by aircraft, journey, procedure, cockpit view, or system. Private progress and access decisions must never enter shared caches.
 
 ## Not included in v0.1

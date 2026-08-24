@@ -1,6 +1,6 @@
 # Phase 2 — Content Platform
 
-**Status:** ⬜ Planned
+**Status:** ▶ Current
 
 ## Goal
 
@@ -9,6 +9,12 @@ Build the repository-authored, validated, publishable content system and prove i
 ## Why Now
 
 Guide Mode, Cockpit Explorer, Aircraft Systems, and progress all depend on stable shared content identities and relationships. Building those experiences first would hard-code or duplicate the model they are meant to render.
+
+The current work package implements this infrastructure and proves the complete
+graph with unmistakably synthetic, transaction-scoped fixtures. The repository
+currently contains product identity metadata for the initial supported target but
+does not contain verified aircraft procedure facts or approved cockpit media; those
+inputs will not be promoted merely to make the first real slice appear complete.
 
 ## Deliverables
 

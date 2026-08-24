@@ -1,0 +1,421 @@
+kind: SOURCE_REFERENCE
+key: source.synthetic-wp2-fixture
+source_type: OTHER
+title: Synthetic Work Package 2 Fixture Source
+repository_identifier: test/fixtures/content/valid/graph.yaml
+notes: Test-only source containing no real aircraft claims.
+access_rights: Test fixture only
+---
+kind: AIRCRAFT
+key: aircraft.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+manufacturer: Synthetic Manufacturer
+family: Test Family
+variant: Test Variant
+display_name: Synthetic Test Aircraft
+slug: synthetic-wp2
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "c8d92cc93a5d85ea536a18bef8f15319ab9c70fced5cff44ec7835e5405831b7"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: SIMULATOR
+key: simulator.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+name: Synthetic Simulator
+product_family: Test Simulator Family
+display_name: Synthetic Test Simulator
+slug: synthetic-wp2
+support_status: SUPPORTED
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "993a99599cfc2cc7cf7526411bcafd9b55c9a13298a1773ab49682a06078ac8a"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: ADDON_PRODUCT
+key: addon.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+developer_name: Synthetic Developer
+product_name: Synthetic Test Add-on
+slug: synthetic-wp2
+support_status: SUPPORTED
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "3579e607ac5adbc79ea85540611f8622da5b2f5f961a06c150e8bd673eefb8f8"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: AIRCRAFT_IMPLEMENTATION
+key: implementation.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+aircraft: aircraft.synthetic-wp2
+simulator: simulator.synthetic-wp2
+addon_product: addon.synthetic-wp2
+slug: synthetic-wp2
+display_name: Synthetic Test Implementation
+support_status: SUPPORTED
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "b8d7cbb3d184ca7880fc78b94d1d8aa99200ae756499275c57ab5530323b52b9"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: MEDIA_ASSET
+key: media.synthetic-wp2-cockpit
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+asset_type: COCKPIT_VIEW
+storage_key: tests/synthetic-wp2-cockpit.png
+mime_type: image/png
+width: 1000
+height: 500
+accessible_description: Synthetic test cockpit image placeholder
+checksum: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+rights_status: APPROVED
+verification_status: VERIFIED
+is_original_capture: true
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "5e2184ed80c9f0ed012e82cf212055a533658b3dacd8affe89920a2ba9333211"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: COCKPIT_AREA
+key: area.synthetic-wp2-cockpit
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+area_type: COCKPIT
+slug: synthetic-cockpit
+title: Synthetic Cockpit
+sort_order: 0
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "f6a96f71f11557d895dc422fd7502f7ce3f2ab32fe5cf8a330fcb16bb7b99e57"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: COCKPIT_AREA
+key: area.synthetic-wp2-panel
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+parent_area: area.synthetic-wp2-cockpit
+area_type: PANEL
+slug: synthetic-panel
+title: Synthetic Panel
+sort_order: 1
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "e2f4c067c4d897564f0c8a011fff21eeac7a8854e5a08830b20af0ff7661a341"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: AIRCRAFT_SYSTEM
+key: system.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+slug: synthetic-system
+title: Synthetic System
+short_description: Test-only system description.
+sort_order: 1
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "cbb71efeff3d7e1a402b16ce4cd36d7c53d903659e3b8756b20abe4c7fe651b8"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: CONCEPT
+key: concept.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+slug: synthetic-concept
+title: Synthetic Concept
+short_definition: Test-only concept definition.
+why_it_matters: It proves the content graph without making aircraft claims.
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "d4e5f9c97d00e2e3bcd5adb18dd1eb99d35080d282c0fee3d990a51ab18e5ed5"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: CONTROL
+key: control.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+cockpit_area: area.synthetic-wp2-panel
+aircraft_system: system.synthetic-wp2
+slug: synthetic-control
+canonical_name: Synthetic Test Control
+control_type: SWITCH
+what_it_does: Performs a test-only synthetic action.
+when_used: Only during automated content-platform tests.
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "3064e149eaba8f2b6689e45a9e10e45b2615b77e457a8df5433d61129af81d93"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: COCKPIT_VIEW
+key: view.synthetic-wp2-panel
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+cockpit_area: area.synthetic-wp2-panel
+media: media.synthetic-wp2-cockpit
+view_role: PRIMARY
+title: Synthetic Panel View
+sort_order: 0
+is_primary: true
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "8c47e8248c9dfcc2ac7d4e6247b006081b4c191719ea901eaebc5e8b5850f269"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: HOTSPOT
+key: hotspot.synthetic-wp2-control
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+cockpit_view: view.synthetic-wp2-panel
+target_control: control.synthetic-wp2
+x: 0.1
+y: 0.2
+width: 0.2
+height: 0.2
+shape: RECTANGLE
+label: Synthetic control hotspot
+sort_order: 0
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "9881532e9e87e7cddae304be9055e099b60b65d6fd4211edb6febfee6cdb229e"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: SYSTEM_COMPONENT
+key: component.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+system: system.synthetic-wp2
+slug: synthetic-component
+title: Synthetic Component
+component_type: TEST
+what_it_does: Provides a synthetic system node.
+why_it_matters: Connects controls and concepts in the test graph.
+sort_order: 1
+controls:
+  - key: control.synthetic-wp2
+    relation_type: OPERATED_BY
+    sort_order: 0
+concepts:
+  - key: concept.synthetic-wp2
+    relation_type: EXPLAINS
+    sort_order: 0
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "26701c7fa83f5719ceab86d080bfc4e81ced1e5540e36827f5cca1b70d52aef2"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+---
+kind: PROCEDURE
+key: procedure.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+slug: synthetic-procedure
+title: Synthetic Procedure
+short_description: Test-only procedure for the connected graph.
+sort_order: 1
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "80c8e5d277d28c9a8f7d4364a1c9658a516a86e0b2537ff2db4f8c860a6f64e4"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review
+steps:
+  - kind: PROCEDURE_STEP
+    key: step.synthetic-wp2.action
+    status: PUBLISHED
+    locale: en
+    revision: 1
+    audience: PUBLIC
+    access_class: FREE
+    sequence: 1
+    step_type: ACTION
+    title: Perform Synthetic Action
+    action_text: Operate the synthetic test control.
+    expected_result: The synthetic test state changes.
+    explanation: This statement is intentionally fictional and test-only.
+    is_optional: false
+    controls:
+      - key: control.synthetic-wp2
+        role: ACTION_TARGET
+        sequence: 1
+        preferred_hotspot: hotspot.synthetic-wp2-control
+    visuals:
+      - role: PRIMARY
+        sort_order: 0
+        cockpit_view: view.synthetic-wp2-panel
+        hotspot: hotspot.synthetic-wp2-control
+    sources:
+      - key: source.synthetic-wp2-fixture
+        purpose: OTHER
+    verifications:
+      - status: VERIFIED
+        revision: 1
+        content_hash: "62f33a9550347df68cf2f4c784e526c3412c0b013290548f6859f1f08f249fcd"
+        verified_at: 2026-01-01T00:00:00Z
+        verified_by: automated-test-fixture
+        method: Synthetic fixture review
+---
+kind: JOURNEY
+key: journey.synthetic-wp2
+status: PUBLISHED
+locale: en
+revision: 1
+audience: PUBLIC
+access_class: FREE
+implementation: implementation.synthetic-wp2
+slug: synthetic-journey
+title: Synthetic Journey
+description: Test-only journey for the connected publishing proof.
+difficulty: TEST
+estimated_scope: One synthetic step
+sort_order: 1
+sections:
+  - procedure: procedure.synthetic-wp2
+    sequence: 1
+    title_override: Synthetic Section
+    is_required: true
+sources:
+  - key: source.synthetic-wp2-fixture
+    purpose: OTHER
+verifications:
+  - status: VERIFIED
+    revision: 1
+    content_hash: "ff85f79ee5a8cb7b4ff722e505d24694ff59b58dc0b1f6a9dadd2db977550ba4"
+    verified_at: 2026-01-01T00:00:00Z
+    verified_by: automated-test-fixture
+    method: Synthetic fixture review

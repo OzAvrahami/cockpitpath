@@ -25,6 +25,12 @@ All repository content, metadata, notes, and identifiers are in English. Use UTF
 
 Use stable content keys defined in [content-key-conventions.md](content-key-conventions.md). Never paste database UUIDs or hard-coded R2 URLs into authored relationships.
 
+Authored files live under the repository-root `content/` directory, outside
+application source and database migrations. A YAML file may contain multiple
+documents separated by `---`; each document declares its entity `kind` and stable
+`key`. Procedure Steps remain closely owned children of their Procedure document
+while retaining their own stable keys and runtime identities.
+
 ## Roles
 
 One person may hold multiple roles in a small v0.1 team, but the responsibilities remain visible:
@@ -49,6 +55,12 @@ Content cannot self-verify merely because its author believes it is correct. If 
 8. Assemble reusable Procedures into the Journey.
 9. Run schema, reference, graph, media, and verification validation locally.
 10. Request review, address findings, and publish through the controlled workflow.
+
+Run `npm run content:validate` before review. Use
+`npm run content:publish:dry-run` to compare eligible `PUBLISHED`/`ARCHIVED`
+records with development without writing, then `npm run content:publish` only
+after the plan is accepted. Database integration coverage is separate under
+`npm run content:test:integration` so ordinary unit tests do not require Neon.
 
 This is dependency order, not a requirement to finish all cockpit or system content before the first Procedure. Build only the graph needed by the v0.1 Journey and Electrical learning experience.
 

@@ -51,11 +51,27 @@ The same person may perform multiple duties in beta, but each transition and res
 - `plan` / dry run: compare source to target and report intended changes; no writes.
 - `publish`: apply the reviewed plan to an explicit environment and scope.
 
-Exact command names are chosen during implementation. Commands must default safely, print their target environment, and never infer production from missing configuration.
+The repository commands are:
+
+- `npm run content:validate`: parse and validate `content/` without a database connection.
+- `npm run content:publish:dry-run`: validate and compare against development, then roll back without writes.
+- `npm run content:publish`: transactionally publish eligible content to development.
+- `npm run content:test:integration`: publish the synthetic connected fixture inside transactions and roll it back.
+
+The database commands require `NEON_BRANCH=development` or an explicitly isolated
+test/preview branch. They do not provide a production override; a reviewed future
+release mechanism must provision production credentials and targeting explicitly.
 
 ## Transaction and idempotency
 
 Database content changes occur in one transaction per approved publication unit. A failed validation or write rolls back the unit. Re-running the same content hashes produces no duplicate entities or revision increments. Stable key-to-UUID mapping cannot change.
+
+The implemented revision rule is intentionally narrow: a new logical key begins at
+revision 1; changed publishable content advances the persisted revision by exactly
+one; unchanged content retains its revision. Lifecycle and access metadata may
+change without replacing the UUID. Verification Events are append-only evidence
+and publication requires a verified event matching the authored revision and
+deterministic content hash.
 
 R2 upload happens before database publication and is not transactional with PostgreSQL. Unreferenced uploaded objects are harmless and can be reviewed later; a database record pointing to a missing object is not allowed.
 

@@ -24,6 +24,13 @@ Tests and test artifacts use plain JavaScript unless a third-party generated art
 
 Every content change runs parse, schema, key uniqueness, reference, implementation-scope, graph, order, media, hotspot, source, verification, access-inheritance, and publication-state checks. Include fixtures for every failure category and assert actionable file/key diagnostics.
 
+The implemented layers keep live Neon out of ordinary unit tests:
+`npm test` covers authoring and validation behavior,
+`npm run content:validate` validates the real repository tree, and
+`npm run content:test:integration` exercises transactional publication,
+idempotency, revision identity, and the published-only database surface on a
+guarded development/test branch. Synthetic publication fixtures are rolled back.
+
 The suite must prove the 14 canonical Journey sections in approved order without asserting placeholder step counts. Illustrative aircraft-system statements from design files are never golden production fixtures.
 
 ## Domain unit tests

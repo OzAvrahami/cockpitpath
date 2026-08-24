@@ -1,0 +1,93 @@
+kind: AIRCRAFT
+key: aircraft.boeing-737-max-8
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+manufacturer: Boeing
+family: 737 MAX
+variant: "8"
+display_name: Boeing 737 MAX 8
+slug: boeing-737-max-8
+---
+kind: SIMULATOR
+key: simulator.microsoft-flight-simulator-2024
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+name: Microsoft Flight Simulator 2024
+product_family: Microsoft Flight Simulator
+display_name: Microsoft Flight Simulator 2024
+slug: microsoft-flight-simulator-2024
+support_status: PLANNED
+---
+kind: ADDON_PRODUCT
+key: addon.ifly-737-max-8
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+developer_name: iFly
+product_name: 737 MAX 8
+slug: ifly-737-max-8
+support_status: PLANNED
+---
+kind: AIRCRAFT_IMPLEMENTATION
+key: implementation.ifly-737-max-8-msfs-2024
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+aircraft: aircraft.boeing-737-max-8
+simulator: simulator.microsoft-flight-simulator-2024
+addon_product: addon.ifly-737-max-8
+slug: ifly-737-max-8-msfs-2024
+display_name: iFly Boeing 737 MAX 8 for Microsoft Flight Simulator 2024
+support_status: PLANNED
+---
+kind: AIRCRAFT_SYSTEM
+key: system.ifly-737-max-8-msfs-2024.electrical
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+implementation: implementation.ifly-737-max-8-msfs-2024
+slug: electrical
+title: Electrical
+sort_order: 1
+---
+kind: PROCEDURE
+key: procedure.ifly-737-max-8-msfs-2024.power-up
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+implementation: implementation.ifly-737-max-8-msfs-2024
+slug: power-up
+title: Power Up
+sort_order: 1
+steps: []
+---
+kind: JOURNEY
+key: journey.ifly-737-max-8-msfs-2024.cold-dark-to-takeoff
+status: DRAFT
+locale: en
+revision: 1
+audience: AUTHENTICATED
+access_class: FREE
+implementation: implementation.ifly-737-max-8-msfs-2024
+slug: cold-dark-to-takeoff
+title: Cold & Dark → Takeoff
+sort_order: 1
+sections:
+  - procedure: procedure.ifly-737-max-8-msfs-2024.power-up
+    sequence: 1
+    title_override: Power Up
+    is_required: true

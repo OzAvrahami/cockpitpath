@@ -1,6 +1,6 @@
 # Phase 1 — Platform Foundation
 
-**Status:** ▶ Current
+**Status:** ✅ Complete
 
 ## Goal
 
@@ -47,7 +47,7 @@ Platform integration and product features require a reproducible application run
 
 ## Phase 1B — Platform Foundation
 
-**Status:** ▶ Current
+**Status:** ✅ Complete
 
 ### Goal
 
@@ -63,7 +63,7 @@ Neon architecture, development and migration setup, authenticated RLS proof, app
 
 ### Exit Criteria
 
-All Phase 1B.0–1B.5 exit criteria pass. The approved identity path, reproducible schema, real user-owned RLS policies, and security tests are reviewed and committed.
+All Phase 1B.0–1B.5 exit criteria pass. The approved identity path, reproducible shared-content schema, secure database defaults, and security tests are reviewed and committed. The real user-owned RLS mechanism is proven and remains reserved for the first persistent user-owned schema in Phase 3.
 
 ### Dependencies
 
@@ -71,7 +71,7 @@ Phase 1A and the architecture baseline.
 
 ### Relevant Commit(s)
 
-`7b2bd04`, `f7fec2f`, and `54a9592` close completed subphases. Phase 1B.3 is current; Phases 1B.4 and 1B.5 are not started.
+`7b2bd04`, `f7fec2f`, `54a9592`, `67c07f0`, and `cd9b84c` close Phase 1B.0–1B.5.
 
 ## 1B.0 — Architecture Migration to Neon
 
@@ -218,7 +218,7 @@ Phase 1B.1 and ADR-0011.
 
 ## 1B.3 — Application Authentication Integration
 
-**Status:** ▶ Current
+**Status:** ✅ Complete
 
 ### Goal
 
@@ -252,11 +252,11 @@ Phase 1B.2.
 
 ### Relevant Commit(s)
 
-Not started
+`67c07f0` — `feat: integrate Neon Auth with Next.js`
 
 ## 1B.4 — Core Database Schema
 
-**Status:** ⬜ Planned
+**Status:** ✅ Complete
 
 ### Goal
 
@@ -268,23 +268,12 @@ The schema should follow the proven identity path and be driven by a real connec
 
 ### Deliverables
 
-- Version-controlled SQL migrations for the minimum connected learning graph.
-- Stable identities, relationships, constraints, and indexes needed by the first slice.
-- Clear ownership boundaries between Neon Auth's managed schema and CockpitPath domain data.
-
-Likely domain areas include:
-
-- Aircraft and AircraftImplementation
-- Journey
-- Procedure and ProcedureStep
-- Control
-- CockpitArea and CockpitView
-- Hotspot
-- AircraftSystem and SystemComponent
-- Concept
-- MediaAsset
-
-These are candidate areas in the connected model, not a requirement to implement every entity simultaneously. A table is introduced only when the vertical slice or an established integrity requirement needs it.
+- Two version-controlled, reversible plain-SQL migrations.
+- A 21-table shared learning graph covering Aircraft, Simulator, AddOnProduct, AircraftImplementation, Journey, Procedure, ProcedureStep, cockpit hierarchy, Controls, Hotspots, Systems, Components, Concepts, Media Assets, and their minimum connecting relationships.
+- Canonical `ContentRecord` identity and lifecycle metadata with stable human-readable keys separate from UUID database identity.
+- Database constraints and indexes for order, hotspot geometry, target XOR rules, foreign keys, and implementation-scoped relationships.
+- One reusable, narrowly scoped `updated_at` trigger function.
+- No profiles, progress, user-owned schema, or persistent aircraft content.
 
 ### Exit Criteria
 
@@ -300,11 +289,11 @@ Phase 1B.2, coordinated with the minimum data needs of Phase 2.
 
 ### Relevant Commit(s)
 
-Not started
+`cd9b84c` — `feat: establish core learning database foundation`
 
 ## 1B.5 — Database Security Foundation
 
-**Status:** ⬜ Planned
+**Status:** ✅ Complete
 
 ### Goal
 
@@ -316,19 +305,21 @@ Phase 1B.2 proves the mechanism with a narrow end-to-end test. Phase 1B.5 applie
 
 ### Deliverables
 
-- PostgreSQL RLS policies for every user-owned table introduced in Phase 1B.4.
-- Explicit least-privilege grants for runtime and administrative paths.
-- Positive, cross-user, and unauthenticated database security tests.
-- Reproducible migrations for roles, grants, functions, and policies.
-- Security testing on an isolated Neon database test branch or equivalent isolated environment.
+- Secure owner-created default privileges for CockpitPath tables, sequences, and functions.
+- Explicit denial of raw content-table access to `PUBLIC` and the Data API `anonymous`, `authenticated`, and `authenticator` roles.
+- A branch-gated live database test harness covering schema, constraints, relationship scope, privileges, migration metadata, and fixture rollback.
+- Full development-only migration UP, idempotent second UP, DOWN, re-UP, and final-state verification.
+- No meaningless RLS policies on product-owned shared content and no invented user-owned table. Phase 1B.2's proven `auth.user_id()` policy mechanism remains the required foundation for Phase 3 progress data.
+- Published-reader and publisher roles deliberately deferred until Phase 2 creates a meaningful published-only surface and grant model.
 
 ### Exit Criteria
 
-- Every user-owned table has reviewed read and write policies.
-- Grants expose only required operations.
-- Cross-user and unauthenticated negative tests pass.
-- The complete schema and security boundary reproduce from migrations in isolation.
-- No security test relies on owner or bypass-RLS access.
+- All CockpitPath tables are denied to unintended public and Data API roles.
+- Future owner-created application objects inherit safe defaults.
+- The complete schema and security boundary reproduce from migrations on the isolated development branch.
+- Synthetic database fixtures roll back and no production content remains.
+- Managed Neon Auth/Data API objects remain intact.
+- The absence of persistent user-owned tables is explicit; RLS is applied when such a table is introduced rather than to shared editorial content for appearance.
 
 ### Dependencies
 
@@ -336,6 +327,6 @@ Phases 1B.2 and 1B.4.
 
 ### Relevant Commit(s)
 
-Not started
+`cd9b84c` — `feat: establish core learning database foundation`
 
 [← Previous Phase — Foundation](phase-0-foundation.md) · [↑ Implementation Dashboard](README.md) · [→ Next Phase — Content Platform](phase-2-content-platform.md)

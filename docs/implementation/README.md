@@ -23,14 +23,14 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 - ✅ [Phase 0 — Product, UX, Design & Architecture Foundation](phase-0-foundation.md)
 - ✅ [Phase 1A — Next.js Application Scaffold](phase-1-platform.md#phase-1a-nextjs-application-scaffold)
-- ▶ [Phase 1B — Platform Foundation](phase-1-platform.md#phase-1b-platform-foundation)
+- ✅ [Phase 1B — Platform Foundation](phase-1-platform.md#phase-1b-platform-foundation)
   - ✅ [1B.0 — Architecture Migration to Neon](phase-1-platform.md#1b0-architecture-migration-to-neon)
   - ✅ [1B.1 — Neon Development & Migration Foundation](phase-1-platform.md#1b1-neon-development-migration-foundation)
   - ✅ [1B.2 — Neon Auth → PostgreSQL RLS Proof](phase-1-platform.md#1b2-neon-auth-postgresql-rls-proof)
-  - ▶ [1B.3 — Application Authentication Integration](phase-1-platform.md#1b3-application-authentication-integration)
-  - ⬜ [1B.4 — Core Database Schema](phase-1-platform.md#1b4-core-database-schema)
-  - ⬜ [1B.5 — Database Security Foundation](phase-1-platform.md#1b5-database-security-foundation)
-- ⬜ [Phase 2 — Content Platform](phase-2-content-platform.md)
+  - ✅ [1B.3 — Application Authentication Integration](phase-1-platform.md#1b3-application-authentication-integration)
+  - ✅ [1B.4 — Core Database Schema](phase-1-platform.md#1b4-core-database-schema)
+  - ✅ [1B.5 — Database Security Foundation](phase-1-platform.md#1b5-database-security-foundation)
+- ▶ [Phase 2 — Content Platform](phase-2-content-platform.md)
 - ⬜ [Phase 3 — Learning State & Progress](phase-3-progress.md)
 - ⬜ [Phase 4 — Guide Mode](phase-4-guide-mode.md)
 - ⬜ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
@@ -41,16 +41,14 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 ## Current Checkpoint
 
-**Current:** Phase 1B.3 — Application Authentication Integration
+**Current:** Phase 2 — Content Platform
 
-**Previous:** Phase 1B.2 — Neon Auth → PostgreSQL RLS Proof<br>
-**Commit:** `54a9592` — `docs: record Neon Auth RLS access architecture`
+**Previous:** Phase 1B.4 + 1B.5 — Core Database Schema + Database Security Foundation<br>
+**Commit:** `cd9b84c` — `feat: establish core learning database foundation`
 
-**Next:** Phase 1B.4 — Core Database Schema
+**Next:** Phase 3 — Learning State & Progress
 
-Phase 1B.2 is complete after its real Auth-to-RLS proof, security verification, review, and committed architecture decision. Phase 1B.3 is current but has not been implemented. No CockpitPath domain tables exist yet.
-
-The current checkpoint is limited to application authentication integration; it does not include the core CockpitPath schema or product features.
+Phase 1 is complete in committed Git history. Phase 1B.3 integrated Neon Auth with the Next.js application, and the combined Phase 1B.4/1B.5 checkpoint established the connected learning schema, secure database defaults, explicit privilege denial, and live database test harness. Phase 2 now builds the repository-authored validation and publication system on that committed foundation.
 
 ## Major Delivery Path
 
@@ -95,6 +93,8 @@ These mappings were verified against the repository's first-parent Git history.
 | Phase 1B.0 | `7b2bd04` | `docs: migrate platform architecture to Neon` |
 | Phase 1B.1 | `f7fec2f` | `chore: establish Neon migration foundation` |
 | Phase 1B.2 | `54a9592` | `docs: record Neon Auth RLS access architecture` |
+| Phase 1B.3 | `67c07f0` | `feat: integrate Neon Auth with Next.js` |
+| Phase 1B.4 + 1B.5 | `cd9b84c` | `feat: establish core learning database foundation` |
 
 ## Checkpoint Workflow
 

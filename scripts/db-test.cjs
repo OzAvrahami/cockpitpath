@@ -12,6 +12,35 @@ const EXPECTED_TABLES = [
   "cockpit_areas",
   "cockpit_views",
   "concepts",
+  "content_publication_items",
+  "content_publications",
+  "content_records",
+  "content_sources",
+  "controls",
+  "hotspots",
+  "journey_sections",
+  "journeys",
+  "media_assets",
+  "procedure_step_controls",
+  "procedure_step_visuals",
+  "procedure_steps",
+  "procedures",
+  "simulators",
+  "source_references",
+  "system_component_concepts",
+  "system_component_controls",
+  "system_components",
+  "verification_events",
+];
+
+const EXPECTED_PUBLISHED_VIEWS = [
+  "addon_products",
+  "aircraft",
+  "aircraft_implementations",
+  "aircraft_systems",
+  "cockpit_areas",
+  "cockpit_views",
+  "concepts",
   "content_records",
   "controls",
   "hotspots",
@@ -32,6 +61,10 @@ const EXPECTED_FOREIGN_KEYS = [
   "cockpit_areas_parent_scope_fk",
   "cockpit_views_area_scope_fk",
   "cockpit_views_media_scope_fk",
+  "content_publication_items_content_fk",
+  "content_publication_items_publication_fk",
+  "content_sources_content_fk",
+  "content_sources_source_fk",
   "controls_area_scope_fk",
   "controls_system_scope_fk",
   "hotspots_area_scope_fk",
@@ -46,6 +79,8 @@ const EXPECTED_FOREIGN_KEYS = [
   "system_component_controls_component_scope_fk",
   "system_component_controls_control_scope_fk",
   "system_components_system_scope_fk",
+  "verification_events_content_fk",
+  "verification_events_implementation_fk",
 ];
 
 let savepointCounter = 0;
@@ -83,6 +118,23 @@ async function insertContentRecord(client, contentKey, kind) {
 }
 
 async function verifySchema(client) {
+  const managedInfrastructure = await client.query(`
+    select
+      exists (select 1 from pg_namespace where nspname = 'neon_auth') as neon_auth_schema,
+      (select count(*)::int from pg_class c join pg_namespace n on n.oid = c.relnamespace
+       where n.nspname = 'neon_auth' and c.relkind in ('r', 'v')) as neon_auth_relations,
+      to_regprocedure('auth.user_id()') is not null as data_api_identity_helper,
+      exists (select 1 from pg_roles where rolname = 'anonymous') as anonymous_role,
+      exists (select 1 from pg_roles where rolname = 'authenticated') as authenticated_role,
+      exists (select 1 from pg_roles where rolname = 'authenticator') as authenticator_role
+  `);
+  assert.equal(managedInfrastructure.rows[0].neon_auth_schema, true, "Neon Auth schema is missing");
+  assert(managedInfrastructure.rows[0].neon_auth_relations > 0, "Neon Auth managed relations are missing");
+  assert.equal(managedInfrastructure.rows[0].data_api_identity_helper, true, "Data API auth.user_id() helper is missing");
+  assert.equal(managedInfrastructure.rows[0].anonymous_role, true, "Data API anonymous role is missing");
+  assert.equal(managedInfrastructure.rows[0].authenticated_role, true, "Data API authenticated role is missing");
+  assert.equal(managedInfrastructure.rows[0].authenticator_role, true, "Data API authenticator role is missing");
+
   const tables = await client.query(
     `select tablename
      from pg_tables
@@ -95,6 +147,18 @@ async function verifySchema(client) {
     tables.rows.map(({ tablename }) => tablename),
     EXPECTED_TABLES,
     "core table set does not match the expected vertical-slice schema",
+  );
+
+  const publishedViews = await client.query(
+    `select table_name
+     from information_schema.views
+     where table_schema = 'cockpitpath_published'
+     order by table_name`,
+  );
+  assert.deepEqual(
+    publishedViews.rows.map(({ table_name: tableName }) => tableName),
+    EXPECTED_PUBLISHED_VIEWS,
+    "published runtime view set is incomplete",
   );
 
   const foreignKeys = await client.query(
@@ -116,7 +180,7 @@ async function verifySchema(client) {
      from cockpitpath_migrations.pgmigrations
      order by run_on, name`,
   );
-  assert.equal(migrationRows.rows.length, 2, "expected both Work Package 1 migrations");
+  assert.equal(migrationRows.rows.length, 3, "expected all Work Package 1 and 2 migrations");
 
   const timestampInfrastructure = await client.query(`
     select
@@ -130,7 +194,7 @@ async function verifySchema(client) {
   `);
   assert.deepEqual(
     timestampInfrastructure.rows[0],
-    { trigger_count: 17, security_invoker: true, safe_search_path: true },
+    { trigger_count: 18, security_invoker: true, safe_search_path: true },
     "shared updated_at trigger infrastructure is incomplete or unsafe",
   );
 }
@@ -167,7 +231,14 @@ async function verifySecurity(client) {
   const roleBoundary = await client.query(
     `select rolname, rolcanlogin, rolbypassrls
      from pg_roles
-     where rolname in ('anonymous', 'authenticated', 'authenticator', 'neondb_owner')
+     where rolname in (
+       'anonymous',
+       'authenticated',
+       'authenticator',
+       'cockpitpath_content_reader',
+       'cockpitpath_publisher',
+       'neondb_owner'
+     )
      order by rolname`,
   );
   const owner = roleBoundary.rows.find(({ rolname }) => rolname === "neondb_owner");
@@ -175,6 +246,43 @@ async function verifySecurity(client) {
   assert.equal(owner.rolbypassrls, true, "migration owner boundary changed unexpectedly");
   for (const role of roleBoundary.rows.filter(({ rolname }) => rolname !== "neondb_owner")) {
     assert.equal(role.rolbypassrls, false, `${role.rolname} unexpectedly bypasses RLS`);
+  }
+  for (const capability of ["cockpitpath_content_reader", "cockpitpath_publisher"]) {
+    const role = roleBoundary.rows.find(({ rolname }) => rolname === capability);
+    assert(role, `${capability} capability role is missing`);
+    assert.equal(role.rolcanlogin, false, `${capability} must remain NOLOGIN`);
+  }
+
+  const capabilityPrivileges = await client.query(`
+    select
+      has_table_privilege('cockpitpath_content_reader', 'cockpitpath_published.content_records', 'SELECT') as reader_view_select,
+      has_table_privilege('cockpitpath_content_reader', 'public.content_records', 'SELECT') as reader_raw_select,
+      has_table_privilege('cockpitpath_content_reader', 'public.source_references', 'SELECT') as reader_editorial_select,
+      has_table_privilege('cockpitpath_publisher', 'public.content_records', 'INSERT') as publisher_insert,
+      has_table_privilege('cockpitpath_publisher', 'public.verification_events', 'INSERT') as publisher_verification_insert,
+      has_table_privilege('cockpitpath_publisher', 'public.verification_events', 'UPDATE') as publisher_verification_update,
+      has_table_privilege('cockpitpath_publisher', 'public.content_records', 'DELETE') as publisher_entity_delete,
+      has_table_privilege('cockpitpath_publisher', 'public.procedure_step_controls', 'DELETE') as publisher_relation_delete
+  `);
+  assert.deepEqual(capabilityPrivileges.rows[0], {
+    reader_view_select: true,
+    reader_raw_select: false,
+    reader_editorial_select: false,
+    publisher_insert: true,
+    publisher_verification_insert: true,
+    publisher_verification_update: false,
+    publisher_entity_delete: false,
+    publisher_relation_delete: true,
+  });
+
+  for (const role of ["PUBLIC", "anonymous", "authenticated", "authenticator"]) {
+    const publishedGrant = await client.query(
+      `select count(*)::int as count
+       from information_schema.table_privileges
+       where table_schema = 'cockpitpath_published' and grantee = $1`,
+      [role],
+    );
+    assert.equal(publishedGrant.rows[0].count, 0, `${role} can access published views directly`);
   }
 
   const schemaBoundary = await client.query(
@@ -248,6 +356,33 @@ async function verifyConstraintsAndRelationships(client) {
   );
 
   const aircraftRecord = await insertContentRecord(client, "aircraft.db-test-model", "AIRCRAFT");
+  const source = await client.query(
+    `insert into public.source_references
+       (source_key, source_type, title, repository_identifier)
+     values ('source.db-test-fixture', 'OTHER', 'Synthetic DB Test Source', 'db-test')
+     returning id`,
+  );
+  await expectDatabaseError(
+    client,
+    "invalid content-source purpose",
+    () => client.query(
+      `insert into public.content_sources (content_record_id, source_reference_id, purpose)
+       values ($1, $2, 'UNTRUSTED')`,
+      [aircraftRecord, source.rows[0].id],
+    ),
+    ["23514"],
+  );
+  await expectDatabaseError(
+    client,
+    "incomplete verified event",
+    () => client.query(
+      `insert into public.verification_events
+       (content_record_id, verification_status, content_revision, content_hash)
+       values ($1, 'VERIFIED', 1, $2)`,
+      [aircraftRecord, "0".repeat(64)],
+    ),
+    ["23514"],
+  );
   const simulatorRecord = await insertContentRecord(client, "simulator.db-test-sim", "SIMULATOR");
   const addonRecord = await insertContentRecord(client, "addon.db-test-addon", "ADDON_PRODUCT");
   const addonTwoRecord = await insertContentRecord(client, "addon.db-test-addon-two", "ADDON_PRODUCT");
@@ -600,7 +735,13 @@ async function main() {
       baselineRows.rows[0].count,
       "synthetic database fixtures persisted unexpectedly",
     );
+    const persistentCounts = {};
+    for (const table of EXPECTED_TABLES) {
+      const result = await client.query(`select count(*)::int as count from public.${table}`);
+      persistentCounts[table] = result.rows[0].count;
+    }
     console.log("Database tests passed: schema, constraints, relationships, grants, and rollback isolation.");
+    console.log(`Persistent CockpitPath row counts: ${JSON.stringify(persistentCounts)}`);
   } catch (error) {
     try {
       await client.query("ROLLBACK");
