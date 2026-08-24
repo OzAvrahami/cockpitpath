@@ -71,7 +71,7 @@ Phase 1A and the architecture baseline.
 
 ### Relevant Commit(s)
 
-`7b2bd04` and `f7fec2f` close completed subphases. Remaining subphases are not started.
+`7b2bd04`, `f7fec2f`, and `54a9592` close completed subphases. Phase 1B.3 is current; Phases 1B.4 and 1B.5 are not started.
 
 ## 1B.0 — Architecture Migration to Neon
 
@@ -168,7 +168,7 @@ Phase 1B.0.
 
 ## 1B.2 — Neon Auth → PostgreSQL RLS Proof
 
-**Status:** ▶ Current — not implemented
+**Status:** ✅ Complete
 
 ### Goal
 
@@ -178,38 +178,35 @@ Prove real authenticated identity propagation into PostgreSQL and real cross-use
 
 RLS policy syntax alone does not prove that the runtime request path carries verified identity. The trust boundary must work end to end before it is applied to real progress data.
 
-### Intended Proof
+### Proven Path
 
 ```text
-Neon Auth user
-→ verified identity
-→ PostgreSQL
-→ RLS
-→ User A cannot access User B
+Neon Auth
+→ Neon-issued JWT
+→ Neon Data API verification
+→ authenticated PostgreSQL role
+→ auth.user_id()
+→ PostgreSQL RLS
 ```
 
-### Deliverables
+### Completed Work
 
-- Evaluate the current Neon Data API and direct PostgreSQL access against CockpitPath's server-rendered and server-mutation needs.
-- Exercise a real non-owner authenticated database path; owner or bypass-RLS behavior is not evidence.
-- Authenticate User A and User B and prove cross-user read and write isolation.
-- Verify unauthenticated read and write behavior explicitly.
-- Prove that a browser-supplied or manually injected user ID cannot select the acting identity.
-- Record the resulting runtime data-access path, verified identity representation, role/grant model, RLS policy basis, and rejected alternative as an architecture decision.
-- Clean up temporary proof tables, policies, roles, rows, and test identities when safe and applicable; retain only reviewed proof code or tests intentionally needed as evidence.
+- Used real development-only Neon Auth users and Neon-issued JWTs.
+- Proved Data API JWT validation and `auth.user_id()` as the PostgreSQL RLS identity boundary.
+- Exercised PostgreSQL RLS through the real non-owner `authenticated` role rather than the owner/`BYPASSRLS` connection.
+- Verified own-row access, cross-user read/write isolation, ownership-transfer prevention, unauthenticated denial, and invalid-token rejection.
+- Preserved the separation between normal user access, trusted server access, publishing, and database administration.
+- Removed temporary proof objects and test users, confirmed Neon Auth integrity, and left production untouched.
+- Selected and documented the responsibility-based Data API/direct PostgreSQL architecture in [ADR-0012 — User-Scoped Data API and Server PostgreSQL Access](../decisions/ADR-0012-user-scoped-data-api-and-server-postgres-access.md).
 
 ### Exit Criteria
 
-- A real Neon Auth session, not a fabricated claim, is the source of database identity.
-- User A can access only User A's allowed proof rows, and User B can access only User B's allowed proof rows.
-- Cross-user reads and writes fail through a real non-owner RLS path.
-- Unauthenticated behavior is tested and denied wherever the proof contract requires authentication.
-- Forging or manually supplying another user's ID does not change row ownership or visibility.
-- The Data API versus direct PostgreSQL evaluation selects and documents one path for the relevant v0.1 runtime operations.
-- The identity-to-PostgreSQL contract, least-privilege roles/grants, and RLS policy basis are captured in an accepted architecture decision.
-- Repeatable automated or scripted evidence covers positive and negative cases.
-- Temporary proof fixtures are removed, or any retained fixture is explicitly justified and isolated.
-- Required review and verification pass, and the checkpoint is committed.
+- Real Neon Auth sessions supplied the identity used by the Data API and PostgreSQL RLS.
+- Positive own-row access and required cross-user negative cases passed through the non-owner path.
+- Unauthenticated and tampered-token behavior was denied.
+- The owner/`BYPASSRLS` connection was excluded from user-isolation assertions.
+- Temporary proof objects and development test users were removed, and managed Neon Auth state remained intact.
+- The resulting runtime responsibility boundary was reviewed, accepted, documented in ADR-0012, and committed.
 
 ### Dependencies
 
@@ -217,11 +214,11 @@ Phase 1B.1 and ADR-0011.
 
 ### Relevant Commit(s)
 
-Not started
+`54a9592` — `docs: record Neon Auth RLS access architecture`
 
 ## 1B.3 — Application Authentication Integration
 
-**Status:** ⬜ Planned
+**Status:** ▶ Current
 
 ### Goal
 

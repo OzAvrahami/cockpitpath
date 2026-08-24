@@ -26,8 +26,8 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 - ▶ [Phase 1B — Platform Foundation](phase-1-platform.md#phase-1b-platform-foundation)
   - ✅ [1B.0 — Architecture Migration to Neon](phase-1-platform.md#1b0-architecture-migration-to-neon)
   - ✅ [1B.1 — Neon Development & Migration Foundation](phase-1-platform.md#1b1-neon-development-migration-foundation)
-  - ▶ [1B.2 — Neon Auth → PostgreSQL RLS Proof](phase-1-platform.md#1b2-neon-auth-postgresql-rls-proof)
-  - ⬜ [1B.3 — Application Authentication Integration](phase-1-platform.md#1b3-application-authentication-integration)
+  - ✅ [1B.2 — Neon Auth → PostgreSQL RLS Proof](phase-1-platform.md#1b2-neon-auth-postgresql-rls-proof)
+  - ▶ [1B.3 — Application Authentication Integration](phase-1-platform.md#1b3-application-authentication-integration)
   - ⬜ [1B.4 — Core Database Schema](phase-1-platform.md#1b4-core-database-schema)
   - ⬜ [1B.5 — Database Security Foundation](phase-1-platform.md#1b5-database-security-foundation)
 - ⬜ [Phase 2 — Content Platform](phase-2-content-platform.md)
@@ -41,16 +41,16 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 ## Current Checkpoint
 
-**Current:** Phase 1B.2 — Neon Auth → PostgreSQL RLS Proof
+**Current:** Phase 1B.3 — Application Authentication Integration
 
-**Previous:** Phase 1B.1 — Neon Development & Migration Foundation<br>
-**Commit:** `f7fec2f` — `chore: establish Neon migration foundation`
+**Previous:** Phase 1B.2 — Neon Auth → PostgreSQL RLS Proof<br>
+**Commit:** `54a9592` — `docs: record Neon Auth RLS access architecture`
 
-**Next:** Phase 1B.3 — Application Authentication Integration
+**Next:** Phase 1B.4 — Core Database Schema
 
-Phase 1B.2 has not been implemented. No CockpitPath domain tables exist yet.
+Phase 1B.2 is complete after its real Auth-to-RLS proof, security verification, review, and committed architecture decision. Phase 1B.3 is current but has not been implemented. No CockpitPath domain tables exist yet.
 
-The checkpoint must remain a narrow identity/RLS proof, not application feature work or creation of the full CockpitPath schema.
+The current checkpoint is limited to application authentication integration; it does not include the core CockpitPath schema or product features.
 
 ## Major Delivery Path
 
@@ -94,6 +94,7 @@ These mappings were verified against the repository's first-parent Git history.
 | Phase 1A | `ec775e9` | `chore: establish Next.js application scaffold` |
 | Phase 1B.0 | `7b2bd04` | `docs: migrate platform architecture to Neon` |
 | Phase 1B.1 | `f7fec2f` | `chore: establish Neon migration foundation` |
+| Phase 1B.2 | `54a9592` | `docs: record Neon Auth RLS access architecture` |
 
 ## Checkpoint Workflow
 
