@@ -4,7 +4,7 @@ CockpitPath is a connected aircraft-learning platform for flight simulation user
 
 ## Status
 
-**Product Foundation complete. Implementation has not started.**
+**Product foundation complete. Phase 1A application scaffold active.**
 
 ## Initial supported target
 
@@ -33,4 +33,16 @@ Start with the [documentation index](docs/README.md).
 
 All repository documentation, code-related artifacts, schemas, and project files are written in English.
 
-Installation and run instructions will be added after implementation begins.
+## Local development
+
+CockpitPath requires Node.js 20.9 or newer and uses npm.
+
+```bash
+npm install
+npm run dev
+```
+
+The local application is available at `http://localhost:3000` by default.
+
+Use `npm test`, `npm run lint`, and `npm run build` to run the current quality
+checks.
