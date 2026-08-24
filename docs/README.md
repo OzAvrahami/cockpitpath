@@ -61,11 +61,11 @@ Design-component HTML files demonstrate layout and interaction only. Their step 
 
 ## Architecture decisions
 
-ADRs use the status `Accepted` for the v0.1 baseline. A new ADR supersedes an accepted decision; existing history is not rewritten silently.
+ADRs record both the accepted v0.1 baseline and later supersessions. A new ADR supersedes an accepted decision; existing history is not rewritten silently.
 
 - [ADR-0001 — Web-First Next.js Application](decisions/ADR-0001-web-first-nextjs-application.md)
 - [ADR-0002 — Plain JavaScript Application](decisions/ADR-0002-plain-javascript-application.md)
-- [ADR-0003 — PostgreSQL and Supabase Platform](decisions/ADR-0003-postgresql-and-supabase-platform.md)
+- [ADR-0003 — PostgreSQL and Supabase Platform (superseded)](decisions/ADR-0003-postgresql-and-supabase-platform.md)
 - [ADR-0004 — Cloudflare R2 for Learning Media](decisions/ADR-0004-cloudflare-r2-for-learning-media.md)
 - [ADR-0005 — Structured Content Separate from UI](decisions/ADR-0005-structured-content-separate-from-ui.md)
 - [ADR-0006 — Single Application / No Separate Backend](decisions/ADR-0006-single-application-no-separate-backend.md)
@@ -73,10 +73,11 @@ ADRs use the status `Accepted` for the v0.1 baseline. A new ADR supersedes an ac
 - [ADR-0008 — Entitlement-Ready Access Model](decisions/ADR-0008-entitlement-ready-access-model.md)
 - [ADR-0009 — Dynamic Hotspots over Base Images](decisions/ADR-0009-dynamic-hotspots-over-base-images.md)
 - [ADR-0010 — Repository-Based Content Authoring](decisions/ADR-0010-repository-based-content-authoring.md)
+- [ADR-0011 — Neon Postgres and Neon Auth Platform](decisions/ADR-0011-neon-postgres-and-neon-auth-platform.md)
 
 ## Scope boundaries
 
-v0.1 is one Next.js App Router application, written in JavaScript, deployed on Railway, with Supabase PostgreSQL and Auth plus Cloudflare R2 media. It has no separate API server, Redis, microservices, GraphQL server, custom CMS, billing implementation, or simulator telemetry.
+v0.1 is one Next.js App Router application, written in JavaScript, deployed on Railway, with Neon Postgres and Neon Auth plus Cloudflare R2 media. It has no separate API server, Redis, microservices, GraphQL server, custom CMS, billing implementation, or simulator telemetry.
 
 The content model remains ready for additional aircraft and future `FREE`, `PRO`, and `PACK` access without implementing speculative infrastructure now.
 

@@ -22,5 +22,5 @@ Store learning-media binaries in Cloudflare R2. Store stable Media Asset identit
 ## Alternatives Considered
 
 - PostgreSQL binary storage: rejected for large learning media.
-- Supabase Storage: viable but not selected; the established baseline separates R2 media from Supabase data/auth.
+- Supabase Storage: viable but not selected; at the time of this decision, the established platform baseline separated R2 media from Supabase data/auth. The later platform change in ADR-0011 does not change the R2 decision.
 - Repository-hosted production images: rejected because large/versioned delivery assets would burden source history and deployment.

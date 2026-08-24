@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted — 2026-08-24
+Superseded — 2026-08-24
+
+Superseded by [ADR-0011 — Neon Postgres and Neon Auth Platform](ADR-0011-neon-postgres-and-neon-auth-platform.md).
 
 ## Context
 

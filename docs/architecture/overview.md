@@ -121,8 +121,8 @@ The recommended v0.1 stack is:
 | Language                      | JavaScript                              |
 | UI                            | React                                   |
 | Application hosting           | Railway                                 |
-| Database                      | PostgreSQL via Supabase                 |
-| Authentication                | Supabase Auth                           |
+| Database                      | Neon Postgres                           |
+| Authentication                | Neon Auth                               |
 | Authorization                 | Application rules + PostgreSQL RLS      |
 | Media storage                 | Cloudflare R2                           |
 | Media delivery                | Cloudflare CDN / controlled R2 delivery |
@@ -163,7 +163,7 @@ The deployment view below is complemented by the module and trust-boundary [depe
                                 │        │
                                 ▼        ▼
                   ┌─────────────────┐   ┌──────────────────┐
-                  │    Supabase     │   │ Cloudflare R2    │
+                  │      Neon       │   │ Cloudflare R2    │
                   │                 │   │                  │
                   │ PostgreSQL      │   │ Cockpit Images   │
                   │ Auth            │   │ Panel Images     │
@@ -375,7 +375,7 @@ Redux or an equivalent global state system is not currently required.
 
 # 11. Database
 
-CockpitPath should use PostgreSQL hosted through Supabase.
+CockpitPath should use PostgreSQL hosted through Neon.
 
 PostgreSQL fits CockpitPath because its domain is strongly relational.
 
@@ -403,26 +403,26 @@ A relational database is preferable to treating the learning library as independ
 
 ---
 
-# 12. Supabase Responsibilities
+# 12. Neon Responsibilities
 
-Supabase should initially provide:
+Neon should initially provide:
 
 * PostgreSQL hosting
-* Authentication
-* Row Level Security support
-* Server-side data access
-* Database management
-* Migration workflow integration
+* Neon Auth
+* Database branching for isolated environments
+* Database management and connection infrastructure
 
-CockpitPath should not depend unnecessarily on every Supabase product.
+Current Neon Auth is built on Better Auth. Its managed authentication data is stored in the Neon database and participates in database branching. PostgreSQL itself remains responsible for relational constraints, transactions, grants, and Row Level Security.
 
-For example, primary cockpit media is stored separately in Cloudflare R2.
+CockpitPath should not depend unnecessarily on every Neon product. Primary cockpit media remains separate in Cloudflare R2.
 
 ---
 
 # 13. Database Access
 
-CockpitPath should initially use explicit Supabase/PostgreSQL access rather than introducing an ORM by default.
+CockpitPath should initially use explicit PostgreSQL access rather than introducing an ORM by default.
+
+Phase 1B must evaluate the current Neon Data API and direct PostgreSQL access as possible data paths. It must select how verified Neon Auth identity reaches the database session before defining RLS identity expressions. The legacy Neon RLS / Neon Authorize product is not an application dependency.
 
 Schema and access logic should remain clear through:
 
@@ -466,7 +466,7 @@ Production database changes should not depend on manual dashboard edits alone.
 
 # 15. Authentication
 
-CockpitPath should use Supabase Auth for v0.1.
+CockpitPath should use Neon Auth for v0.1.
 
 Required capabilities:
 
@@ -1358,7 +1358,7 @@ Initial production topology:
 Railway
 └── CockpitPath Web
        │
-       ├── Supabase
+       ├── Neon
        │   ├── PostgreSQL
        │   └── Auth
        │
@@ -1372,26 +1372,21 @@ No Redis, separate API server, or worker service is required initially.
 
 # 56. Environments
 
-CockpitPath should support at least:
+CockpitPath should maintain separate application environments and connect each one only to its intended Neon database branch and Neon Auth endpoint. The conceptual database flow is:
 
-## Local
+```text
+Production database branch
+        ↓
+Development branch
+        ↓
+Isolated test or feature branches where useful
+```
 
-Developer environment.
+These labels describe responsibilities, not locked branch names. The exact branch lifecycle, reset policy, preview integration, and CI automation remain Phase 1B implementation decisions.
 
-## Staging
+Development must not depend on the production connection as its default. Neon branches replace the previous assumption of a required provider-specific local Docker stack. CockpitPath does not adopt Neon Local unless a later implementation review demonstrates a concrete need.
 
-Used for testing:
-
-* Migrations
-* Content
-* Releases
-* Publishing
-
-## Production
-
-User-facing environment.
-
-Production credentials should not be reused as development defaults.
+Staging remains the release rehearsal environment for migrations, content, publishing, and critical journeys. Production remains the user-facing environment.
 
 ---
 
@@ -1759,11 +1754,11 @@ Railway.
 
 ## Database
 
-Supabase PostgreSQL.
+Neon Postgres.
 
 ## Authentication
 
-Supabase Auth.
+Neon Auth.
 
 ## Authorization
 
@@ -1814,7 +1809,7 @@ Initial ADR candidates:
 ```text
 ADR-0001 — Web-First Next.js Application
 ADR-0002 — Plain JavaScript Application
-ADR-0003 — PostgreSQL and Supabase Platform
+ADR-0003 — PostgreSQL and Supabase Platform (superseded)
 ADR-0004 — Cloudflare R2 for Learning Media
 ADR-0005 — Structured Content Separate from UI
 ADR-0006 — Single Application / No Separate Backend
@@ -1822,6 +1817,7 @@ ADR-0007 — Database-Level RLS
 ADR-0008 — Entitlement-Ready Access Model
 ADR-0009 — Dynamic Hotspots over Base Images
 ADR-0010 — Repository-Based Content Authoring
+ADR-0011 — Neon Postgres and Neon Auth Platform
 ```
 
 ---
@@ -1857,7 +1853,7 @@ CockpitPath v0.1 uses a deliberately simple architecture:
 ```text
 Next.js + JavaScript
         ↓
-Supabase PostgreSQL + Auth
+Neon Postgres + Neon Auth
         ↓
 Cloudflare R2 Media
         ↓

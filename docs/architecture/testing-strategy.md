@@ -13,7 +13,7 @@ Testing must protect the core promise: a user can follow, leave, and correctly r
 | --- | --- | --- |
 | Static and content validation | Repository artifacts | JavaScript conventions, schemas, keys, references, media, verification, graph integrity. |
 | Unit | Pure domain modules | Access resolution, progress calculation, resume fallback, search normalization, publication planning. |
-| Integration | Next.js server + PostgreSQL/Supabase | Auth session use, progress transactions, RLS, search SQL, publishing idempotency. |
+| Integration | Next.js server + Neon Postgres/Auth | Auth session use, progress transactions, RLS, search SQL, publishing idempotency. |
 | Component | Interactive React behavior | Guide navigation, Quick/Learn, focus, hotspot keyboard behavior, diagram selection, failure states. |
 | End-to-end | Real browser and deployed-like stack | Sign-in through resume, Cockpit Explorer cross-links, responsive critical journeys. |
 | Visual and accessibility | Approved screens and viewports | Layout regression, contrast, focus, semantics, zoom, touch targets. |
@@ -51,7 +51,9 @@ For every exposed table, test anonymous, User A, User B, and privileged publishe
 - Published public versus authenticated content follows policy.
 - Privileged publishing cannot be reached with a normal session.
 
-Run tests against a real PostgreSQL/Supabase-compatible local or isolated test environment; mocks do not prove RLS.
+Run tests against a real isolated Neon Postgres branch or another explicitly approved PostgreSQL test environment using the selected Neon Auth identity path; mocks do not prove RLS. Tests must exercise the same identity-to-database contract used by the application rather than setting an unverified user identifier and calling that sufficient.
+
+Neon branches should provide isolated migration and integration-test targets where useful. Exact branch creation, reset, cleanup, and CI automation remain Phase 1B decisions. The testing strategy does not require a provider-specific local Docker stack and does not adopt Neon Local.
 
 ## Integration tests
 

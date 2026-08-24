@@ -69,7 +69,9 @@ RLS is mandatory defense in depth for every exposed user-owned table.
 - Draft content and editorial metadata are not exposed to normal browser roles.
 - Policies use explicit grants and `WITH CHECK` rules, not only `USING` filters.
 
-Published content is loaded through server-controlled data access in v0.1. If direct browser reads are later exposed, their grants and RLS must implement the same publication and access policy first; an anonymous Supabase key alone is not authorization.
+Published content is loaded through server-controlled data access in v0.1. If direct browser or Neon Data API reads are later exposed, their grants and RLS must implement the same publication and access policy first; a client-accessible endpoint or key is not authorization.
+
+The exact database expression that represents the authenticated Neon Auth user depends on the access path selected in Phase 1B. Direct PostgreSQL access and the Neon Data API are both candidates. The implementation must prove how verified identity enters the database session before defining policy expressions; it must not trust a browser-supplied user ID or copy a provider-specific helper by analogy. The legacy product historically called Neon RLS or Neon Authorize is not selected.
 
 Privileged publishing uses a server-only administrative credential and bypasses user RLS only for the narrow publishing operation.
 

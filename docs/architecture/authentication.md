@@ -5,14 +5,14 @@
 
 ## Purpose
 
-Authentication establishes user identity for persistent progress and future entitlements. Supabase Auth owns credentials and sessions; CockpitPath owns only the application profile and domain data. Authorization is defined separately in [access-control.md](access-control.md).
+Authentication establishes user identity for persistent progress and future entitlements. Neon Auth owns authentication credentials and sessions in its managed `neon_auth` schema; CockpitPath owns only the separate application profile and domain data. Current Neon Auth is built on Better Auth. Authorization is defined separately in [access-control.md](access-control.md).
 
 ## v0.1 requirements
 
 - Email and password sign-up, sign-in, sign-out, and password reset.
 - A persistent session that works in Next.js Server Components, Server Actions, Route Handlers, and interactive browser flows.
 - Server-side protection for authenticated application routes and mutations.
-- A minimal profile keyed by the Supabase Auth user ID.
+- A minimal application profile keyed by the Neon Auth user identity.
 - Safe redirects back to an allowed CockpitPath route after authentication.
 
 Social identity providers, organization accounts, multi-factor enforcement, anonymous-to-account progress migration, and custom identity infrastructure are not v0.1 requirements.
@@ -23,8 +23,8 @@ Social identity providers, organization accounts, multi-factor enforcement, anon
 sequenceDiagram
     participant B as Browser
     participant N as Next.js application
-    participant A as Supabase Auth
-    participant D as PostgreSQL
+    participant A as Neon Auth
+    participant D as Neon Postgres
 
     B->>N: Submit sign-in
     N->>A: Authenticate
@@ -38,14 +38,20 @@ sequenceDiagram
     N-->>B: Render response
 ```
 
-Use the current supported Supabase server-rendering integration at implementation time. Cookie creation, refresh, and deletion must occur only in contexts that can write response cookies.
+Use the current supported Neon Auth server-rendering integration at implementation time. Cookie creation, refresh, and deletion must occur only in contexts that can write response cookies. Exact SDK calls and session adapters are Phase 1B implementation decisions rather than architecture contracts.
+
+## Branch-aware identity
+
+Neon Auth stores authentication state in the Neon database. Users, sessions, configuration, and related identity state therefore branch with database data, and each branch has isolated authentication configuration and an endpoint associated with that branch.
+
+This supports realistic development and test environments, but copied authentication data remains sensitive. Every application environment must use the intended branch and authentication endpoint. Branching does not make production-derived identity safe for unrestricted use; data minimization, schema-only branching, or sanitization must be considered when real user data exists.
 
 ## Trust boundaries
 
 - Treat every browser-supplied user ID as untrusted. Derive the acting user from the validated session.
 - Never accept an ownership field that allows a client to write progress for another user.
 - Browser route guards improve UX but are not authorization controls.
-- Supabase service-role credentials and R2 credentials remain server-only.
+- Privileged Neon database credentials and R2 credentials remain server-only.
 - Do not store passwords or duplicate credential data in CockpitPath tables.
 
 ## Route behavior
@@ -56,9 +62,9 @@ An unauthenticated request to a protected page should redirect to sign-in with a
 
 ## Profile lifecycle
 
-`UserProfile.user_id` references the Supabase Auth identity. Profile creation must be idempotent and must not block authentication if optional profile fields are absent. The profile contains no role or entitlement shortcut such as `is_pro`; access comes from centralized policy and future entitlement records.
+`UserProfile.user_id` references the Neon Auth identity without duplicating authentication-owned user fields. Profile creation must be idempotent and must not block authentication if optional profile fields are absent. The profile contains no role or entitlement shortcut such as `is_pro`; access comes from centralized policy and future entitlement records.
 
-Account deletion is not fully specified for v0.1. Before implementing it, define retention, progress deletion, audit needs, and Supabase Auth deletion order in a separate approved policy.
+Account deletion is not fully specified for v0.1. Before implementing it, define retention, progress deletion, audit needs, and Neon Auth/application-data deletion order in a separate approved policy.
 
 ## Failure handling
 
@@ -77,4 +83,4 @@ Account deletion is not fully specified for v0.1. Before implementing it, define
 
 ## Future-ready boundary
 
-Future identity providers may link to the same Supabase Auth user identity. Authentication does not grant paid access by itself: identity, entitlement, and progress remain independent.
+Future identity providers may link to the same Neon Auth user identity. Authentication does not grant paid access by itself: identity, entitlement, and progress remain independent.

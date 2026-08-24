@@ -23,7 +23,7 @@ CockpitPath is a connected aircraft-learning platform for flight simulation user
 
 - Next.js and React
 - Plain JavaScript
-- Supabase PostgreSQL, Auth, and PostgreSQL RLS
+- Neon Postgres, Neon Auth, and PostgreSQL RLS
 - Cloudflare R2 for learning media
 - Railway deployment
 

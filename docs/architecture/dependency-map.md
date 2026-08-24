@@ -11,8 +11,8 @@ flowchart TB
     Web["Next.js App Router on Railway<br/>Server Components · Actions · Route Handlers"]
     Domain["Server-only domain modules<br/>progress · access · search · content relationships"]
     Data[Data-access modules]
-    Auth[Supabase Auth]
-    DB[("Supabase PostgreSQL<br/>content · progress · RLS")]
+    Auth[Neon Auth]
+    DB[("Neon Postgres<br/>content · progress · RLS")]
     Media[Media delivery module]
     R2[(Cloudflare R2)]
     Author[Repository authoring files]
@@ -34,12 +34,14 @@ flowchart TB
 
 - Presentation may depend on domain interfaces, not directly on privileged credentials.
 - Domain modules may depend on validation and data-access interfaces, not React components.
-- Browser code may receive browser-safe Supabase configuration, but never privileged database or R2 credentials.
+- Browser code may receive only intentionally browser-safe Neon Auth or Data API configuration, never privileged database or R2 credentials.
 - User progress mutations pass through server authorization and are also constrained by RLS.
 - Published learning content is read through server-controlled data access. Direct browser table access is not assumed.
 - The publishing command is an administrative path, not a public runtime endpoint.
 - R2 stores binaries; PostgreSQL stores media identity, metadata, and relationships.
 - No reverse dependency from authored content to UI modules is allowed.
+
+Neon Phase 1B selects whether each runtime data path uses direct PostgreSQL access or the Neon Data API and defines how verified identity reaches PostgreSQL RLS. This map does not imply direct browser database access.
 
 ## v0.1 versus future-ready
 

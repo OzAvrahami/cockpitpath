@@ -1623,7 +1623,7 @@ These fields may remain null until confirmed.
 
 # 59. User Profile
 
-Authentication identity is owned by Supabase Auth.
+Authentication identity is owned by Neon Auth in its managed database schema.
 
 CockpitPath should maintain a small application profile.
 

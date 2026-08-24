@@ -11,10 +11,10 @@ This baseline complements [authentication.md](authentication.md), [access-contro
 
 ## Protected assets
 
-- Supabase Auth sessions and account identity.
+- Neon Auth sessions and account identity.
 - User-owned progress and preferences.
 - Draft, review, and unpublished content.
-- Service-role, database, R2, and deployment credentials.
+- Privileged database, R2, and deployment credentials.
 - Content publication authority and verification history.
 - Future entitlement state.
 - Media rights/provenance metadata and non-public objects.
@@ -41,7 +41,7 @@ Authored Markdown is trusted editorial input only after review, but rendering mu
 
 ## Sessions and browser controls
 
-Use HTTPS and secure, HTTP-only session cookies where supported by the Supabase server-rendering flow, with an appropriate SameSite setting. Apply a Content Security Policy compatible with Next.js and the selected media domain, plus frame, referrer, MIME-sniffing, and permissions policies appropriate to the product.
+Use HTTPS and secure, HTTP-only session cookies through the selected Neon Auth server-rendering flow, with an appropriate SameSite setting. Apply a Content Security Policy compatible with Next.js and the selected media domain, plus frame, referrer, MIME-sniffing, and permissions policies appropriate to the product.
 
 CORS is not a substitute for authorization. Keep allowed origins narrow for any cross-origin media or API behavior.
 
@@ -50,10 +50,16 @@ CORS is not a substitute for authorization. Keep allowed origins narrow for any 
 - Use least-privilege roles and explicit grants.
 - Enable and test RLS on exposed user-owned tables.
 - Include both row visibility and write checks.
-- Keep publishing/service roles unavailable to browser code.
+- Keep publishing and other administrative database roles unavailable to browser code.
 - Avoid dynamic SQL from untrusted input.
 - Preserve audit context for privileged publication.
 - Treat database views/functions as security surfaces and review their execution privileges.
+
+The Phase 1B access-path decision must document how a verified Neon Auth identity is represented inside PostgreSQL for RLS. No policy may trust an unverified browser claim. If the Neon Data API is selected for any client-accessible path, every exposed table requires reviewed grants and RLS before exposure. Direct PostgreSQL access must preserve equivalent per-request identity and least privilege. Do not depend on the legacy Neon RLS / Neon Authorize product.
+
+## Branch security
+
+Neon branches isolate changes, but a child branch may begin with database and Neon Auth state from its parent. Treat every branch connection and auth endpoint as an environment-specific secret boundary. Restrict production-derived personal data, prefer schema-only or sanitized data where appropriate, and remove temporary branches according to a defined retention policy. Branching is not a substitute for grants, RLS, or application authorization.
 
 ## Media security
 
@@ -73,7 +79,7 @@ Apply request size bounds, query limits, database timeouts, and rate limits to a
 
 ## Incident baseline
 
-Before public beta, assign an owner and write a short runbook covering credential revocation, Railway rollback, Supabase session invalidation options, content unpublication, user notification assessment, and evidence preservation. Provider-specific incident steps remain open until accounts exist.
+Before public beta, assign an owner and write a short runbook covering credential revocation, Railway rollback, Neon Auth session invalidation options, content unpublication, user notification assessment, and evidence preservation. Provider-specific incident steps remain open until accounts exist.
 
 ## Security release checklist
 
