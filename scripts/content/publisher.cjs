@@ -161,11 +161,30 @@ async function upsertSources(client, graph, actions, contentIds) {
 async function replaceRelationships(client, actions, ids) {
   for (const { entity } of actions) {
     if (entity.kind === "JOURNEY") {
-      await client.query("delete from public.journey_sections where journey_id=$1", [idFor(ids, entity.key)]);
+      const journeyId = idFor(ids, entity.key);
+      const procedureIds = entity.sections.map((section) => idFor(ids, section.procedure));
+      await client.query(
+        `delete from public.journey_sections
+         where journey_id=$1
+           and not (procedure_id = any($2::uuid[]))`,
+        [journeyId, procedureIds],
+      );
+      await client.query(
+        `update public.journey_sections
+         set sequence = sequence + 1000000
+         where journey_id=$1`,
+        [journeyId],
+      );
       for (const section of entity.sections) await client.query(
         `insert into public.journey_sections (aircraft_implementation_id, journey_id, procedure_id, sequence, title_override, is_required, notes)
-         values ($1,$2,$3,$4,$5,$6,$7)`,
-        [idFor(ids, entity.implementation), idFor(ids, entity.key), idFor(ids, section.procedure), section.sequence, section.title_override ?? null, section.is_required, section.notes ?? null],
+         values ($1,$2,$3,$4,$5,$6,$7)
+         on conflict (journey_id, procedure_id) do update set
+           aircraft_implementation_id=excluded.aircraft_implementation_id,
+           sequence=excluded.sequence,
+           title_override=excluded.title_override,
+           is_required=excluded.is_required,
+           notes=excluded.notes`,
+        [idFor(ids, entity.implementation), journeyId, idFor(ids, section.procedure), section.sequence, section.title_override ?? null, section.is_required, section.notes ?? null],
       );
     }
     if (entity.kind === "PROCEDURE_STEP") {

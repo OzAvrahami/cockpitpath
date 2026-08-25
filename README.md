@@ -4,7 +4,7 @@ CockpitPath is a connected aircraft-learning platform for flight simulation user
 
 ## Status
 
-**Platform foundation complete. Phase 2 content platform is current.**
+**Content-platform engineering complete. Learning Progress + Guide Mode is the current review checkpoint.**
 
 ## Initial supported target
 
@@ -58,6 +58,15 @@ the database test command refuses production or an unknown branch.
 ```bash
 npm run db:migrate
 npm run db:test
+```
+
+Guide Mode reads published content through a restricted development runtime role.
+Provision its ignored `CONTENT_DATABASE_URL` once per development branch, then use
+the Guide integration command for the synthetic Auth/Data API/RLS acceptance path.
+
+```bash
+npm run db:provision:content-reader
+npm run guide:test:integration
 ```
 
 Repository-authored YAML content is validated before publication. Publication

@@ -1,6 +1,6 @@
 # Phase 4 — Guide Mode
 
-**Status:** ⬜ Planned
+**Status:** ▶ Current — implemented in the working tree; pending checkpoint review and commit
 
 ## Goal
 
@@ -27,6 +27,10 @@ Guide Mode is the core product hypothesis. It follows content and progress so it
 
 Implementation must follow the existing [Guide Mode UX](../ux/guide-mode.md) and [locked Guide Mode design direction](../design/guide-mode-direction.md). Those documents remain the source of truth for detailed interaction and visual behavior and are not duplicated here.
 
+## Current Implementation State
+
+The review candidate implements the authenticated published-content route, action-first layout, Quick/Learn density, Expected Result confirmation, normalized dynamic hotspots, Done/Next, permitted Skip, autosave, exact resume, Focus Mode, missing-content/media states, and responsive companion-window behavior. The complete service chain was verified with synthetic test-only content because no verified operational aircraft procedure or approved cockpit media is currently available. The checkpoint remains Current until review, required checks, and a Git commit close it.
+
 ## Exit Criteria
 
 - A user can complete the vertical-slice Procedure through the intended Quick/Learn flow.
@@ -42,6 +46,6 @@ Phases 2 and 3.
 
 ## Relevant Commit(s)
 
-Not started
+Not started — implementation is uncommitted pending review
 
 [← Previous Phase — Learning State & Progress](phase-3-progress.md) · [↑ Implementation Dashboard](README.md) · [→ Next Phase — Cockpit Explorer](phase-5-cockpit-explorer.md)

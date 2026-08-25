@@ -31,7 +31,7 @@ beforeAll(async () => {
 describe("repository content validation", () => {
   it("accepts the complete synthetic connected graph", () => {
     const result = validateGraph(copyGraph());
-    expect(result.entities).toHaveLength(16);
+    expect(result.entities).toHaveLength(18);
     expect(result.sources).toHaveLength(1);
   });
 

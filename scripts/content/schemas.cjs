@@ -71,7 +71,7 @@ const step = entity("PROCEDURE_STEP", {
   wait_hint: z.string().min(1).optional(),
   controls: z.array(z.object({
     key: contentKey,
-    role: z.enum(["ACTION_TARGET", "CONTEXT", "VERIFICATION_TARGET"]),
+    role: z.enum(["ACTION_TARGET", "CONTEXT", "VERIFY_TARGET"]),
     sequence: positive,
     preferred_hotspot: contentKey.optional(),
   }).strict()).default([]),

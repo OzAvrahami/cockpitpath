@@ -1,6 +1,6 @@
 # Phase 2 — Content Platform
 
-**Status:** ▶ Current
+**Status:** ✅ Engineering foundation complete; verified aircraft-content gate open
 
 ## Goal
 
@@ -10,7 +10,7 @@ Build the repository-authored, validated, publishable content system and prove i
 
 Guide Mode, Cockpit Explorer, Aircraft Systems, and progress all depend on stable shared content identities and relationships. Building those experiences first would hard-code or duplicate the model they are meant to render.
 
-The current work package implements this infrastructure and proves the complete
+The completed engineering checkpoint implements this infrastructure and proves the complete
 graph with unmistakably synthetic, transaction-scoped fixtures. The repository
 currently contains product identity metadata for the initial supported target but
 does not contain verified aircraft procedure facts or approved cockpit media; those
@@ -60,11 +60,14 @@ This sequence defines relationships, not production aircraft facts. Instructions
 
 ## Exit Criteria
 
-- The vertical slice passes all content validation.
-- Publication is reproducible, idempotent, and transactional in the isolated runtime schema.
-- All graph and media references resolve.
-- Published data can be read through a minimal verification path.
+- The complete connected graph passes validation with unmistakably synthetic test-only content.
+- Publication is reproducible, idempotent, transactional, and preserves stable database identities across controlled revisions.
+- Graph, scope, source, verification, publication, and media references are validated before writes.
+- Published data is readable only through the dedicated published surface and restricted reader capability.
+- Failed and dry-run publications make no persistent changes, and integration fixtures are removed after verification.
 - No production claim is represented as verified without verification evidence.
+
+These engineering criteria passed in the committed checkpoint. Publishing the first real aircraft slice remains an external content gate: verified operational source material, verification evidence, and approved cockpit media are still required. That gate does not invalidate the completed platform engineering or block later feature engineering against synthetic test fixtures.
 
 ## Dependencies
 
@@ -72,6 +75,6 @@ Phase 1B, especially the minimum schema and database security foundation.
 
 ## Relevant Commit(s)
 
-Not started
+`ab862b5` — `feat: establish content platform and publishing pipeline`
 
 [← Previous Phase — Platform Foundation](phase-1-platform.md) · [↑ Implementation Dashboard](README.md) · [→ Next Phase — Learning State & Progress](phase-3-progress.md)

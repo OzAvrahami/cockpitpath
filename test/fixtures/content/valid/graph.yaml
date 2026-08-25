@@ -389,6 +389,74 @@ steps:
         verified_at: 2026-01-01T00:00:00Z
         verified_by: automated-test-fixture
         method: Synthetic fixture review
+  - kind: PROCEDURE_STEP
+    key: step.synthetic-wp2.optional-context
+    status: PUBLISHED
+    locale: en
+    revision: 1
+    audience: PUBLIC
+    access_class: FREE
+    sequence: 2
+    step_type: INFORMATION
+    title: Review Synthetic Context
+    action_text: Review the optional synthetic test context.
+    expected_result: The synthetic context is understood.
+    explanation: This optional statement is fictional and test-only.
+    is_optional: true
+    controls:
+      - key: control.synthetic-wp2
+        role: CONTEXT
+        sequence: 1
+        preferred_hotspot: hotspot.synthetic-wp2-control
+    visuals:
+      - role: PRIMARY
+        sort_order: 0
+        cockpit_view: view.synthetic-wp2-panel
+        hotspot: hotspot.synthetic-wp2-control
+    sources:
+      - key: source.synthetic-wp2-fixture
+        purpose: OTHER
+    verifications:
+      - status: VERIFIED
+        revision: 1
+        content_hash: "1ce3af71695b5371520d86b8bed56653df2d222dbcdf12d3678a9b907a61baac"
+        verified_at: 2026-01-01T00:00:00Z
+        verified_by: automated-test-fixture
+        method: Synthetic fixture review
+  - kind: PROCEDURE_STEP
+    key: step.synthetic-wp2.verify
+    status: PUBLISHED
+    locale: en
+    revision: 1
+    audience: PUBLIC
+    access_class: FREE
+    sequence: 3
+    step_type: VERIFY
+    title: Verify Synthetic Result
+    action_text: Confirm the synthetic test result.
+    expected_result: The synthetic test result is visible.
+    explanation: This verification is fictional and exists only for automated tests.
+    is_optional: false
+    controls:
+      - key: control.synthetic-wp2
+        role: VERIFY_TARGET
+        sequence: 1
+        preferred_hotspot: hotspot.synthetic-wp2-control
+    visuals:
+      - role: PRIMARY
+        sort_order: 0
+        cockpit_view: view.synthetic-wp2-panel
+        hotspot: hotspot.synthetic-wp2-control
+    sources:
+      - key: source.synthetic-wp2-fixture
+        purpose: OTHER
+    verifications:
+      - status: VERIFIED
+        revision: 1
+        content_hash: "f0c2614c0dc9e8680337ad9271255f7e56f89ad5518c5f83bb9d33115b92ae8f"
+        verified_at: 2026-01-01T00:00:00Z
+        verified_by: automated-test-fixture
+        method: Synthetic fixture review
 ---
 kind: JOURNEY
 key: journey.synthetic-wp2

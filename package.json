@@ -15,14 +15,17 @@
     "db:migrate:create": "node ./node_modules/node-pg-migrate/bin/node-pg-migrate.js create --migrations-dir migrations --migration-file-language sql",
     "db:migrate:down": "node --env-file=.env.local scripts/run-db-migration.cjs down",
     "db:test": "node --env-file=.env.local scripts/db-test.cjs",
+    "db:provision:content-reader": "node --env-file=.env.local scripts/provision-content-reader.cjs",
     "content:validate": "node scripts/content/cli.cjs validate content",
     "content:publish:dry-run": "node --env-file=.env.local scripts/content/cli.cjs publish content --dry-run",
     "content:publish": "node --env-file=.env.local scripts/content/cli.cjs publish content",
-    "content:test:integration": "node --env-file=.env.local scripts/content/publish-integration-test.cjs"
+    "content:test:integration": "node --env-file=.env.local scripts/content/publish-integration-test.cjs",
+    "guide:test:integration": "node --env-file=.env.local scripts/guide-integration-test.cjs"
   },
   "dependencies": {
     "@neondatabase/auth": "0.5.0-beta",
     "next": "^16.3.2",
+    "pg": "^8.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
@@ -30,7 +33,6 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.2",
     "node-pg-migrate": "^9.0.0",
-    "pg": "^8.23.0",
     "vitest": "^4.1.11",
     "yaml": "2.9.0",
     "zod": "4.4.3"

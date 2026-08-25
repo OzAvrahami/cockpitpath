@@ -40,7 +40,7 @@ async function main() {
 
     await beginPublisher(client);
     const rollbackPlan = await planPublication(client, graph);
-    assert.equal(rollbackPlan.actions.length, 16);
+    assert.equal(rollbackPlan.actions.length, 18);
     await applyPublication(client, graph, rollbackPlan, { environment: "test/wp2-rollback" });
     await client.query("ROLLBACK");
     assert.equal(await countSynthetic(client), 0, "rolled-back publication left partial content");
@@ -49,15 +49,19 @@ async function main() {
     const beforeDryRun = await countSynthetic(client);
     const firstPlan = await planPublication(client, graph);
     assert.equal(await countSynthetic(client), beforeDryRun, "planning/dry-run wrote database rows");
-    assert.equal(firstPlan.actions.length, 16);
+    assert.equal(firstPlan.actions.length, 18);
 
     const firstResult = await applyPublication(client, graph, firstPlan, { environment: "test/wp2-integration" });
     const initialConceptId = firstResult.domainIds.get("concept.synthetic-wp2");
     assert(initialConceptId);
+    const initialSection = await client.query(
+      "select id from public.journey_sections where journey_id=$1",
+      [firstResult.domainIds.get("journey.synthetic-wp2")],
+    );
 
     const repeatPlan = await planPublication(client, graph);
     assert.equal(repeatPlan.actions.length, 0, "identical publication is not idempotent");
-    assert.equal(repeatPlan.unchanged, 16);
+    assert.equal(repeatPlan.unchanged, 18);
 
     const revisedRaw = structuredClone(rawGraph);
     const revisedConcept = revisedRaw.entities.find(({ key }) => key === "concept.synthetic-wp2");
@@ -71,12 +75,27 @@ async function main() {
       verified_by: "automated-test-fixture",
       method: "Synthetic fixture revision review",
     }];
+    const revisedJourney = revisedRaw.entities.find(({ key }) => key === "journey.synthetic-wp2");
+    revisedJourney.revision = 2;
+    revisedJourney.description = "Updated test-only journey description.";
+    revisedJourney.verifications = [{
+      status: "VERIFIED",
+      revision: 2,
+      content_hash: contentHash(revisedJourney),
+      verified_at: "2026-01-02T00:00:00Z",
+      verified_by: "automated-test-fixture",
+      method: "Synthetic fixture revision review",
+    }];
     const revisedGraph = validateGraph(revisedRaw);
     const revisionPlan = await planPublication(client, revisedGraph);
-    assert.equal(revisionPlan.actions.length, 1);
-    assert.equal(revisionPlan.actions[0].entity.key, "concept.synthetic-wp2");
+    assert.equal(revisionPlan.actions.length, 2);
     const revisionResult = await applyPublication(client, revisedGraph, revisionPlan, { environment: "test/wp2-integration" });
     assert.equal(revisionResult.domainIds.get("concept.synthetic-wp2"), initialConceptId, "stable entity UUID changed after revision");
+    const revisedSection = await client.query(
+      "select id from public.journey_sections where journey_id=$1",
+      [revisionResult.domainIds.get("journey.synthetic-wp2")],
+    );
+    assert.equal(revisedSection.rows[0].id, initialSection.rows[0].id, "stable Journey Section identity changed after revision");
 
     const draftRecord = await client.query(
       `insert into public.content_records (content_key, kind, status, revision)
@@ -93,7 +112,7 @@ async function main() {
       "select count(*)::int as count from cockpitpath_published.content_records where content_key like $1",
       [PREFIX],
     );
-    assert.equal(published.rows[0].count, 16, "published surface omitted graph content or exposed draft content");
+    assert.equal(published.rows[0].count, 18, "published surface omitted graph content or exposed draft content");
     const rawDenied = await client.query(
       "select has_table_privilege(current_user, 'public.content_records', 'SELECT') as allowed",
     );

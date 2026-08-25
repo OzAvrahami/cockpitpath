@@ -4,7 +4,7 @@ const { assertSafeDatabaseEnvironment } = require("./database-safety.cjs");
 
 assertSafeDatabaseEnvironment();
 
-const EXPECTED_TABLES = [
+const CONTENT_TABLES = [
   "addon_products",
   "aircraft",
   "aircraft_implementations",
@@ -32,6 +32,14 @@ const EXPECTED_TABLES = [
   "system_components",
   "verification_events",
 ];
+
+const PROGRESS_TABLES = [
+  "user_journey_progress",
+  "user_procedure_progress",
+  "user_step_progress",
+];
+
+const EXPECTED_TABLES = [...CONTENT_TABLES, ...PROGRESS_TABLES].sort();
 
 const EXPECTED_PUBLISHED_VIEWS = [
   "addon_products",
@@ -81,6 +89,9 @@ const EXPECTED_FOREIGN_KEYS = [
   "system_components_system_scope_fk",
   "verification_events_content_fk",
   "verification_events_implementation_fk",
+  "user_journey_progress_section_fk",
+  "user_procedure_progress_step_fk",
+  "user_step_progress_step_fk",
 ];
 
 let savepointCounter = 0;
@@ -180,7 +191,7 @@ async function verifySchema(client) {
      from cockpitpath_migrations.pgmigrations
      order by run_on, name`,
   );
-  assert.equal(migrationRows.rows.length, 3, "expected all Work Package 1 and 2 migrations");
+  assert.equal(migrationRows.rows.length, 4, "expected migrations through the progress foundation");
 
   const timestampInfrastructure = await client.query(`
     select
@@ -194,7 +205,7 @@ async function verifySchema(client) {
   `);
   assert.deepEqual(
     timestampInfrastructure.rows[0],
-    { trigger_count: 18, security_invoker: true, safe_search_path: true },
+    { trigger_count: 21, security_invoker: true, safe_search_path: true },
     "shared updated_at trigger infrastructure is incomplete or unsafe",
   );
 }
@@ -206,12 +217,12 @@ async function verifySecurity(client) {
      where table_schema = 'public'
        and table_name = any($1::text[])
        and grantee = any($2::text[])`,
-    [EXPECTED_TABLES, ["PUBLIC", "anonymous", "authenticated", "authenticator"]],
+    [CONTENT_TABLES, ["PUBLIC", "anonymous", "authenticated", "authenticator"]],
   );
   assert.deepEqual(grants.rows, [], "an exposed role has an explicit content-table grant");
 
   for (const role of ["anonymous", "authenticated", "authenticator"]) {
-    for (const table of EXPECTED_TABLES) {
+    for (const table of CONTENT_TABLES) {
       const privilege = await client.query(
         `select
            has_table_privilege($1, format('public.%I', $2::text), 'SELECT') as can_select,
@@ -235,8 +246,9 @@ async function verifySecurity(client) {
        'anonymous',
        'authenticated',
        'authenticator',
-       'cockpitpath_content_reader',
-       'cockpitpath_publisher',
+        'cockpitpath_content_reader',
+        'cockpitpath_publisher',
+        'cockpitpath_progress_writer',
        'neondb_owner'
      )
      order by rolname`,
@@ -247,7 +259,7 @@ async function verifySecurity(client) {
   for (const role of roleBoundary.rows.filter(({ rolname }) => rolname !== "neondb_owner")) {
     assert.equal(role.rolbypassrls, false, `${role.rolname} unexpectedly bypasses RLS`);
   }
-  for (const capability of ["cockpitpath_content_reader", "cockpitpath_publisher"]) {
+  for (const capability of ["cockpitpath_content_reader", "cockpitpath_publisher", "cockpitpath_progress_writer"]) {
     const role = roleBoundary.rows.find(({ rolname }) => rolname === capability);
     assert(role, `${capability} capability role is missing`);
     assert.equal(role.rolcanlogin, false, `${capability} must remain NOLOGIN`);
@@ -324,6 +336,165 @@ async function verifySecurity(client) {
     ) as public_can_execute
   `);
   assert.equal(publicFunctionAcl.rows[0].public_can_execute, false, "PUBLIC can execute a new function");
+}
+
+async function verifyProgressFoundation(client) {
+  const identityContract = await client.query(
+    "select pg_get_function_result('auth.user_id()'::regprocedure) as result_type",
+  );
+  assert.equal(identityContract.rows[0].result_type, "text", "auth.user_id() must remain text-compatible");
+
+  const identityPrivileges = await client.query(`
+    select has_schema_privilege('cockpitpath_progress_writer', 'auth', 'USAGE') as schema_usage,
+           has_function_privilege('cockpitpath_progress_writer', 'auth.user_id()', 'EXECUTE') as helper_execute
+  `);
+  assert.equal(identityPrivileges.rows[0].helper_execute, true, "progress writer cannot execute auth.user_id()");
+  assert.equal(identityPrivileges.rows[0].schema_usage, false, "progress writer received broad access to the managed auth schema");
+
+  const identityBridge = await client.query(`
+    select procedure.prosecdef,
+           exists (
+             select 1
+             from aclexplode(coalesce(procedure.proacl, acldefault('f', procedure.proowner))) privilege
+             where privilege.grantee = 0 and privilege.privilege_type = 'EXECUTE'
+           ) as public_execute,
+           has_function_privilege('authenticated', procedure.oid, 'EXECUTE') as authenticated_execute,
+           has_function_privilege('cockpitpath_progress_writer', procedure.oid, 'EXECUTE') as writer_execute,
+           pg_get_functiondef(procedure.oid) like '%auth.user_id()%' as uses_verified_identity
+    from pg_proc procedure
+    join pg_namespace namespace on namespace.oid = procedure.pronamespace
+    where namespace.nspname = 'public' and procedure.proname = 'cockpitpath_auth_user_id'
+  `);
+  assert.equal(identityBridge.rows.length, 1, "CockpitPath Auth identity bridge is missing");
+  assert.equal(identityBridge.rows[0].prosecdef, false, "Auth identity bridge must remain SECURITY INVOKER");
+  assert.equal(identityBridge.rows[0].public_execute, false, "Auth identity bridge is executable by PUBLIC");
+  assert.equal(identityBridge.rows[0].authenticated_execute, true, "authenticated cannot use the Auth identity bridge");
+  assert.equal(identityBridge.rows[0].writer_execute, true, "progress writer cannot use the Auth identity bridge");
+  assert.equal(identityBridge.rows[0].uses_verified_identity, true, "Auth identity bridge does not bind auth.user_id()");
+
+  const rls = await client.query(
+    `select c.relname, c.relrowsecurity, c.relforcerowsecurity
+     from pg_class c
+     join pg_namespace n on n.oid = c.relnamespace
+     where n.nspname = 'public' and c.relname = any($1::text[])
+     order by c.relname`,
+    [PROGRESS_TABLES],
+  );
+  assert.equal(rls.rows.length, PROGRESS_TABLES.length, "progress RLS table metadata is incomplete");
+  for (const table of rls.rows) {
+    assert.equal(table.relrowsecurity, true, `${table.relname} must enable RLS`);
+    assert.equal(table.relforcerowsecurity, true, `${table.relname} must force RLS`);
+  }
+
+  const policyCount = await client.query(
+    `select count(*)::int as count
+     from pg_policies
+     where schemaname = 'public' and tablename = any($1::text[])`,
+    [PROGRESS_TABLES],
+  );
+  assert.equal(policyCount.rows[0].count, 12, "progress tables require separate user and writer-context policies");
+
+  for (const table of PROGRESS_TABLES) {
+    const authenticated = await client.query(
+      `select has_table_privilege('authenticated', format('public.%I', $1::text), 'SELECT') as can_select,
+              has_table_privilege('authenticated', format('public.%I', $1::text), 'INSERT') as can_insert,
+              has_table_privilege('authenticated', format('public.%I', $1::text), 'UPDATE') as can_update,
+              has_table_privilege('authenticated', format('public.%I', $1::text), 'DELETE') as can_delete`,
+      [table],
+    );
+    assert.deepEqual(
+      authenticated.rows[0],
+      { can_select: true, can_insert: false, can_update: false, can_delete: false },
+      `authenticated has the wrong raw privileges on public.${table}`,
+    );
+    for (const role of ["anonymous", "authenticator"]) {
+      const denied = await client.query(
+        `select has_table_privilege($1, format('public.%I', $2::text), 'SELECT, INSERT, UPDATE, DELETE') as allowed`,
+        [role, table],
+      );
+      assert.equal(denied.rows[0].allowed, false, `${role} can access public.${table}`);
+    }
+  }
+
+  const functions = await client.query(`
+    select p.proname,
+           p.prosecdef,
+           owner.rolname as owner,
+           has_function_privilege('authenticated', p.oid, 'EXECUTE') as authenticated_execute,
+           has_function_privilege('anonymous', p.oid, 'EXECUTE') as anonymous_execute,
+           exists (
+             select 1
+             from aclexplode(coalesce(p.proacl, acldefault('f', p.proowner))) acl
+             where acl.grantee = 0 and acl.privilege_type = 'EXECUTE'
+           ) as public_execute,
+           'row_security=on' = any(p.proconfig) as row_security_on,
+           'search_path=pg_catalog, public' = any(p.proconfig) as safe_search_path
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    join pg_roles owner on owner.oid = p.proowner
+    where n.nspname = 'public'
+      and p.proname in (
+        'cockpitpath_start_guide',
+        'cockpitpath_set_guide_position',
+        'cockpitpath_record_step_progress'
+      )
+    order by p.proname
+  `);
+  assert.equal(functions.rows.length, 3, "atomic progress API functions are missing");
+  for (const functionRow of functions.rows) {
+    assert.equal(functionRow.prosecdef, false, `${functionRow.proname} must capture identity as its authenticated invoker`);
+    assert.equal(functionRow.authenticated_execute, true, `${functionRow.proname} is unavailable to authenticated`);
+    assert.equal(functionRow.anonymous_execute, false, `${functionRow.proname} is available anonymously`);
+    assert.equal(functionRow.public_execute, false, `${functionRow.proname} is available to PUBLIC`);
+    assert.equal(functionRow.safe_search_path, true, `${functionRow.proname} has an unsafe search_path`);
+  }
+
+  const privateSchema = await client.query(`
+    select exists (
+             select 1
+             from pg_namespace namespace,
+                  aclexplode(coalesce(namespace.nspacl, acldefault('n', namespace.nspowner))) privilege
+             where namespace.nspname = 'cockpitpath_private'
+               and privilege.grantee = 0
+               and privilege.privilege_type = 'USAGE'
+           ) as public_usage,
+           has_schema_privilege('anonymous', 'cockpitpath_private', 'USAGE') as anonymous_usage,
+           has_schema_privilege('authenticated', 'cockpitpath_private', 'USAGE') as authenticated_usage,
+           has_schema_privilege('cockpitpath_progress_writer', 'cockpitpath_private', 'USAGE') as writer_usage
+  `);
+  assert.deepEqual(
+    privateSchema.rows[0],
+    { public_usage: false, anonymous_usage: false, authenticated_usage: false, writer_usage: true },
+    "atomic progress implementation schema has the wrong boundary",
+  );
+
+  const implementations = await client.query(`
+    select p.proname,
+           p.prosecdef,
+           owner.rolname as owner,
+           has_function_privilege('authenticated', p.oid, 'EXECUTE') as authenticated_execute,
+           exists (
+             select 1
+             from aclexplode(coalesce(p.proacl, acldefault('f', p.proowner))) acl
+             where acl.grantee = 0 and acl.privilege_type = 'EXECUTE'
+           ) as public_execute,
+           'row_security=on' = any(p.proconfig) as row_security_on,
+           'search_path=pg_catalog, public' = any(p.proconfig) as safe_search_path
+    from pg_proc p
+    join pg_namespace n on n.oid = p.pronamespace
+    join pg_roles owner on owner.oid = p.proowner
+    where n.nspname = 'cockpitpath_private'
+    order by p.proname
+  `);
+  assert.equal(implementations.rows.length, 3, "private atomic progress implementations are missing");
+  for (const implementation of implementations.rows) {
+    assert.equal(implementation.prosecdef, true, `${implementation.proname} must own the narrow write capability`);
+    assert.equal(implementation.owner, "cockpitpath_progress_writer", `${implementation.proname} has the wrong owner`);
+    assert.equal(implementation.authenticated_execute, true, `${implementation.proname} is unavailable to the bound wrapper`);
+    assert.equal(implementation.public_execute, false, `${implementation.proname} is available to PUBLIC`);
+    assert.equal(implementation.row_security_on, true, `${implementation.proname} does not force row_security`);
+    assert.equal(implementation.safe_search_path, true, `${implementation.proname} has an unsafe search_path`);
+  }
 }
 
 async function verifyConstraintsAndRelationships(client) {
@@ -713,6 +884,65 @@ async function verifyConstraintsAndRelationships(client) {
     ),
     ["23503"],
   );
+
+  const section = await client.query(
+    "select id from public.journey_sections where journey_id=$1 and procedure_id=$2",
+    [journey.rows[0].id, procedure.rows[0].id],
+  );
+  const progressUser = "synthetic-db-test-user";
+  await client.query(
+    `insert into public.user_journey_progress
+       (user_id, journey_id, progress_status, current_journey_section_id,
+        current_procedure_step_id, started_at, last_activity_at)
+     values ($1,$2,'IN_PROGRESS',$3,$4,statement_timestamp(),statement_timestamp())`,
+    [progressUser, journey.rows[0].id, section.rows[0].id, step.rows[0].id],
+  );
+  await client.query(
+    `insert into public.user_procedure_progress
+       (user_id, procedure_id, progress_status, current_step_id, started_at, last_activity_at)
+     values ($1,$2,'IN_PROGRESS',$3,statement_timestamp(),statement_timestamp())`,
+    [progressUser, procedure.rows[0].id, step.rows[0].id],
+  );
+  await client.query(
+    `insert into public.user_step_progress
+       (user_id, procedure_id, procedure_step_id, progress_status, completed_at)
+     values ($1,$2,$3,'COMPLETED',statement_timestamp())`,
+    [progressUser, procedure.rows[0].id, step.rows[0].id],
+  );
+  await expectDatabaseError(
+    client,
+    "duplicate user journey progress",
+    () => client.query(
+      `insert into public.user_journey_progress
+         (user_id, journey_id, progress_status, current_journey_section_id,
+          current_procedure_step_id, started_at, last_activity_at)
+       values ($1,$2,'IN_PROGRESS',$3,$4,statement_timestamp(),statement_timestamp())`,
+      [progressUser, journey.rows[0].id, section.rows[0].id, step.rows[0].id],
+    ),
+    ["23505"],
+  );
+  await expectDatabaseError(
+    client,
+    "invalid completed progress timestamps",
+    () => client.query(
+      `insert into public.user_procedure_progress
+         (user_id, procedure_id, progress_status, current_step_id, started_at, last_activity_at)
+       values ('synthetic-db-test-user-two',$1,'COMPLETED',$2,statement_timestamp(),statement_timestamp())`,
+      [procedure.rows[0].id, step.rows[0].id],
+    ),
+    ["23514"],
+  );
+  await expectDatabaseError(
+    client,
+    "step progress procedure mismatch",
+    () => client.query(
+      `insert into public.user_step_progress
+         (user_id, procedure_id, procedure_step_id, progress_status, skipped_at)
+       values ('synthetic-db-test-user-two',$1,$2,'SKIPPED',statement_timestamp())`,
+      [procedureTwo.rows[0].id, step.rows[0].id],
+    ),
+    ["23503"],
+  );
 }
 
 async function main() {
@@ -726,6 +956,7 @@ async function main() {
     );
     await client.query("BEGIN");
     await verifySecurity(client);
+    await verifyProgressFoundation(client);
     await verifyConstraintsAndRelationships(client);
     await client.query("ROLLBACK");
 

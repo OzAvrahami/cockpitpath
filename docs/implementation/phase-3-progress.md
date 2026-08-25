@@ -1,6 +1,6 @@
 # Phase 3 — Learning State & Progress
 
-**Status:** ⬜ Planned
+**Status:** ▶ Current — implemented in the working tree; pending checkpoint review and commit
 
 ## Goal
 
@@ -23,6 +23,10 @@ Progress must reference stable Journey, Procedure, and ProcedureStep identities 
 
 Detailed behavior remains governed by the [progress model](../architecture/progress-model.md).
 
+## Current Implementation State
+
+The review candidate includes Journey, Procedure, and Step progress; forced PostgreSQL RLS; explicit grants; atomic start, position, completion, and skip operations; a server-only Neon Data API boundary; autosave; and exact resume state. Real two-user development verification proved that authenticated users can read and mutate only their own progress. The checkpoint remains Current until review, required checks, and a Git commit close it.
+
 ## Exit Criteria
 
 - An authenticated user can start the vertical slice, complete or permissibly skip steps, leave, and resume at the correct context.
@@ -38,6 +42,6 @@ Phases 1B and 2. Content identity must be stable before progress records depend 
 
 ## Relevant Commit(s)
 
-Not started
+Not started — implementation is uncommitted pending review
 
 [← Previous Phase — Content Platform](phase-2-content-platform.md) · [↑ Implementation Dashboard](README.md) · [→ Next Phase — Guide Mode](phase-4-guide-mode.md)
