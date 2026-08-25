@@ -33,8 +33,8 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 - ✅ [Phase 2 — Content Platform engineering foundation](phase-2-content-platform.md) — verified aircraft-content gate remains open
 - ✅ [Phase 3 — Learning State & Progress](phase-3-progress.md)
 - ✅ [Phase 4 — Guide Mode](phase-4-guide-mode.md)
-- ▶ Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation
-- ⬜ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
+- ✅ Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation
+- ▶ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
 - ⬜ [Phase 6 — Aircraft Systems](phase-6-aircraft-systems.md)
 - ⬜ [Phase 7 — Aircraft Page](phase-7-aircraft-page.md)
 - ⬜ [Phase 8 — Content Expansion](phase-8-content-expansion.md)
@@ -42,14 +42,14 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 ## Current Checkpoint
 
-**Current:** Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation (pending review and commit)
+**Current:** Phase 5 — Cockpit Explorer
 
-**Previous:** Phase 3 — Learning State & Progress + Phase 4 — Guide Mode<br>
-**Commit:** `09485cc` — `feat: implement learning progress and Guide Mode`
+**Previous:** Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation<br>
+**Commit:** `716fc7f` — `chore: establish Railway staging environment`
 
-**Next:** Phase 5 — Cockpit Explorer, after the staging checkpoint is reviewed and committed
+**Next:** Phase 6 — Aircraft Systems
 
-Phase 1, the Phase 2 engineering foundation, Phase 3, and Phase 4 are complete in committed Git history. The real Boeing/iFly technical-content gate remains open because verified source material and approved cockpit media have not yet been supplied; no unverified operational facts were published. Work Package 3.5 establishes an isolated Neon staging branch, Railway deployment contract, healthcheck, verified staging schema, and external-device validation foundation. Phase 5 remains planned until that checkpoint is reviewed and committed.
+Phase 1, the Phase 2 engineering foundation, Phase 3, Phase 4, and Work Package 3.5 are complete in committed Git history. The real Boeing/iFly technical-content gate remains open because verified source material and approved cockpit media have not yet been supplied; no unverified operational facts were published. Staging now provides an isolated Neon branch, Railway deployment contract, healthcheck, verified schema, restricted runtime credentials, and external-device validation foundation. Phase 5 is the current engineering focus.
 
 ## Major Delivery Path
 
@@ -98,6 +98,7 @@ These mappings were verified against the repository's first-parent Git history.
 | Phase 1B.4 + 1B.5 | `cd9b84c` | `feat: establish core learning database foundation` |
 | Phase 2 engineering foundation | `ab862b5` | `feat: establish content platform and publishing pipeline` |
 | Phase 3 + Phase 4 | `09485cc` | `feat: implement learning progress and Guide Mode` |
+| Work Package 3.5 | `716fc7f` | `chore: establish Railway staging environment` |
 
 ## Checkpoint Workflow
 
