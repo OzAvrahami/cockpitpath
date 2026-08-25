@@ -58,3 +58,6 @@ Desktop.ini
 
 # Neon CLI local context
 .neon
+
+# Railway CLI local project link
+.railway/

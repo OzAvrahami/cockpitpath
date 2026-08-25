@@ -31,8 +31,9 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
   - ✅ [1B.4 — Core Database Schema](phase-1-platform.md#1b4-core-database-schema)
   - ✅ [1B.5 — Database Security Foundation](phase-1-platform.md#1b5-database-security-foundation)
 - ✅ [Phase 2 — Content Platform engineering foundation](phase-2-content-platform.md) — verified aircraft-content gate remains open
-- ▶ [Phase 3 — Learning State & Progress](phase-3-progress.md) — implemented; pending checkpoint review
-- ▶ [Phase 4 — Guide Mode](phase-4-guide-mode.md) — implemented; pending checkpoint review
+- ✅ [Phase 3 — Learning State & Progress](phase-3-progress.md)
+- ✅ [Phase 4 — Guide Mode](phase-4-guide-mode.md)
+- ▶ Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation
 - ⬜ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
 - ⬜ [Phase 6 — Aircraft Systems](phase-6-aircraft-systems.md)
 - ⬜ [Phase 7 — Aircraft Page](phase-7-aircraft-page.md)
@@ -41,14 +42,14 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 ## Current Checkpoint
 
-**Current:** Work Package 3 — Phase 3 Learning State & Progress + Phase 4 Guide Mode (pending review and commit)
+**Current:** Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation (pending review and commit)
 
-**Previous:** Phase 2 — Content Platform engineering foundation<br>
-**Commit:** `ab862b5` — `feat: establish content platform and publishing pipeline`
+**Previous:** Phase 3 — Learning State & Progress + Phase 4 — Guide Mode<br>
+**Commit:** `09485cc` — `feat: implement learning progress and Guide Mode`
 
-**Next:** Phase 5 — Cockpit Explorer, after the combined Phase 3 + Phase 4 checkpoint is reviewed and committed
+**Next:** Phase 5 — Cockpit Explorer, after the staging checkpoint is reviewed and committed
 
-Phase 1 and the Phase 2 engineering foundation are complete in committed Git history. Phase 2 established repository-authored validation, transactional publishing, published-only runtime views, capability roles, and a synthetic connected-graph proof. The real Boeing/iFly technical-content gate remains open because verified source material and approved cockpit media have not yet been supplied; no unverified operational facts were published. Work Package 3 implements progress and Guide Mode against that foundation with synthetic test content only and remains Current until review and commit.
+Phase 1, the Phase 2 engineering foundation, Phase 3, and Phase 4 are complete in committed Git history. The real Boeing/iFly technical-content gate remains open because verified source material and approved cockpit media have not yet been supplied; no unverified operational facts were published. Work Package 3.5 establishes an isolated Neon staging branch, Railway deployment contract, healthcheck, verified staging schema, and external-device validation foundation. Phase 5 remains planned until that checkpoint is reviewed and committed.
 
 ## Major Delivery Path
 
@@ -96,6 +97,7 @@ These mappings were verified against the repository's first-parent Git history.
 | Phase 1B.3 | `67c07f0` | `feat: integrate Neon Auth with Next.js` |
 | Phase 1B.4 + 1B.5 | `cd9b84c` | `feat: establish core learning database foundation` |
 | Phase 2 engineering foundation | `ab862b5` | `feat: establish content platform and publishing pipeline` |
+| Phase 3 + Phase 4 | `09485cc` | `feat: implement learning progress and Guide Mode` |
 
 ## Checkpoint Workflow
 

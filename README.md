@@ -4,7 +4,7 @@ CockpitPath is a connected aircraft-learning platform for flight simulation user
 
 ## Status
 
-**Content-platform engineering complete. Learning Progress + Guide Mode is the current review checkpoint.**
+**Learning Progress and Guide Mode are complete. Staging deployment and real-device validation are the current checkpoint.**
 
 ## Initial supported target
 
@@ -53,7 +53,8 @@ checks.
 
 Database migrations and integration tests use the unpooled connection configured
 in `.env.local`. Both commands are intended for the linked Neon development branch;
-the database test command refuses production or an unknown branch.
+the database guard also recognizes the dedicated staging branch while continuing
+to reject production and unknown branches.
 
 ```bash
 npm run db:migrate
@@ -82,3 +83,11 @@ npm run content:test:integration
 
 See the [content authoring guide](docs/content/authoring-guide.md) and
 [publishing workflow](docs/content/publishing-workflow.md) for the full policy.
+
+Staging deploys the same application to Railway against the isolated Neon
+`staging` branch. The initial staging schema is applied and verified through a
+trusted operator boundary before deployment; the Railway web runtime never
+receives the database-owner credential. Railway checks `/api/health` before
+activating a deployment. See the
+[deployment architecture](docs/architecture/deployment.md#staging-on-railway)
+for the required variable names and verification workflow.
