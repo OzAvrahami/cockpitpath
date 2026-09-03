@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9E8E5; color:#14161A; font-family:'Archivo',system-ui,sans-serif; }
+  a { color:#0E6A70; text-decoration:none; }
+  a:hover { color:#0A4F54; }
+</style>
+</helmet>
+
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">BRAND &middot; LOGO &middot; v1</div>
+    <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em">CockpitPath &mdash; Logo Directions</div>
+    <div style="font-size:16px;line-height:1.55;color:#4A4C50;text-wrap:pretty">Three concepts explored, drawing from route/waypoint geometry, instrument precision, and stepped procedure flow. Route &amp; Fix is recommended: it literalizes &ldquo;Path&rdquo; without a plane silhouette, reuses the cyan accent already established in the product, and holds up at favicon size as two strokes and a dot.</div>
+  </div>
+
+  <!-- ===================== THREE CONCEPTS ===================== -->
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">THREE CONCEPTS EXPLORED</div>
+    <div style="display:flex;flex-wrap:wrap;gap:24px">
+
+      <!-- Concept 1: Route & Fix (recommended) -->
+      <div style="width:420px;background:#08090B;border:1px solid #1C2126;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">CONCEPT 01 &middot; ROUTE &amp; FIX</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.12em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px">RECOMMENDED</span>
+        </div>
+        <div style="height:140px;border-radius:8px;background:#0E1114;display:flex;align-items:center;justify-content:center">
+          <svg width="88" height="88" viewBox="0 0 48 48">
+            <path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="10" cy="36" r="2.2" fill="#9AA3AC"/>
+            <circle cx="24" cy="14" r="3.4" fill="#57E0E8"/>
+            <circle cx="40" cy="20" r="4" fill="none" stroke="#57E0E8" stroke-width="2.2"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;line-height:1.55;color:#9AA3AC">A bent route leg with two waypoints &mdash; a filled fix at the turn, an open fix at the destination. Reads as a flight path and a learning path at once: each turn is a step understood before the next.</div>
+        <div style="display:flex;align-items:center;gap:10px;padding-top:4px;border-top:1px solid #15181C">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="4.5" fill="#57E0E8"/></svg>
+          <span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#5B6470">AT SMALL SIZE</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="26" height="26" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="5" fill="#57E0E8"/></svg>
+            <svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="6" fill="#57E0E8"/></svg>
+            <svg width="13" height="13" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="7" fill="#57E0E8"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 2: Instrument Arc -->
+      <div style="width:420px;background:#08090B;border:1px solid #1C2126;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:18px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">CONCEPT 02 &middot; INSTRUMENT ARC</span>
+        <div style="height:140px;border-radius:8px;background:#0E1114;display:flex;align-items:center;justify-content:center">
+          <svg width="88" height="88" viewBox="0 0 48 48">
+            <path d="M12 34 A14 14 0 1 1 36 12" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round"/>
+            <line x1="24" y1="10" x2="24" y2="4" stroke="#57E0E8" stroke-width="3.2" stroke-linecap="round"/>
+            <circle cx="24" cy="23" r="2.2" fill="#57E0E8"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;line-height:1.55;color:#9AA3AC">A partial instrument bezel with a single pointer tick, abstracted from cockpit gauges without illustrating one. Communicates precision and orientation, but reads closer to a generic dial once shrunk.</div>
+        <div style="display:flex;align-items:center;gap:10px;padding-top:4px;border-top:1px solid #15181C">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M12 34 A14 14 0 1 1 36 12" fill="none" stroke="#F2F4F6" stroke-width="4.5" stroke-linecap="round"/><line x1="24" y1="10" x2="24" y2="3" stroke="#57E0E8" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#5B6470">AT SMALL SIZE</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="26" height="26" viewBox="0 0 48 48"><path d="M12 34 A14 14 0 1 1 36 12" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round"/><line x1="24" y1="10" x2="24" y2="3" stroke="#57E0E8" stroke-width="5" stroke-linecap="round"/></svg>
+            <svg width="18" height="18" viewBox="0 0 48 48"><path d="M12 34 A14 14 0 1 1 36 12" fill="none" stroke="#F2F4F6" stroke-width="6" stroke-linecap="round"/><line x1="24" y1="10" x2="24" y2="3" stroke="#57E0E8" stroke-width="6" stroke-linecap="round"/></svg>
+            <svg width="13" height="13" viewBox="0 0 48 48"><path d="M12 34 A14 14 0 1 1 36 12" fill="none" stroke="#9AA3AC" stroke-width="7" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Concept 3: Ascending Steps -->
+      <div style="width:420px;background:#08090B;border:1px solid #1C2126;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:18px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">CONCEPT 03 &middot; ASCENDING STEPS</span>
+        <div style="height:140px;border-radius:8px;background:#0E1114;display:flex;align-items:center;justify-content:center">
+          <svg width="88" height="88" viewBox="0 0 48 48">
+            <path d="M6 34 L12 28 L18 34" fill="none" stroke="#6B7480" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 24 L24 16 L32 24" fill="none" stroke="#9AA3AC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M28 14 L38 4 L46 12" fill="none" stroke="#57E0E8" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(-4,10)"/>
+          </svg>
+        </div>
+        <div style="font-size:14px;line-height:1.55;color:#9AA3AC">Three chevrons ascending in scale, standing for a procedure taken one verified step at a time. Legible and calm, but less distinctive &mdash; chevron marks are common across unrelated categories.</div>
+        <div style="display:flex;align-items:center;gap:10px;padding-top:4px;border-top:1px solid #15181C">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M6 34 L12 28 L18 34" fill="none" stroke="#6B7480" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 24 L24 16 L32 24" fill="none" stroke="#9AA3AC" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 24 L34 14 L42 22" fill="none" stroke="#57E0E8" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#5B6470">AT SMALL SIZE</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <svg width="26" height="26" viewBox="0 0 48 48"><path d="M6 34 L12 28 L18 34" fill="none" stroke="#6B7480" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 24 L24 16 L32 24" fill="none" stroke="#9AA3AC" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 24 L34 14 L42 22" fill="none" stroke="#57E0E8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="18" height="18" viewBox="0 0 48 48"><path d="M16 24 L24 16 L32 24" fill="none" stroke="#9AA3AC" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M24 24 L34 14 L42 22" fill="none" stroke="#57E0E8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="13" height="13" viewBox="0 0 48 48"><path d="M24 24 L34 14 L42 22" fill="none" stroke="#57E0E8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== RECOMMENDED / REFINED ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">RECOMMENDED DIRECTION &middot; REFINED</div>
+    <div style="font-size:22px;font-weight:600;letter-spacing:-0.01em">Route &amp; Fix</div>
+    <div style="font-size:15px;line-height:1.6;color:#4A4C50;text-wrap:pretty">One bent route leg, a filled fix at the turn, an open fix at the end. It is the only one of the three that literalizes the product name without drawing an aircraft, and the only one still identifiable as two strokes and a dot at 16px. The vertex fix reuses the same cyan already reserved in-product for the current step and the current action, so the mark and the interface read as one system rather than a logo bolted onto an unrelated UI.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">FULL LOCKUP &middot; DARK (PRIMARY)</div>
+      <div style="width:520px;height:180px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:20px">
+        <svg width="56" height="56" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#9AA3AC"/><circle cx="24" cy="14" r="3.6" fill="#57E0E8"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#57E0E8" stroke-width="2.4"/></svg>
+        <span style="font-size:34px;font-weight:600;letter-spacing:-0.015em;color:#F2F4F6">CockpitPath</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">FULL LOCKUP &middot; LIGHT FALLBACK</div>
+      <div style="width:520px;height:180px;background:#E9E8E5;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:20px">
+        <svg width="56" height="56" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#14161A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#4A4C50"/><circle cx="24" cy="14" r="3.6" fill="#0E6A70"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#0E6A70" stroke-width="2.4"/></svg>
+        <span style="font-size:34px;font-weight:600;letter-spacing:-0.015em;color:#14161A">CockpitPath</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">STANDALONE SYMBOL</div>
+      <div style="width:180px;height:180px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center">
+        <svg width="80" height="80" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#9AA3AC"/><circle cx="24" cy="14" r="3.6" fill="#57E0E8"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#57E0E8" stroke-width="2.4"/></svg>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">COMPACT HEADER USAGE</div>
+      <div style="width:340px;display:flex;flex-direction:column;gap:8px">
+        <div style="height:48px;background:#08090B;border-bottom:1px solid #15181C;border-radius:6px 6px 0 0;display:flex;align-items:center;gap:10px;padding:0 16px">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="4.8" fill="#57E0E8"/></svg>
+          <span style="font-size:14px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">Public site header</span>
+        </div>
+        <div style="height:48px;background:#08090B;border-radius:0 0 6px 6px;display:flex;align-items:center;gap:10px;padding:0 16px">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="5.2" fill="#57E0E8"/></svg>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">Icon-only, same slot as the existing in-app &ldquo;CP&rdquo; mono mark</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">FAVICON / APP ICON</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:64px;height:64px;border-radius:14px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="4.6" fill="#57E0E8"/></svg></div>
+        <div style="width:36px;height:36px;border-radius:9px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="14" r="5.4" fill="#57E0E8"/></svg></div>
+        <div style="width:18px;height:18px;border-radius:5px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 48 48"><path d="M8 37 L24 13 L42 20" fill="none" stroke="#F2F4F6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="13" r="7" fill="#57E0E8"/></svg></div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">MONOCHROME TREATMENT</div>
+      <div style="display:flex;gap:14px">
+        <div style="width:170px;height:120px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#FFFFFF"/><circle cx="24" cy="14" r="3.6" fill="#FFFFFF"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#FFFFFF" stroke-width="2.4"/></svg></div>
+        <div style="width:170px;height:120px;background:#FFFFFF;border-radius:10px;border:1px solid #DEDCD6;display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#111111" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#111111"/><circle cx="24" cy="14" r="3.6" fill="#111111"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#111111" stroke-width="2.4"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

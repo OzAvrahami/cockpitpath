@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9E8E5; color:#14161A; font-family:'Archivo',system-ui,sans-serif; }
+  a { color:#0E6A70; text-decoration:none; }
+  a:hover { color:#0A4F54; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; }
+</style>
+</helmet>
+
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:920px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">PUBLIC SITE &amp; SHELL &middot; v2 &middot; REFINEMENT OF v1</div>
+    <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em">CockpitPath &mdash; Public Site &amp; Application Shell, Refined</div>
+    <div style="font-size:16px;line-height:1.55;color:#4A4C50;text-wrap:pretty">v1 solved structure but stayed flat &mdash; black, text, black, cards, black. This pass keeps every locked decision (Guide Mode / Cockpit Explorer / Aircraft Systems positioning, the one-aircraft-first model, auth simplicity, Route &amp; Fix) and rebuilds the homepage as visual storytelling: four dark surface levels instead of one, a cockpit-dominant hero, and each learning mode getting its own full visual treatment instead of a feature card. It also adds the piece v1 didn't have: a real App Home for signed-in users, and a public header that stays public even when you're signed in.</div>
+  </div>
+
+  <!-- ===================== HOMEPAGE DESKTOP ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">HOMEPAGE &middot; DESKTOP &middot; 1440px</div>
+    <div data-screen-label="Homepage Desktop" style="width:1440px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+      <!-- header -->
+      <div style="flex:none;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;border-bottom:1px solid #15181C">
+        <div style="display:flex;align-items:center;gap:36px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#9AA3AC" stroke-width="2.6" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#57E0E8" stroke-width="2.4" stroke-linejoin="round"/></svg>
+            <span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:26px">
+            <button style="font-size:14px;color:#9AA3AC" style-hover="color:#F2F4F6">Aircraft</button>
+            <button style="font-size:14px;color:#9AA3AC" style-hover="color:#F2F4F6">How it works</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px">
+          <button style="font-size:14px;color:#9AA3AC" style-hover="color:#F2F4F6">Sign in</button>
+          <button style="height:38px;padding:0 18px;border-radius:7px;background:#57E0E8;color:#04191B;font-size:14px;font-weight:600" style-hover="background:#7DEAF0">Start learning</button>
+        </div>
+      </div>
+
+      <!-- ===== HERO ===== -->
+      <div style="flex:none;padding:28px 40px 0">
+        <div style="position:relative;height:640px;border-radius:14px;overflow:hidden">
+          <div style="position:absolute;inset:0"><dc-import name="CockpitFrame" caption="BOEING 737 MAX 8 &middot; FLIGHT DECK" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(105deg, rgba(6,7,9,0.95) 0%, rgba(6,7,9,0.8) 28%, rgba(6,7,9,0.32) 58%, rgba(6,7,9,0.06) 80%)"></div>
+          <div style="position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center;padding:0 56px;max-width:600px;gap:18px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#8FB6BA">BOEING 737 MAX 8 &middot; IFLY &middot; MICROSOFT FLIGHT SIMULATOR 2024</span>
+            <div style="font-size:56px;font-weight:600;line-height:1.04;letter-spacing:-0.02em;color:#FFFFFF">Master the cockpit.<br>One step at a time.</div>
+            <div style="font-size:19px;line-height:1.5;color:#D7DCE1">Learn complex aircraft while you fly.</div>
+            <div style="font-size:15.5px;line-height:1.6;color:#9BA5B0;text-wrap:pretty;max-width:480px">Interactive step-by-step procedures, real cockpit locations, and system explanations &mdash; built to sit beside your simulator.</div>
+            <div style="display:flex;align-items:center;gap:16px;padding-top:8px">
+              <button style="height:52px;padding:0 26px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:16px;font-weight:600" style-hover="background:#7DEAF0">Start learning</button>
+              <button style="height:52px;padding:0 22px;border:1px solid rgba(215,220,225,0.3);border-radius:8px;font-size:15px;color:#F2F4F6" style-hover="border-color:#57E0E8">Explore the 737 MAX</button>
+            </div>
+          </div>
+          <div style="position:absolute;right:44px;bottom:36px;width:380px;background:#0B0D10;border:1px solid #1C2E31;border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 50px rgba(0,0,0,0.6)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.14em;color:#8FB6BA">GUIDE MODE &middot; POWER UP &middot; STEP 04/16</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 6px;border-radius:3px">DO</span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">OVERHEAD &rarr; ELECTRICAL</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></div>
+            <div style="position:relative;height:72px;border-radius:6px;background:#151A1F;display:flex;align-items:center;padding:0 12px">
+              <div style="position:relative;width:44px;height:44px;background:#1B1F24;border-radius:5px"></div>
+              <div style="position:absolute;left:20px;top:12px;width:44px;height:44px;border:2px solid #57E0E8;border-radius:6px;box-shadow:0 0 0 9999px rgba(9,11,13,0.72)"></div>
+            </div>
+            <div style="background:#0E1114;border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:3px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;color:#8FB6BA">EXPECT</span>
+              <span style="font-size:13px;color:#E4E8EC">Electrical indications become available.</span>
+            </div>
+            <button style="height:42px;border-radius:6px;background:#57E0E8;color:#04191B;font-size:13.5px;font-weight:600">Done &mdash; Next &nbsp;&rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FLY — GUIDE MODE ===== -->
+      <div style="flex:none;margin-top:64px;padding:72px 40px;background:#0B0D10;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px;width:fit-content">FLY</span>
+          <div style="font-size:36px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Guide Mode</div>
+          <div style="font-size:16px;line-height:1.6;color:#9AA3AC;max-width:420px">Know exactly what to do next. Step-by-step procedures designed to follow while the simulator stays open &mdash; one action, one expected result, one tap to continue.</div>
+        </div>
+        <div style="background:#0E1216;border:1px solid #1A2126;border-radius:12px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.1em;color:#6B7480">737 MAX 8 &middot; COLD &amp; DARK &rarr; TAKEOFF &middot; POWER UP</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.08em;color:#D7DCE1">STEP 04 <span style="color:#5B6470">/ 16</span></span>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:1px;height:8px">
+            <div style="flex:1;height:3px;border-radius:2px;background:#2E6E73"></div>
+            <div style="flex:1;height:3px;border-radius:2px;background:#2E6E73"></div>
+            <div style="flex:1;height:8px;border-radius:2px;background:#57E0E8"></div>
+            <div style="flex:8;height:3px;border-radius:2px;background:#1B1F24"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 7px;border-radius:3px">DO</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6B7480">OVERHEAD &rarr; ELECTRICAL</span>
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:38px;font-weight:600;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></div>
+          <div style="position:relative;height:130px;border-radius:7px;background:#151A1F;overflow:hidden;display:flex;align-items:center;padding:0 20px;gap:14px">
+            <div style="flex:1;height:60px;background:#1B1F24;border-radius:5px"></div>
+            <div style="position:relative;flex:1;height:60px;background:#1B1F24;border-radius:5px;box-shadow:0 0 0 2px #57E0E8, 0 0 0 9999px rgba(9,11,13,0.72)"></div>
+            <div style="flex:1;height:60px;background:#1B1F24;border-radius:5px"></div>
+            <div style="position:absolute;left:34px;bottom:10px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#79838F">OVERHEAD PANEL &middot; ELECTRICAL</div>
+          </div>
+          <div style="background:#151A1F;border-radius:7px;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;color:#8FB6BA">EXPECT</span>
+            <span style="font-size:14px;color:#E4E8EC">Electrical indications become available.</span>
+          </div>
+          <button style="height:46px;border-radius:7px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Done &mdash; Next &nbsp;&rarr;</button>
+        </div>
+      </div>
+
+      <!-- ===== FIND — COCKPIT EXPLORER ===== -->
+      <div style="flex:none;padding:72px 40px;background:#0E1216;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+        <div style="display:flex;flex-direction:column;gap:12px;order:2">
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1;height:64px;border-radius:6px;background:#161B20;display:flex;align-items:flex-end;padding:6px 8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:#6B7480">COCKPIT</span></div>
+            <span style="color:#3B767B;font-size:13px">&rarr;</span>
+            <div style="flex:1;height:64px;border-radius:6px;background:#161B20;display:flex;align-items:flex-end;padding:6px 8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:#6B7480">OVERHEAD</span></div>
+            <span style="color:#3B767B;font-size:13px">&rarr;</span>
+            <div style="flex:1;height:64px;border-radius:6px;background:#161B20;display:flex;align-items:flex-end;padding:6px 8px"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.1em;color:#79838F">ELECTRICAL</span></div>
+            <span style="color:#57E0E8;font-size:13px">&rarr;</span>
+            <div style="position:relative;flex:1.3;height:64px;border-radius:6px;background:#161B20;border:1px solid #3B767B;display:flex;align-items:center;justify-content:center">
+              <div style="width:8px;height:8px;border-radius:50%;background:#57E0E8;box-shadow:0 0 0 4px rgba(87,224,232,0.18)"></div>
+              <span style="position:absolute;bottom:6px;left:8px;font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:0.08em;color:#CBD3DC">BATTERY SW</span>
+            </div>
+          </div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#5B6470">FOUR LEVELS DEEP, NO TECHNICAL NAME REQUIRED</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;order:1">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px;width:fit-content">FIND</span>
+          <div style="font-size:36px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Cockpit Explorer</div>
+          <div style="font-size:16px;line-height:1.6;color:#9AA3AC;max-width:420px">Locate and understand cockpit controls visually. Start from the full cockpit and narrow down &mdash; panel, area, then control &mdash; without needing to know what anything is called first.</div>
+        </div>
+      </div>
+
+      <!-- ===== UNDERSTAND — AIRCRAFT SYSTEMS ===== -->
+      <div style="flex:none;padding:72px 40px;background:#0B0D10;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.16em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px;width:fit-content">UNDERSTAND</span>
+          <div style="font-size:36px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Aircraft Systems</div>
+          <div style="font-size:16px;line-height:1.6;color:#9AA3AC;max-width:420px">See how the systems behind those controls connect, so procedures make sense instead of just working. Select a control in Guide Mode and follow it into the system diagram.</div>
+        </div>
+        <div style="background:#0E1216;border:1px solid #1A2126;border-radius:12px;padding:26px 30px;display:flex;align-items:center;gap:0">
+          <div style="flex:1;background:#0F2A2D;border:1.5px solid #57E0E8;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#F2F4F6">BATTERY</span>
+            <span style="font-size:10px;color:#8FB6BA">Power source</span>
+          </div>
+          <div style="width:36px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#57E0E8">&rarr;</div>
+          <div style="flex:1;background:#0E1114;border:1.5px solid #3B767B;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#CBD3DC">DC POWER</span>
+            <span style="font-size:10px;color:#79838F">Electrical domain</span>
+          </div>
+          <div style="width:36px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#57E0E8">&rarr;</div>
+          <div style="flex:1;background:#0E1114;border:1.5px solid #3B767B;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;color:#CBD3DC">DISTRIBUTION</span>
+            <span style="font-size:10px;color:#79838F">Electrical buses</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CONNECTED LOOP ===== -->
+      <div style="flex:none;padding:72px 40px 56px;background:#0E1216;display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">ONE CONNECTED LOOP, NOT THREE SEPARATE TOOLS</span>
+        <div style="font-size:15px;line-height:1.6;color:#9AA3AC;max-width:560px">Every control in a procedure links to where it lives in the cockpit and the system it belongs to &mdash; then brings you back to the exact step you left.</div>
+        <div style="position:relative;width:100%;max-width:1360px;height:290px;margin-top:20px">
+          <svg style="position:absolute;inset:0" viewBox="0 0 1360 290" preserveAspectRatio="none">
+            <defs><marker id="loopArrow" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orientation="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#57E0E8"/></marker></defs>
+            <path d="M660,95 C 500,150 320,150 250,195" fill="none" stroke="#57E0E8" stroke-width="1.5" marker-end="url(#loopArrow)"/>
+            <path d="M400,235 C 650,270 950,270 1090,235" fill="none" stroke="#57E0E8" stroke-width="1.5" marker-end="url(#loopArrow)"/>
+            <path d="M1170,195 C 1200,110 950,45 760,95" fill="none" stroke="#3B767B" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#loopArrow)"/>
+          </svg>
+          <div style="position:absolute;left:50%;top:0;transform:translateX(-50%);width:250px;background:#0E1114;border:1px solid #1C2126;border-radius:9px;padding:16px 18px;display:flex;flex-direction:column;gap:5px;text-align:left">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#57E0E8">GUIDE MODE &middot; STEP 04</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#F2F4F6">BATTERY &rarr; ON</span>
+          </div>
+          <div style="position:absolute;left:5%;top:190px;width:250px;background:#0E1114;border:1px solid #1C2126;border-radius:9px;padding:16px 18px;display:flex;flex-direction:column;gap:5px;text-align:left">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#57E0E8">COCKPIT CONTROL</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#F2F4F6">Battery Switch</span>
+          </div>
+          <div style="position:absolute;right:5%;top:190px;width:250px;background:#0E1114;border:1px solid #1C2126;border-radius:9px;padding:16px 18px;display:flex;flex-direction:column;gap:5px;text-align:left">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.12em;color:#57E0E8">AIRCRAFT SYSTEM</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:15px;color:#F2F4F6">Electrical</span>
+          </div>
+          <span style="position:absolute;right:14%;top:130px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#5B6470">back to your step</span>
+        </div>
+      </div>
+
+      <!-- ===== SIMULATOR COMPANION ===== -->
+      <div style="flex:none;padding:72px 40px;background:#0B0D10;display:flex;flex-direction:column;gap:26px">
+        <div style="display:flex;flex-direction:column;gap:8px;max-width:640px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">BUILT TO SIT BESIDE THE SIMULATOR</span>
+          <div style="font-size:15px;line-height:1.6;color:#9AA3AC">Designed for short glances while Microsoft Flight Simulator stays in focus &mdash; from a full desktop monitor down to a narrow companion window.</div>
+        </div>
+        <div style="position:relative;height:360px;display:flex;align-items:flex-end;gap:0">
+          <div style="flex:1;height:340px;position:relative;border-radius:10px;overflow:hidden">
+            <dc-import name="CockpitFrame" caption="MICROSOFT FLIGHT SIMULATOR &middot; MSFS 2024" style="width:100%;height:100%" hint-size="100%,100%"></dc-import>
+          </div>
+          <div style="position:relative;z-index:1;flex:none;width:270px;height:390px;margin-left:-40px;background:#0B0D10;border:1px solid #1C2E31;border-radius:12px;padding:16px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 50px rgba(0,0,0,0.6)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#6B7480">COCKPITPATH &middot; COMPANION 420PX</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 6px;border-radius:3px">DO</span>
+            </div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;color:#FFFFFF">BATTERY<br><span style="color:#57E0E8">&rarr; ON</span></div>
+            <div style="flex:1;border-radius:6px;background:#151A1F"></div>
+            <div style="background:#0E1114;border-radius:6px;padding:9px 11px"><span style="font-size:12px;color:#E4E8EC">Electrical indications become available.</span></div>
+            <button style="height:40px;border-radius:6px;background:#57E0E8;color:#04191B;font-size:13px;font-weight:600">Done &mdash; Next</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:24px;padding-top:6px">
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:190px;height:120px;border:1px solid #1C2126;border-radius:6px;background:#0E1114;display:flex;align-items:center;justify-content:center"><div style="width:40px;height:40px;border-radius:6px;background:#57E0E8;opacity:0.14"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#6B7480">IPAD LANDSCAPE</span></div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:center"><div style="width:100px;height:150px;border:1px solid #1C2126;border-radius:6px;background:#0E1114;display:flex;align-items:center;justify-content:center"><div style="width:26px;height:26px;border-radius:5px;background:#57E0E8;opacity:0.14"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#6B7480">MOBILE</span></div>
+        </div>
+      </div>
+
+      <!-- ===== SUPPORTED AIRCRAFT ===== -->
+      <div style="flex:none;padding:72px 40px;background:#0E1216;display:flex;flex-direction:column;gap:22px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.18em;color:#8FB6BA">SUPPORTED AIRCRAFT</span>
+        <div style="display:flex;align-items:stretch;background:#0D1417;border:1px solid #17282B;border-radius:12px;overflow:hidden">
+          <div style="width:52%;position:relative"><dc-import name="CockpitFrame" caption="BOEING 737 MAX 8 &middot; REFERENCE CAPTURE" style="width:100%;height:100%;border-radius:0" hint-size="100%,100%"></dc-import></div>
+          <div style="flex:1;padding:36px 40px;display:flex;flex-direction:column;gap:16px;justify-content:center">
+            <div style="font-size:34px;font-weight:600;letter-spacing:-0.015em;color:#FFFFFF">Boeing 737 MAX 8</div>
+            <div style="display:flex;align-items:stretch;gap:22px">
+              <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#5B6470">IMPLEMENTATION</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#D7DCE1">iFly</span></div>
+              <div style="width:1px;background:#1C2126"></div>
+              <div style="display:flex;flex-direction:column;gap:5px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#5B6470">SIMULATOR</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.06em;color:#D7DCE1">Microsoft Flight Simulator 2024</span></div>
+            </div>
+            <span style="font-size:14px;color:#9AA3AC">Learning content is being prepared and verified.</span>
+            <span style="font-size:13px;color:#5B6470">Free during beta. Additional aircraft will follow.</span>
+            <button style="align-self:flex-start;height:50px;padding:0 22px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600;margin-top:6px">Explore the 737 MAX &nbsp;&rarr;</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FINAL CTA ===== -->
+      <div style="flex:none;padding:80px 40px;background:#08090B;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
+        <div style="font-size:30px;font-weight:600;letter-spacing:-0.01em;color:#FFFFFF">Start learning the 737 MAX 8.</div>
+        <div style="display:flex;align-items:center;gap:18px">
+          <button style="height:52px;padding:0 28px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:16px;font-weight:600">Start learning</button>
+          <button style="font-size:15px;color:#9AA3AC">Already have an account? Sign in</button>
+        </div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#4A5560">FREE DURING BETA</span>
+      </div>
+
+      <!-- footer -->
+      <div style="flex:none;padding:24px 40px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #12151A;background:#08090B">
+        <div style="display:flex;align-items:center;gap:9px"><svg width="15" height="15" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#9AA3AC" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,10 20,16.4 28,16.4" fill="#57E0E8"/></svg><span style="font-size:13px;color:#6B7480">CockpitPath</span></div>
+        <div style="display:flex;align-items:center;gap:22px"><button style="font-size:13px;color:#6B7480">Aircraft</button><button style="font-size:13px;color:#6B7480">Sign in</button><button style="font-size:13px;color:#6B7480">Privacy</button><button style="font-size:13px;color:#6B7480">Terms</button></div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:#3F4854">&copy; 2026 COCKPITPATH</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HOMEPAGE MOBILE ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">HOMEPAGE &middot; MOBILE &middot; 400px &middot; recomposed, not just shrunk</div>
+    <div data-screen-label="Homepage Mobile" style="width:400px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+
+      <div style="flex:none;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid #15181C">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:14px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+        <button onClick="{{ toggleMenu }}" style="font-size:18px;color:#9AA3AC;padding:4px">&#9776;</button>
+      </div>
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:none;display:flex;flex-direction:column;padding:6px 16px 14px;border-bottom:1px solid #15181C;gap:2px">
+          <button style="height:44px;text-align:left;font-size:15px;color:#D7DCE1">Aircraft</button>
+          <button style="height:44px;text-align:left;font-size:15px;color:#D7DCE1">How it works</button>
+          <button style="height:44px;text-align:left;font-size:15px;color:#D7DCE1">Sign in</button>
+          <button style="height:48px;margin-top:6px;border-radius:7px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Start learning</button>
+        </div>
+      </sc-if>
+
+      <div style="flex:none;position:relative;height:330px">
+        <div style="position:absolute;inset:0"><dc-import name="CockpitFrame" caption="737 MAX 8 &middot; FLIGHT DECK" style="width:100%;height:100%;border-radius:0" hint-size="100%,100%"></dc-import></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(8,9,11,1) 0%, rgba(8,9,11,0.15) 60%, rgba(8,9,11,0.35) 100%)"></div>
+      </div>
+      <div style="flex:none;padding:0 18px 30px;display:flex;flex-direction:column;gap:14px">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#8FB6BA">BOEING 737 MAX 8 &middot; IFLY &middot; MSFS 2024</span>
+        <div style="font-size:32px;font-weight:600;line-height:1.08;letter-spacing:-0.015em;color:#FFFFFF">Master the cockpit. One step at a time.</div>
+        <div style="font-size:15.5px;color:#C3CAD1">Learn complex aircraft while you fly.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;padding-top:6px">
+          <button style="height:50px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Start learning</button>
+          <button style="height:50px;border:1px solid #22282E;border-radius:8px;font-size:14.5px;color:#D7DCE1">Explore the 737 MAX</button>
+        </div>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:14px;background:#0B0D10">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 6px;border-radius:3px;width:fit-content">FLY</span>
+        <span style="font-size:20px;font-weight:600;color:#FFFFFF">Guide Mode</span>
+        <div style="height:150px;border-radius:8px;background:#0E1216;border:1px solid #1A2126;display:flex;flex-direction:column;justify-content:center;padding:14px 16px;gap:6px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:22px;font-weight:600;color:#FFFFFF">BATTERY <span style="color:#57E0E8">&rarr; ON</span></span>
+          <span style="font-size:12px;color:#8FB6BA">EXPECT &middot; Electrical indications become available.</span>
+        </div>
+        <span style="font-size:13.5px;color:#9AA3AC;line-height:1.55">Know exactly what to do next, while the simulator stays open.</span>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:14px;background:#0E1216">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 6px;border-radius:3px;width:fit-content">FIND</span>
+        <span style="font-size:20px;font-weight:600;color:#FFFFFF">Cockpit Explorer</span>
+        <div style="display:flex;gap:6px;align-items:center">
+          <div style="flex:1;height:56px;border-radius:6px;background:#161B20"></div>
+          <span style="color:#3B767B;font-size:11px">&rarr;</span>
+          <div style="flex:1;height:56px;border-radius:6px;background:#161B20"></div>
+          <span style="color:#57E0E8;font-size:11px">&rarr;</span>
+          <div style="flex:1;height:56px;border-radius:6px;background:#161B20;border:1px solid #3B767B;display:flex;align-items:center;justify-content:center"><div style="width:6px;height:6px;border-radius:50%;background:#57E0E8"></div></div>
+        </div>
+        <span style="font-size:13.5px;color:#9AA3AC;line-height:1.55">Locate and understand cockpit controls visually.</span>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:14px;background:#0B0D10">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:3px 6px;border-radius:3px;width:fit-content">UNDERSTAND</span>
+        <span style="font-size:20px;font-weight:600;color:#FFFFFF">Aircraft Systems</span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="background:#0F2A2D;border:1px solid #57E0E8;border-radius:6px;padding:9px 11px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#F2F4F6">BATTERY</div>
+          <div style="display:flex;justify-content:center;color:#57E0E8;font-size:12px">&darr;</div>
+          <div style="background:#0E1114;border:1px solid #3B767B;border-radius:6px;padding:9px 11px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#CBD3DC">DISTRIBUTION</div>
+        </div>
+        <span style="font-size:13.5px;color:#9AA3AC;line-height:1.55">See how the systems behind those controls connect.</span>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:16px;background:#0E1216">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#8FB6BA">ONE CONNECTED LOOP</span>
+        <div style="display:flex;flex-direction:column;gap:6px;align-items:center">
+          <div style="width:100%;background:#0E1114;border:1px solid #1C2126;border-radius:8px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F2F4F6">Guide Mode &middot; Battery &rarr; ON</div>
+          <span style="color:#57E0E8;font-size:13px">&darr;</span>
+          <div style="width:100%;background:#0E1114;border:1px solid #1C2126;border-radius:8px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F2F4F6">Cockpit Control &middot; Battery Switch</div>
+          <span style="color:#57E0E8;font-size:13px">&darr;</span>
+          <div style="width:100%;background:#0E1114;border:1px solid #1C2126;border-radius:8px;padding:10px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F2F4F6">Aircraft System &middot; Electrical</div>
+          <span style="color:#3B767B;font-size:11px">&darr; back to your step</span>
+        </div>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:14px;background:#0B0D10">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#8FB6BA">BUILT TO SIT BESIDE THE SIMULATOR</span>
+        <div style="height:150px;position:relative"><dc-import name="CockpitFrame" caption="MSFS 2024" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+        <span style="font-size:13.5px;color:#9AA3AC;line-height:1.55">Designed for short glances beside Microsoft Flight Simulator &mdash; desktop, tablet, or a narrow companion window.</span>
+      </div>
+
+      <div style="flex:none;padding:34px 18px;display:flex;flex-direction:column;gap:16px;background:#0E1216">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.16em;color:#8FB6BA">SUPPORTED AIRCRAFT</span>
+        <div style="height:170px;position:relative;border-radius:10px;overflow:hidden"><dc-import name="CockpitFrame" caption="737 MAX 8" style="width:100%;height:100%;border-radius:0" hint-size="100%,100%"></dc-import></div>
+        <div style="background:#0D1417;border:1px solid #17282B;border-radius:10px;padding:20px">
+          <div style="font-size:24px;font-weight:600;color:#FFFFFF">Boeing 737 MAX 8</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.08em;color:#6B7480;padding-top:8px">IFLY &middot; MICROSOFT FLIGHT SIMULATOR 2024</div>
+          <div style="font-size:13px;color:#6B7480;padding-top:6px">Learning content is being prepared and verified.</div>
+          <button style="width:100%;height:46px;margin-top:14px;border-radius:7px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Explore the 737 MAX</button>
+        </div>
+      </div>
+
+      <div style="flex:none;padding:36px 18px;display:flex;flex-direction:column;align-items:center;gap:14px;background:#08090B;text-align:center">
+        <div style="font-size:22px;font-weight:600;color:#FFFFFF">Start learning the 737 MAX 8.</div>
+        <button style="width:100%;height:50px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Start learning</button>
+        <span style="font-size:13.5px;color:#9AA3AC">Already have an account? Sign in</span>
+      </div>
+
+      <div style="flex:none;padding:20px 18px;display:flex;flex-direction:column;gap:12px;border-top:1px solid #12151A;align-items:center;background:#08090B">
+        <div style="display:flex;gap:18px"><span style="font-size:12.5px;color:#6B7480">Aircraft</span><span style="font-size:12.5px;color:#6B7480">Sign in</span><span style="font-size:12.5px;color:#6B7480">Privacy</span><span style="font-size:12.5px;color:#6B7480">Terms</span></div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#3F4854">&copy; 2026 COCKPITPATH</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== PUBLIC HEADER STATES ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">PUBLIC HEADER &middot; STAYS PUBLIC, EVEN SIGNED IN</div>
+    <div style="font-size:14.5px;line-height:1.6;color:#4A4C50">Signing in never redirects away from &ldquo;/&rdquo;. It only changes which actions sit on the right: Sign in / Start learning becomes Continue Learning / Open App / account.</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">UNAUTHENTICATED</span>
+      <div style="width:640px;height:64px;background:#08090B;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 28px">
+        <div style="display:flex;align-items:center;gap:26px">
+          <div style="display:flex;align-items:center;gap:9px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:15px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;gap:20px"><span style="font-size:13.5px;color:#9AA3AC">Aircraft</span><span style="font-size:13.5px;color:#9AA3AC">How it works</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px"><span style="font-size:13.5px;color:#9AA3AC">Sign in</span><button style="height:34px;padding:0 15px;border-radius:6px;background:#57E0E8;color:#04191B;font-size:13px;font-weight:600">Start learning</button></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">AUTHENTICATED &middot; ACTIVE PROGRESS</span>
+      <div style="width:640px;height:64px;background:#08090B;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 28px">
+        <div style="display:flex;align-items:center;gap:26px">
+          <div style="display:flex;align-items:center;gap:9px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:15px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;gap:20px"><span style="font-size:13.5px;color:#9AA3AC">Aircraft</span><span style="font-size:13.5px;color:#9AA3AC">How it works</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:18px">
+          <span style="font-size:13.5px;color:#F2F4F6">Continue Learning</span>
+          <button style="height:34px;padding:0 15px;border-radius:6px;border:1px solid #22282E;font-size:13px;color:#D7DCE1">Open App</button>
+          <div style="width:28px;height:28px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9AA3AC">AB</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== APP HOME ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">APP HOME &middot; /app &middot; ONE AIRCRAFT, NO EMPTY LIBRARY</div>
+    <div style="font-size:14.5px;line-height:1.6;color:#4A4C50">Sign-in lands here, not on Aircraft Page directly. This shell is a different navigation context from the public header &mdash; compact, product-facing, and it evolves into an aircraft list later without anyone seeing an empty one now.</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">DESKTOP &middot; NO ACTIVE PROGRESS</span>
+      <div data-screen-label="App Home Desktop No Progress" style="width:800px;height:600px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#12171C;border-bottom:1px solid #1A2126">
+          <div style="display:flex;align-items:center;gap:22px">
+            <div style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg><span style="font-size:13.5px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+            <span style="font-size:13px;color:#F2F4F6">Aircraft</span>
+          </div>
+          <div style="width:26px;height:26px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA3AC">AB</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:40px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#8FB6BA">COCKPITPATH APP</span>
+          <div style="width:280px;height:150px;position:relative;border-radius:10px;overflow:hidden"><dc-import name="CockpitFrame" caption="737 MAX 8" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+            <div style="font-size:28px;font-weight:600;color:#FFFFFF">Boeing 737 MAX 8</div>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:#6B7480">IFLY &middot; MICROSOFT FLIGHT SIMULATOR 2024</span>
+          </div>
+          <div style="width:1px;height:20px;background:#1C2126"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;max-width:400px;text-align:center">
+            <div style="font-size:17px;color:#D7DCE1">Learning content is being prepared and verified.</div>
+            <div style="font-size:13.5px;color:#6B7480">Journeys, Cockpit Explorer, and Aircraft Systems will appear here as content is published.</div>
+          </div>
+          <button style="height:46px;padding:0 22px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Open Aircraft</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">DESKTOP &middot; CONTINUE LEARNING</span>
+      <div data-screen-label="App Home Desktop Continue Learning" style="width:800px;height:600px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#12171C;border-bottom:1px solid #1A2126">
+          <div style="display:flex;align-items:center;gap:22px">
+            <div style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg><span style="font-size:13.5px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+            <span style="font-size:13px;color:#F2F4F6">Aircraft</span>
+          </div>
+          <div style="width:26px;height:26px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA3AC">AB</div>
+        </div>
+        <div style="flex:1;padding:56px;display:flex;flex-direction:column;gap:18px;justify-content:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.16em;color:#57E0E8">CONTINUE LEARNING</span>
+          <div style="background:#0E1216;border:1px solid #17282B;border-radius:12px;padding:26px;display:flex;gap:24px;align-items:center">
+            <div style="width:170px;height:120px;flex:none;position:relative;border-radius:8px;overflow:hidden"><dc-import name="CockpitFrame" caption="OVERHEAD &middot; ELECTRICAL" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+              <div style="font-size:24px;font-weight:600;color:#FFFFFF">Boeing 737 MAX 8</div>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:0.08em;color:#8FB6BA">COLD &amp; DARK &rarr; TAKEOFF &middot; POWER UP &middot; STEP 04/16</span>
+              <div style="display:flex;gap:12px;padding-top:6px">
+                <button style="height:44px;padding:0 22px;border-radius:7px;background:#57E0E8;color:#04191B;font-size:14px;font-weight:600">Continue &nbsp;&rarr;</button>
+                <button style="height:44px;padding:0 18px;border:1px solid #22282E;border-radius:7px;font-size:13.5px;color:#D7DCE1">Open Aircraft</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">MOBILE 400 &middot; NO PROGRESS</span>
+      <div data-screen-label="App Home Mobile No Progress" style="width:380px;height:600px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#12171C;border-bottom:1px solid #1A2126">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg>
+          <div style="width:24px;height:24px;border-radius:50%;border:1px solid #22282E"></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;color:#8FB6BA">COCKPITPATH APP</span>
+          <div style="width:100%;height:130px;position:relative;border-radius:10px;overflow:hidden"><dc-import name="CockpitFrame" caption="737 MAX 8" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+          <div style="font-size:22px;font-weight:600;color:#FFFFFF">Boeing 737 MAX 8</div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.08em;color:#6B7480">IFLY &middot; MSFS 2024</span>
+          <div style="font-size:14.5px;color:#D7DCE1">Learning content is being prepared and verified.</div>
+          <button style="width:100%;height:46px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14px;font-weight:600">Open Aircraft</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">MOBILE 400 &middot; CONTINUE LEARNING</span>
+      <div data-screen-label="App Home Mobile Continue Learning" style="width:380px;height:600px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column">
+        <div style="flex:none;height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:#12171C;border-bottom:1px solid #1A2126">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg>
+          <div style="width:24px;height:24px;border-radius:50%;border:1px solid #22282E"></div>
+        </div>
+        <div style="flex:1;padding:22px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.14em;color:#57E0E8">CONTINUE LEARNING</span>
+          <div style="width:100%;height:130px;position:relative;border-radius:10px;overflow:hidden"><dc-import name="CockpitFrame" caption="OVERHEAD &middot; ELECTRICAL" style="width:100%;height:100%" hint-size="100%,100%"></dc-import></div>
+          <div style="font-size:21px;font-weight:600;color:#FFFFFF">Boeing 737 MAX 8</div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;color:#8FB6BA">POWER UP &middot; STEP 04/16</span>
+          <button style="height:48px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Continue &nbsp;&rarr;</button>
+          <button style="height:44px;border:1px solid #22282E;border-radius:8px;font-size:13.5px;color:#D7DCE1">Open Aircraft</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== AUTH PAGES ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">AUTH PAGES &middot; SAME FOCUSED STRUCTURE, SUBTLE AVIATION CONTEXT</div>
+    <div data-screen-label="Sign In Desktop" style="width:1440px;height:820px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px">
+        <div style="width:380px;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;align-items:center;gap:10px"><svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:26px;font-weight:600;color:#FFFFFF">Sign in</span><span style="font-size:14px;color:#8B94A0">Continue your progress on the 737 MAX 8.</span></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Email</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Password</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+            <button style="align-self:flex-start;font-size:13px;color:#57E0E8">Forgot password?</button>
+            <button style="height:48px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Sign in</button>
+          </div>
+          <span style="font-size:13.5px;color:#6B7480;text-align:center">No account? <span style="color:#57E0E8">Start learning</span></span>
+        </div>
+      </div>
+      <div style="width:520px;position:relative;border-left:1px solid #15181C"><dc-import name="CockpitFrame" caption="737 MAX 8 &middot; OVERHEAD PANEL" style="width:100%;height:100%;border-radius:0" hint-size="100%,100%"></dc-import></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div data-screen-label="Sign Up Desktop" style="width:1440px;height:860px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex">
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px">
+        <div style="width:380px;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;align-items:center;gap:10px"><svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:16px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:26px;font-weight:600;color:#FFFFFF">Create your account</span><span style="font-size:14px;color:#8B94A0">Free during beta. Boeing 737 MAX 8 &middot; iFly &middot; MSFS 2024.</span></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Email</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Password</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+            <button style="height:48px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Create account</button>
+          </div>
+          <span style="font-size:13.5px;color:#6B7480;text-align:center">Already have an account? <span style="color:#57E0E8">Sign in</span></span>
+        </div>
+      </div>
+      <div style="width:520px;position:relative;border-left:1px solid #15181C"><dc-import name="CockpitFrame" caption="737 MAX 8 &middot; FORWARD PANEL" style="width:100%;height:100%;border-radius:0" hint-size="100%,100%"></dc-import></div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:24px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">FORGOT PASSWORD &middot; 900 &times; 640</div>
+      <div data-screen-label="Forgot Password" style="width:900px;height:640px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;align-items:center;justify-content:center">
+        <div style="width:360px;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;gap:10px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:15px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:23px;font-weight:600;color:#FFFFFF">Reset your password</span><span style="font-size:13.5px;color:#8B94A0">We&rsquo;ll email you a link to reset it.</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Email</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+          <button style="height:46px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Send reset link</button>
+          <span style="font-size:13px;color:#57E0E8;text-align:center">Back to sign in</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">RESET PASSWORD &middot; 900 &times; 640</div>
+      <div data-screen-label="Reset Password" style="width:900px;height:640px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;align-items:center;justify-content:center">
+        <div style="width:360px;display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;gap:10px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:15px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:23px;font-weight:600;color:#FFFFFF">Choose a new password</span><span style="font-size:13.5px;color:#8B94A0">Your link is valid for a limited time.</span></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">New password</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Confirm password</span><div style="height:44px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+          <button style="height:46px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:14.5px;font-weight:600">Update password</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">SIGN IN &middot; MOBILE &middot; 400 &times; 720</div>
+      <div data-screen-label="Sign In Mobile" style="width:400px;height:720px;overflow:hidden;border-radius:10px;box-shadow:0 24px 60px rgba(15,17,20,0.24);background:#08090B;color:#F2F4F6;display:flex;flex-direction:column;padding:48px 26px;gap:24px">
+        <div style="display:flex;align-items:center;gap:9px"><svg width="18" height="18" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/></svg><span style="font-size:15px;font-weight:600;color:#F2F4F6">CockpitPath</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:24px;font-weight:600;color:#FFFFFF">Sign in</span><span style="font-size:13.5px;color:#8B94A0">Continue your progress on the 737 MAX 8.</span></div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Email</span><div style="height:46px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+          <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12.5px;color:#9AA3AC">Password</span><div style="height:46px;border:1px solid #22282E;border-radius:7px;background:#0E1114"></div></div>
+          <button style="align-self:flex-start;font-size:13px;color:#57E0E8">Forgot password?</button>
+          <button style="height:50px;border-radius:8px;background:#57E0E8;color:#04191B;font-size:15px;font-weight:600">Sign in</button>
+        </div>
+        <span style="font-size:13.5px;color:#6B7480;text-align:center">No account? <span style="color:#57E0E8">Start learning</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== AUTHENTICATED SHELL (AIRCRAFT PAGE / EXPLORER / SYSTEMS) ===================== -->
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">SHELL NAV &middot; WRAPS AIRCRAFT PAGE / EXPLORER / SYSTEMS &middot; NOT GUIDE MODE</div>
+    <div style="font-size:14.5px;line-height:1.6;color:#4A4C50">CockpitPath &middot; Aircraft &middot; Continue Learning &middot; Account. A different bar from the public header and from App Home &mdash; this one sits above the approved product screens. Guide Mode keeps its own Focus Mode chrome and never carries this bar.</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">DESKTOP 1440</span>
+      <div style="width:640px;border-radius:8px;overflow:hidden;background:#08090B">
+        <div style="height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:#12171C;border-bottom:1px solid #1A2126">
+          <div style="display:flex;align-items:center;gap:24px"><div style="display:flex;align-items:center;gap:8px"><svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg><span style="font-size:13.5px;font-weight:600;color:#F2F4F6">CockpitPath</span></div><span style="font-size:13px;color:#D7DCE1">Aircraft</span><span style="font-size:13px;color:#9AA3AC">Continue Learning</span></div>
+          <div style="width:26px;height:26px;border-radius:50%;border:1px solid #22282E;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#9AA3AC">AB</div>
+        </div>
+        <div style="height:60px;display:flex;align-items:center;padding:0 24px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.1em;color:#3F4854">Aircraft Page content below (unchanged)</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">NARROW COMPANION 480</span>
+      <div style="width:280px;border-radius:8px;overflow:hidden;background:#08090B">
+        <div style="height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#12171C;border-bottom:1px solid #1A2126">
+          <svg width="15" height="15" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg>
+          <span style="font-size:11px;color:#9AA3AC">Continue</span>
+          <button style="font-size:14px;color:#6B7480">&#9776;</button>
+        </div>
+        <div style="height:60px;display:flex;align-items:center;padding:0 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854">Content below</span></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#78776F">MOBILE 400</span>
+      <div style="width:240px;border-radius:8px;overflow:hidden;background:#08090B">
+        <div style="height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:#12171C;border-bottom:1px solid #1A2126">
+          <svg width="15" height="15" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9.5 19.9,16.3 28.1,16.3" fill="#57E0E8"/></svg>
+          <button style="font-size:14px;color:#6B7480">&#9776;</button>
+        </div>
+        <div style="height:60px;display:flex;align-items:center;padding:0 14px"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.08em;color:#3F4854">Content below</span></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  renderVals() {
+    return {
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen }))
+    };
+  }
+}
+</script>
+</body>
+</html>

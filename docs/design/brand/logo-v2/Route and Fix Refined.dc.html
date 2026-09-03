@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#E9E8E5; color:#14161A; font-family:'Archivo',system-ui,sans-serif; }
+  a { color:#0E6A70; text-decoration:none; }
+  a:hover { color:#0A4F54; }
+</style>
+</helmet>
+
+<section style="padding:56px 64px 96px;display:flex;flex-direction:column;gap:48px">
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:900px">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.16em;color:#78776F">BRAND &middot; LOGO &middot; v2 &middot; REFINEMENT OF CONCEPT 01</div>
+    <div style="font-size:34px;font-weight:600;letter-spacing:-0.02em">Route &amp; Fix &mdash; Refined</div>
+    <div style="font-size:16px;line-height:1.55;color:#4A4C50;text-wrap:pretty">Direction locked to Route &amp; Fix; not re-explored. The concern with v1 was that a bent line with round dots reads as a generic maps pin. This pass replaces the plain circles with real aeronautical chart symbology &mdash; a solid fix triangle at the understood turn, an open fix triangle at the point ahead, and a short perpendicular reference tick at the origin, the kind of mark you would find on an approach chart. Fixed, upright orientation (not rotated to the route) keeps it reading as instrument notation rather than a route icon. Still two strokes and two shapes at 16px.</div>
+  </div>
+
+  <!-- ===================== WHAT CHANGED ===================== -->
+  <div style="display:flex;flex-wrap:wrap;gap:24px">
+    <div style="width:460px;background:#08090B;border:1px solid #1C2126;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.14em;color:#6B7480">V1 &middot; ROUTE &amp; FIX</span>
+      <div style="height:130px;border-radius:8px;background:#0E1114;display:flex;align-items:center;justify-content:center">
+        <svg width="76" height="76" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="36" r="2.2" fill="#9AA3AC"/><circle cx="24" cy="14" r="3.6" fill="#57E0E8"/><circle cx="40" cy="20" r="4.2" fill="none" stroke="#57E0E8" stroke-width="2.4"/></svg>
+      </div>
+      <div style="font-size:13.5px;line-height:1.55;color:#79776F">Two circles and a dot &mdash; closer to a map-pin or route-planner icon than an aviation instrument mark.</div>
+    </div>
+    <div style="width:460px;background:#08090B;border:1px solid #1C2E31;border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.14em;color:#04191B;background:#57E0E8;padding:4px 8px;border-radius:3px;width:fit-content">V2 &middot; REFINED</span>
+      <div style="height:130px;border-radius:8px;background:#0E1114;display:flex;align-items:center;justify-content:center">
+        <svg width="76" height="76" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#9AA3AC" stroke-width="2.4" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#57E0E8" stroke-width="2.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div style="font-size:13.5px;line-height:1.55;color:#9AA3AC">Solid fix triangle at the turn, open fix triangle ahead, reference tick at the origin &mdash; chart-fix notation, upright and unrotated.</div>
+    </div>
+  </div>
+
+  <!-- ===================== LOCKUPS ===================== -->
+  <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start">
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">HORIZONTAL MARK &middot; DARK (PRIMARY)</div>
+      <div style="width:520px;height:180px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:20px">
+        <svg width="56" height="56" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#9AA3AC" stroke-width="2.4" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#57E0E8" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        <span style="font-size:34px;font-weight:600;letter-spacing:-0.015em;color:#F2F4F6">CockpitPath</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">HORIZONTAL MARK &middot; LIGHT FALLBACK</div>
+      <div style="width:520px;height:180px;background:#E9E8E5;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:20px">
+        <svg width="56" height="56" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#14161A" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#4A4C50" stroke-width="2.4" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#0E6A70"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#0E6A70" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        <span style="font-size:34px;font-weight:600;letter-spacing:-0.015em;color:#14161A">CockpitPath</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">STANDALONE SYMBOL</div>
+      <div style="width:180px;height:180px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center">
+        <svg width="82" height="82" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#9AA3AC" stroke-width="2.2" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#57E0E8"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#57E0E8" stroke-width="2.1" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">COMPACT HEADER MARK</div>
+      <div style="width:340px;display:flex;flex-direction:column;gap:8px">
+        <div style="height:48px;background:#08090B;border-bottom:1px solid #15181C;border-radius:6px 6px 0 0;display:flex;align-items:center;gap:10px;padding:0 16px">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="6.8" y1="33.7" x2="13.2" y2="38.3" stroke="#9AA3AC" stroke-width="3.4" stroke-linecap="round"/><polygon points="24,8.8 19.4,16.6 28.6,16.6" fill="#57E0E8"/><polygon points="40,14 35.4,21.8 44.6,21.8" fill="none" stroke="#57E0E8" stroke-width="3" stroke-linejoin="round"/></svg>
+          <span style="font-size:14px;font-weight:600;color:#F2F4F6">CockpitPath</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">Public site header</span>
+        </div>
+        <div style="height:48px;background:#08090B;border-radius:0 0 6px 6px;display:flex;align-items:center;gap:10px;padding:0 16px">
+          <svg width="16" height="16" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,8.4 19,16.8 29,16.8" fill="#57E0E8"/></svg>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">Icon-only, tick dropped below ~20px</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">FAVICON / APP ICON</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:64px;height:64px;border-radius:14px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,9 19.6,16.6 28.4,16.6" fill="#57E0E8"/></svg></div>
+        <div style="width:36px;height:36px;border-radius:9px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#F2F4F6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,8.4 19,16.8 29,16.8" fill="#57E0E8"/></svg></div>
+        <div style="width:18px;height:18px;border-radius:5px;background:#08090B;display:flex;align-items:center;justify-content:center"><svg width="11" height="11" viewBox="0 0 48 48"><path d="M8 37 L24 13 L42 20" fill="none" stroke="#F2F4F6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,6 17,17.5 31,17.5" fill="#57E0E8"/></svg></div>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.1em;color:#6B7480">Below ~20px: path + turn fix only. Tick and open fix drop first &mdash; the solid triangle carries the mark alone.</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.14em;color:#78776F">MONOCHROME TREATMENT</div>
+      <div style="display:flex;gap:14px">
+        <div style="width:170px;height:120px;background:#08090B;border-radius:10px;display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#FFFFFF"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <div style="width:170px;height:120px;background:#FFFFFF;border-radius:10px;border:1px solid #DEDCD6;display:flex;align-items:center;justify-content:center"><svg width="60" height="60" viewBox="0 0 48 48"><path d="M10 36 L24 14 L40 20" fill="none" stroke="#111111" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><line x1="7.05" y1="34.12" x2="12.95" y2="37.88" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/><polygon points="24,9.6 20.19,16.2 27.81,16.2" fill="#111111"/><polygon points="40,15.4 36.02,22.3 43.98,22.3" fill="none" stroke="#111111" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</x-dc>
+</body>
+</html>

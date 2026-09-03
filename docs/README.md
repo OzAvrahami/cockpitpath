@@ -1,7 +1,7 @@
 # CockpitPath Documentation
 
 **Status:** Foundation v0.1<br>
-**Last updated:** 2026-08-24
+**Last updated:** 2026-09-03
 
 This directory is the documentation source of truth for CockpitPath product, UX, design, content, and architecture decisions. Repository documentation and project artifacts are written in English. CockpitPath v0.1 uses plain JavaScript; TypeScript is not a project requirement.
 
@@ -32,6 +32,7 @@ Design-component HTML files demonstrate layout and interaction only. Their step 
 - [Cockpit Explorer UX](ux/cockpit-explorer.md)
 - [Aircraft Systems UX](ux/aircraft-systems.md)
 - [Locked Guide Mode direction](design/guide-mode-direction.md)
+- [Public site and application shell handoff](design/public-site-shell-handoff.md)
 
 ## Architecture
 
