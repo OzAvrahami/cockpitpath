@@ -51,6 +51,20 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 
 Phase 1, the Phase 2 engineering foundation, Phase 3, Phase 4, and Work Package 3.5 are complete in committed Git history. The real Boeing/iFly technical-content gate remains open because verified source material and approved cockpit media have not yet been supplied; no unverified operational facts were published. Staging now provides an isolated Neon branch, Railway deployment contract, healthcheck, verified schema, restricted runtime credentials, and external-device validation foundation. Phase 5 is the current engineering focus.
 
+## Parallel Implementation Workstreams
+
+### Public Site v1
+
+**Status:** Implemented locally; automated verification complete; manual visual approval pending<br>
+**GitHub:** [Issue #6 — Implement CockpitPath Public Site v1](https://github.com/OzAvrahami/cockpitpath/issues/6)<br>
+**Design handoff:** [Public Site and Application Shell Handoff](../design/public-site-shell-handoff.md)
+
+Public Site v1 replaces the root application-foundation placeholder with the complete public marketing homepage. It establishes the Route & Fix identity, public navigation states, image-led Fly / Find / Understand story, simulator-companion presentation, supported-aircraft presentation, responsive layouts, accessibility behavior, and deliberate deferred-media fallbacks.
+
+This workstream does not renumber or replace the Phase 5–7 product-feature path. Application Shell v1 remains a separate future workstream, and the current successful sign-in destination and protected application routes are unchanged. Real iFly 737 MAX 8 cockpit media remains deferred and does not block the public-site structure; approved captures, crop variants, attribution, verification metadata, and hotspot calibration will be integrated later.
+
+The implementation must remain in verification until the complete public page receives manual visual approval. Issue #6 must not be closed or moved to Done before that review.
+
 ## Major Delivery Path
 
 This diagram represents dependency order, not dates.
