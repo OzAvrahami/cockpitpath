@@ -64,7 +64,7 @@ describe("authentication server actions", () => {
     expect(redirectMock).toHaveBeenCalledWith("/account");
   });
 
-  it("signs in through Neon Auth without accepting an arbitrary return URL", async () => {
+  it("signs in through Neon Auth and rejects an unsafe return URL", async () => {
     authMock.signIn.email.mockResolvedValue({ data: {}, error: null });
 
     await expect(
@@ -75,13 +75,33 @@ describe("authentication server actions", () => {
           returnTo: "//attacker.example",
         }),
       ),
-    ).rejects.toThrow("redirect:/account");
+    ).rejects.toThrow("redirect:/app");
 
     expect(authMock.signIn.email).toHaveBeenCalledWith({
       email: "learner@example.com",
       password: "not-a-real-password",
     });
-    expect(redirectMock).toHaveBeenCalledWith("/account");
+    expect(redirectMock).toHaveBeenCalledWith("/app");
+  });
+
+  it("preserves a validated internal return destination after sign-in", async () => {
+    authMock.signIn.email.mockResolvedValue({ data: {}, error: null });
+
+    await expect(
+      signInAction(
+        formData({
+          email: "learner@example.com",
+          password: "not-a-real-password",
+          returnTo: "/learn/cold-dark-to-takeoff?mode=learn",
+        }),
+      ),
+    ).rejects.toThrow(
+      "redirect:/learn/cold-dark-to-takeoff?mode=learn",
+    );
+
+    expect(redirectMock).toHaveBeenCalledWith(
+      "/learn/cold-dark-to-takeoff?mode=learn",
+    );
   });
 
   it("returns a safe sign-in error without exposing the provider response", async () => {
@@ -97,7 +117,9 @@ describe("authentication server actions", () => {
           password: "not-a-real-password",
         }),
       ),
-    ).rejects.toThrow("redirect:/auth/sign-in?error=invalid");
+    ).rejects.toThrow(
+      "redirect:/auth/sign-in?error=invalid&returnTo=%2Fapp",
+    );
   });
 
   it("signs out through the SDK before returning to the public sign-in route", async () => {

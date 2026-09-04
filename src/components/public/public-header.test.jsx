@@ -28,6 +28,15 @@ describe("PublicHeader navigation refinement", () => {
     expect(markup).toContain('tabindex="-1"');
   });
 
+  it("opens the application home from the authenticated public header", () => {
+    const markup = renderToStaticMarkup(<PublicHeader authenticated />);
+
+    expect(markup).toContain('href="/app"');
+    expect(markup).toContain("Open app");
+    expect(markup).toContain('href="/account"');
+    expect(markup).toContain('href="/learn/cold-dark-to-takeoff"');
+  });
+
   it("shows Back to top only after one viewport and outside blocking UI", () => {
     expect(getBackToTopThreshold(320)).toBe(480);
     expect(getBackToTopThreshold(800)).toBe(800);

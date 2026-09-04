@@ -137,7 +137,8 @@ body {
 
 .public-header__nav a,
 .public-header__signin,
-.public-header__continue {
+.public-header__continue,
+.public-header__account {
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -148,7 +149,8 @@ body {
 
 .public-header__nav a:hover,
 .public-header__signin:hover,
-.public-header__continue:hover {
+.public-header__continue:hover,
+.public-header__account:hover {
   color: var(--public-text);
 }
 
@@ -205,6 +207,10 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem;
+}
+
+.public-mobile-nav__actions.is-authenticated {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .public-back-to-top {
@@ -1597,7 +1603,8 @@ body {
 }
 
 @media (max-width: 390px) {
-  .public-mobile-nav__actions {
+  .public-mobile-nav__actions,
+  .public-mobile-nav__actions.is-authenticated {
     grid-template-columns: 1fr;
   }
 
@@ -1620,11 +1627,639 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .public-site *,
   .public-site *::before,
-  .public-site *::after {
+  .public-site *::after,
+  .app-shell *,
+  .app-shell *::before,
+  .app-shell *::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+}
+
+.app-shell {
+  --public-page: #08090b;
+  --public-surface-deep: #0b0d10;
+  --public-surface: #0e1216;
+  --public-surface-raised: #12171c;
+  --public-surface-control: #151a1f;
+  --public-border: #1a2126;
+  --public-border-strong: #3b767b;
+  --public-text: #f2f4f6;
+  --public-text-secondary: #d7dce1;
+  --public-text-muted: #9aa3ac;
+  --public-text-quiet: #7f8994;
+  --public-accent: #57e0e8;
+  --public-accent-hover: #7deaf0;
+  --public-accent-foreground: #04191b;
+  min-height: 100vh;
+  overflow: clip;
+  background: var(--public-page);
+  color: var(--public-text);
+  font-family: var(--font-public-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+.app-shell a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell button,
+.app-shell summary {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-shell a:focus-visible,
+.app-shell button:focus-visible,
+.app-shell summary:focus-visible {
+  outline: 3px solid var(--public-accent);
+  outline-offset: 3px;
+}
+
+.app-skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.4rem;
+  background: var(--public-accent);
+  color: var(--public-accent-foreground) !important;
+  font-weight: 700;
+  transform: translateY(-180%);
+}
+
+.app-skip-link:focus {
+  transform: translateY(0);
+}
+
+.app-header {
+  position: sticky;
+  z-index: 40;
+  top: 0;
+  border-bottom: 1px solid var(--public-border);
+  background: rgba(18, 23, 28, 0.97);
+}
+
+@supports (backdrop-filter: blur(12px)) {
+  .app-header {
+    background: rgba(18, 23, 28, 0.92);
+    backdrop-filter: saturate(120%) blur(12px);
+  }
+}
+
+.app-header__inner {
+  width: min(100% - 3rem, 1240px);
+  min-height: 56px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.app-header__identity,
+.app-header__nav {
+  display: flex;
+  align-items: center;
+}
+
+.app-header__identity {
+  min-width: 0;
+  gap: 1.15rem;
+}
+
+.app-aircraft-context {
+  min-width: 0;
+  padding-left: 1.15rem;
+  border-left: 1px solid var(--public-border);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.app-aircraft-context small,
+.app-eyebrow,
+.app-aircraft-metadata dt,
+.app-future__index,
+.app-coming-soon {
+  font-family: var(--font-public-mono), Consolas, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.app-aircraft-context small {
+  color: var(--public-text-quiet);
+  font-size: 0.58rem;
+}
+
+.app-aircraft-context strong {
+  overflow: hidden;
+  color: var(--public-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+}
+
+.app-header__nav {
+  margin-left: auto;
+  gap: 0.25rem;
+}
+
+.app-header__nav a,
+.app-account-menu summary {
+  min-height: 44px;
+  padding-inline: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.4rem;
+  color: var(--public-text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.app-header__nav a:hover,
+.app-account-menu summary:hover {
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--public-text);
+}
+
+.app-header__nav a[aria-current="page"] {
+  color: var(--public-text);
+}
+
+.app-header__nav a[aria-current="page"]::before {
+  width: 0.32rem;
+  height: 0.32rem;
+  margin-right: 0.48rem;
+  border-radius: 50%;
+  background: var(--public-accent);
+  content: "";
+}
+
+.app-account-menu {
+  position: relative;
+}
+
+.app-account-menu summary {
+  list-style: none;
+}
+
+.app-account-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.app-account-menu summary::after {
+  margin-left: 0.45rem;
+  color: var(--public-text-quiet);
+  content: "⌄";
+}
+
+.app-account-menu[open] summary {
+  background: var(--public-surface-control);
+  color: var(--public-text);
+}
+
+.app-account-menu__panel {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  width: 13rem;
+  padding: 0.45rem;
+  border: 1px solid #263038;
+  border-radius: 0.55rem;
+  background: var(--public-surface-raised);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.4);
+  display: grid;
+}
+
+.app-account-menu__panel a,
+.app-account-menu__panel button {
+  width: 100%;
+  min-height: 44px;
+  padding-inline: 0.7rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--public-text-secondary);
+  display: flex;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.app-account-menu__panel a:hover,
+.app-account-menu__panel button:hover {
+  background: var(--public-surface-control);
+  color: var(--public-text);
+}
+
+.app-header__menu-button {
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  border: 1px solid var(--public-border);
+  border-radius: 0.45rem;
+  background: var(--public-surface-deep);
+  color: var(--public-text);
+  display: none;
+  place-items: center;
+  cursor: pointer;
+}
+
+.app-header__menu-icon {
+  width: 1.05rem;
+  display: grid;
+  gap: 0.22rem;
+}
+
+.app-header__menu-icon span {
+  height: 1px;
+  background: currentColor;
+}
+
+.app-mobile-nav {
+  padding: 0.6rem max(1rem, calc((100vw - 1240px) / 2)) 0.9rem;
+  border-top: 1px solid var(--public-border);
+  background: var(--public-surface-deep);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+
+.app-mobile-nav > a,
+.app-mobile-nav button {
+  min-height: 44px;
+  padding-inline: 0.65rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--public-text-secondary);
+  display: flex;
+  align-items: center;
+  text-align: left;
+  cursor: pointer;
+}
+
+.app-mobile-nav > a:hover,
+.app-mobile-nav button:hover {
+  background: var(--public-surface-control);
+  color: var(--public-text);
+}
+
+.app-mobile-nav form {
+  min-width: 0;
+}
+
+.app-main {
+  padding: 0;
+}
+
+.app-home {
+  width: min(100% - 3rem, 1160px);
+  margin-inline: auto;
+  padding-block: clamp(2.5rem, 6vw, 5.5rem) 5rem;
+}
+
+.app-home h1,
+.app-home h2,
+.app-home h3,
+.app-home p,
+.app-home dl {
+  margin-top: 0;
+}
+
+.app-home h1 {
+  max-width: 12ch;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: clamp(2.5rem, 5.6vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.app-home h2 {
+  margin-bottom: 0.75rem;
+  color: #fff;
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.app-eyebrow {
+  margin-bottom: 0.8rem;
+  color: #8fb6ba;
+  font-size: 0.67rem;
+  font-weight: 500;
+}
+
+.app-home__intro {
+  padding-bottom: clamp(2.8rem, 6vw, 5rem);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
+  align-items: center;
+  gap: clamp(2.25rem, 6vw, 5.5rem);
+}
+
+.app-home__intro-copy {
+  min-width: 0;
+}
+
+.app-home__lead {
+  max-width: 34rem;
+  margin-bottom: 1.7rem;
+  color: var(--public-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.app-aircraft-metadata {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.app-aircraft-metadata div {
+  min-width: 0;
+}
+
+.app-aircraft-metadata div + div {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--public-border);
+}
+
+.app-aircraft-metadata dt {
+  margin-bottom: 0.35rem;
+  color: var(--public-text-quiet);
+  font-size: 0.58rem;
+}
+
+.app-aircraft-metadata dd {
+  margin: 0;
+  color: var(--public-text-secondary);
+  font-size: 0.87rem;
+}
+
+.app-home__aircraft-media {
+  min-height: clamp(17rem, 34vw, 25rem);
+  border-color: #26353b;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.28);
+}
+
+.app-learning {
+  padding: clamp(2rem, 5vw, 3.5rem);
+  border: 1px solid #17282b;
+  border-radius: 0.85rem;
+  background: var(--public-surface);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.app-learning__copy {
+  max-width: 42rem;
+}
+
+.app-learning__copy > p:last-child,
+.app-future__heading > p:last-child {
+  margin-bottom: 0;
+  color: var(--public-text-muted);
+  line-height: 1.65;
+}
+
+.app-learning__action {
+  max-width: 19rem;
+  display: grid;
+  justify-items: start;
+  gap: 0.65rem;
+}
+
+.app-learning__action p,
+.app-learning__unavailable {
+  margin: 0;
+  color: var(--public-text-quiet);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.app-learning__unavailable {
+  max-width: 20rem;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--public-border-strong);
+  background: var(--public-surface-control);
+}
+
+.app-future {
+  padding-top: clamp(3.5rem, 8vw, 6.5rem);
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(2.5rem, 7vw, 6rem);
+}
+
+.app-future__heading {
+  max-width: 28rem;
+}
+
+.app-future__list {
+  border-top: 1px solid var(--public-border);
+}
+
+.app-future__item {
+  min-width: 0;
+  padding-block: 1.45rem;
+  border-bottom: 1px solid var(--public-border);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.app-future__index {
+  color: var(--public-accent);
+  font-size: 0.62rem;
+}
+
+.app-future__item h3 {
+  margin-bottom: 0.3rem;
+  color: var(--public-text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.app-future__item p {
+  margin-bottom: 0;
+  color: var(--public-text-quiet);
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+.app-coming-soon {
+  padding: 0.38rem 0.5rem;
+  border: 1px solid #263038;
+  border-radius: 999px;
+  color: var(--public-text-muted);
+  font-size: 0.54rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .app-home__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .app-home__intro-copy {
+    max-width: 42rem;
+  }
+
+  .app-home__aircraft-media {
+    min-height: clamp(18rem, 58vw, 30rem);
+  }
+
+  .app-future {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-header__inner {
+    width: calc(100% - 2rem);
+  }
+
+  .app-header__nav,
+  .app-account-menu {
+    display: none;
+  }
+
+  .app-header__menu-button {
+    display: grid;
+  }
+
+  .app-mobile-nav {
+    padding-inline: 1rem;
+  }
+
+  .app-home {
+    width: calc(100% - 2rem);
+  }
+
+  .app-learning {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .app-learning__action,
+  .app-learning__action .public-button {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-header__inner {
+    min-height: 50px;
+  }
+
+  .app-header .public-brand {
+    min-height: 44px;
+    font-size: 0.86rem;
+  }
+
+  .app-aircraft-context {
+    padding-left: 0.75rem;
+    gap: 0;
+  }
+
+  .app-aircraft-context small {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .app-home {
+    width: calc(100% - 2rem);
+    padding-block: 2.3rem 3.5rem;
+  }
+
+  .app-home h1 {
+    font-size: clamp(2.35rem, 12vw, 3.35rem);
+  }
+
+  .app-home__intro {
+    padding-bottom: 2.5rem;
+    gap: 1.7rem;
+  }
+
+  .app-home__lead {
+    font-size: 0.96rem;
+  }
+
+  .app-aircraft-metadata {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .app-aircraft-metadata div + div {
+    padding: 0.8rem 0 0;
+    border-top: 1px solid var(--public-border);
+    border-left: 0;
+  }
+
+  .app-home__aircraft-media {
+    min-height: 13rem;
+  }
+
+  .app-learning {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .app-future {
+    padding-top: 3.8rem;
+  }
+
+  .app-future__item {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .app-coming-soon {
+    grid-column: 2;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 390px) {
+  .app-header .public-brand > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .app-header__identity {
+    gap: 0.75rem;
+  }
+
+  .app-aircraft-context {
+    padding-left: 0.75rem;
+  }
+
+  .app-mobile-nav {
+    grid-template-columns: 1fr;
   }
 }
 

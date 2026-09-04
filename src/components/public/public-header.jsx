@@ -124,6 +124,13 @@ function HeaderActions({ authenticated, mobile = false, onNavigate }) {
         </Link>
         <Link
           className="public-button public-button--quiet"
+          href="/app"
+          onClick={onNavigate}
+        >
+          Open app
+        </Link>
+        <Link
+          className={mobile ? "public-button public-button--quiet" : "public-header__account"}
           href="/account"
           onClick={onNavigate}
         >
@@ -222,7 +229,9 @@ export default function PublicHeader({ authenticated }) {
             <Link href="#how-it-works" onClick={closeMenu}>
               How it works
             </Link>
-            <div className="public-mobile-nav__actions">
+            <div
+              className={`public-mobile-nav__actions${authenticated ? " is-authenticated" : ""}`}
+            >
               <HeaderActions
                 authenticated={authenticated}
                 mobile

@@ -52,8 +52,8 @@ describe("HomePage", () => {
 
     expect(markup).toContain("Master the cockpit.");
     expect(markup).toContain('href="/learn/cold-dark-to-takeoff"');
+    expect(markup).toContain('href="/app"');
     expect(markup).toContain('href="/account"');
-    expect(markup).not.toContain('href="/app"');
     expect(markup).not.toContain("private-session");
   });
 

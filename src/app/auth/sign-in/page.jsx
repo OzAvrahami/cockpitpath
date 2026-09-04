@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import SubmitButton from "../../../components/auth/submit-button";
+import { getSafeReturnPath } from "../../../lib/auth/redirects";
 import { signInAction } from "../actions";
 
 const errorMessages = {
@@ -9,7 +10,8 @@ const errorMessages = {
 };
 
 export default async function SignInPage({ searchParams }) {
-  const { error, reset, verification } = await searchParams;
+  const { error, reset, returnTo, verification } = await searchParams;
+  const safeReturnPath = getSafeReturnPath(returnTo);
 
   return (
     <main>
@@ -32,6 +34,7 @@ export default async function SignInPage({ searchParams }) {
           </p>
         ) : null}
         <form action={signInAction} className="auth-form">
+          <input name="returnTo" type="hidden" value={safeReturnPath} />
           <label htmlFor="email">Email</label>
           <input id="email" name="email" type="email" autoComplete="email" required />
           <label htmlFor="password">Password</label>

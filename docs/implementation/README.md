@@ -55,15 +55,27 @@ Phase 1, the Phase 2 engineering foundation, Phase 3, Phase 4, and Work Package 
 
 ### Public Site v1
 
-**Status:** Implemented locally; automated verification complete; manual visual approval pending<br>
+**Status:** ✅ Complete — deployed staging implementation received manual visual approval<br>
 **GitHub:** [Issue #6 — Implement CockpitPath Public Site v1](https://github.com/OzAvrahami/cockpitpath/issues/6)<br>
 **Design handoff:** [Public Site and Application Shell Handoff](../design/public-site-shell-handoff.md)
 
 Public Site v1 replaces the root application-foundation placeholder with the complete public marketing homepage. It establishes the Route & Fix identity, public navigation states, image-led Fly / Find / Understand story, simulator-companion presentation, supported-aircraft presentation, responsive layouts, accessibility behavior, and deliberate deferred-media fallbacks.
 
-This workstream does not renumber or replace the Phase 5–7 product-feature path. Application Shell v1 remains a separate future workstream, and the current successful sign-in destination and protected application routes are unchanged. Real iFly 737 MAX 8 cockpit media remains deferred and does not block the public-site structure; approved captures, crop variants, attribution, verification metadata, and hotspot calibration will be integrated later.
+This workstream does not renumber or replace the Phase 5–7 product-feature path. Application Shell v1 remains a separate workstream. Real iFly 737 MAX 8 cockpit media remains deferred and does not block the public-site structure; approved captures, crop variants, attribution, verification metadata, and hotspot calibration will be integrated later.
 
-The implementation must remain in verification until the complete public page receives manual visual approval. Issue #6 must not be closed or moved to Done before that review.
+### Application Shell v1
+
+**Status:** Implemented locally; automated verification complete; browser inspection pending<br>
+**GitHub:** [Issue #7 — Implement CockpitPath Application Shell v1](https://github.com/OzAvrahami/cockpitpath/issues/7)<br>
+**Design handoff:** [Public Site and Application Shell Handoff](../design/public-site-shell-handoff.md)
+
+Application Shell v1 adds the protected `/app` route as the signed-in home and establishes the compact shared navigation foundation for future product pages. It presents the one supported Boeing 737 MAX 8 / iFly / Microsoft Flight Simulator 2024 context and surfaces the existing Cold & Dark → Takeoff journey using authoritative progress when available. When progress cannot be read, the shell makes no completion or recency claim and lets the existing journey-resume route resolve the saved position safely.
+
+Successful sign-in now defaults to `/app`. Valid explicit internal destinations under `/app`, `/account`, and `/learn` survive authentication; unsafe, external, authentication-loop, and unknown return destinations fall back to `/app`. `/account` remains the account-management destination, while authenticated visitors can still remain on the public homepage and open `/app` explicitly from its public header.
+
+Aircraft Page, Cockpit Explorer, and Aircraft Systems remain unavailable until their existing Phase 5–7 work items are implemented. The shell presents them only as non-link coming-soon states and does not establish their final route slugs. Guide Mode retains its separate Focus Mode chrome on the existing learning route and is not wrapped in the application shell. Verified real cockpit media remains deferred and does not block the shell.
+
+The automated route, component, authentication, full-suite, lint, and production-build checks pass. A controllable local browser was unavailable for the required desktop, tablet, narrow-width, keyboard, zoom, reflow, and visual inspection, so Issue #7 remains In Progress until that review is completed.
 
 ## Major Delivery Path
 

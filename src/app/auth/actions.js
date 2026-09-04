@@ -3,6 +3,10 @@
 import { redirect } from "next/navigation";
 
 import { auth } from "../../lib/auth/server";
+import {
+  DEFAULT_AUTH_DESTINATION,
+  getSafeReturnPath,
+} from "../../lib/auth/redirects";
 
 const ACCOUNT_PATH = "/account";
 const SIGN_IN_PATH = "/auth/sign-in";
@@ -20,6 +24,14 @@ function passwordField(formData, name) {
 function authPage(path, parameter, value = "1") {
   const query = new URLSearchParams({ [parameter]: value });
   return `${path}?${query}`;
+}
+
+function signInPage(parameter, value, returnTo) {
+  const query = new URLSearchParams({
+    [parameter]: value,
+    returnTo: getSafeReturnPath(returnTo),
+  });
+  return `${SIGN_IN_PATH}?${query}`;
 }
 
 async function callAuth(operation) {
@@ -57,18 +69,22 @@ export async function signUpAction(formData) {
 export async function signInAction(formData) {
   const email = textField(formData, "email");
   const password = passwordField(formData, "password");
+  const returnTo = getSafeReturnPath(
+    textField(formData, "returnTo"),
+    DEFAULT_AUTH_DESTINATION,
+  );
 
   if (!email || !password) {
-    redirect(authPage(SIGN_IN_PATH, "error", "required"));
+    redirect(signInPage("error", "required", returnTo));
   }
 
   const result = await callAuth(() => auth.signIn.email({ email, password }));
 
   if (result.error) {
-    redirect(authPage(SIGN_IN_PATH, "error", "invalid"));
+    redirect(signInPage("error", "invalid", returnTo));
   }
 
-  redirect(ACCOUNT_PATH);
+  redirect(returnTo);
 }
 
 export async function signOutAction() {

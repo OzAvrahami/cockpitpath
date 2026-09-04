@@ -35,13 +35,17 @@ export function RouteFixMark({ className = "" }) {
   );
 }
 
-export default function Brand({ compact = false, href = "#top" }) {
+export default function Brand({
+  ariaLabel = "CockpitPath home — return to top",
+  compact = false,
+  href = "#top",
+}) {
   return (
     <Link
       className="public-brand"
       data-public-home-link
       href={href}
-      aria-label="CockpitPath home — return to top"
+      aria-label={ariaLabel}
     >
       <RouteFixMark className="public-brand__mark" />
       {compact ? null : <span>CockpitPath</span>}
