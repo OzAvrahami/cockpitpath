@@ -11,7 +11,10 @@ const { authMock, redirectMock } = vi.hoisted(() => ({
 }));
 
 vi.mock("../../lib/auth/server", () => ({ auth: authMock }));
-vi.mock("next/navigation", () => ({ redirect: redirectMock }));
+vi.mock("next/navigation", () => ({
+  redirect: redirectMock,
+  usePathname: () => "/account",
+}));
 
 import AccountPage from "./page";
 

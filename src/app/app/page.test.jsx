@@ -71,13 +71,15 @@ describe("ApplicationHomePage", () => {
     expect(markup).not.toContain("Continue Guide Mode");
   });
 
-  it("does not create routes or dead links for unavailable future areas", async () => {
+  it("links the implemented Explorer while keeping future phases unavailable", async () => {
     const markup = await renderAppHome();
 
     expect(markup).toContain("Aircraft Page");
     expect(markup).toContain("Cockpit Explorer");
     expect(markup).toContain("Aircraft Systems");
-    expect(markup.match(/Coming soon/g)).toHaveLength(3);
+    expect(markup.match(/Coming soon/g)).toHaveLength(2);
+    expect(markup).toContain('href="/app/cockpit/ifly-737-max-8-msfs-2024"');
+    expect(markup).toContain("Open Explorer");
     expect(markup).not.toContain('href="/aircraft"');
     expect(markup).not.toContain('href="/cockpit-explorer"');
     expect(markup).not.toContain('href="/systems"');

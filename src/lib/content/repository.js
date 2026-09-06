@@ -12,12 +12,226 @@ function groupBy(rows, key) {
   return grouped;
 }
 
+function numberOrZero(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : 0;
+}
+
+export async function getCockpitExplorer(implementationSlug) {
+  const contextResult = await queryPublished(
+    `select implementation.id,
+            implementation.slug,
+            implementation.display_name,
+            implementation.support_status,
+            aircraft.slug as aircraft_slug,
+            aircraft.display_name as aircraft_name,
+            simulator.display_name as simulator_name,
+            addon.developer_name,
+            addon.product_name
+     from cockpitpath_published.aircraft_implementations implementation
+     join cockpitpath_published.aircraft aircraft on aircraft.id = implementation.aircraft_id
+     join cockpitpath_published.simulators simulator on simulator.id = implementation.simulator_id
+     join cockpitpath_published.addon_products addon on addon.id = implementation.addon_product_id
+     where implementation.slug = $1
+     limit 1`,
+    [implementationSlug],
+  );
+
+  if (!contextResult.rowCount) return null;
+  const context = contextResult.rows[0];
+
+  const [areasResult, viewsResult, controlsResult, hotspotsResult, conceptsResult, proceduresResult] =
+    await Promise.all([
+      queryPublished(
+        `select id, parent_area_id, area_type, slug, title, sort_order
+         from cockpitpath_published.cockpit_areas
+         where aircraft_implementation_id = $1
+         order by sort_order, title`,
+        [context.id],
+      ),
+      queryPublished(
+        `select view_entity.id,
+                view_entity.cockpit_area_id,
+                view_entity.view_role,
+                view_entity.title,
+                view_entity.sort_order,
+                view_entity.is_primary,
+                media.id as media_id,
+                media.storage_key,
+                media.mime_type,
+                media.width,
+                media.height,
+                media.accessible_description,
+                media.rights_status,
+                media.verification_status
+         from cockpitpath_published.cockpit_views view_entity
+         join cockpitpath_published.media_assets media on media.id = view_entity.media_asset_id
+         where view_entity.aircraft_implementation_id = $1
+         order by view_entity.is_primary desc, view_entity.sort_order, view_entity.title`,
+        [context.id],
+      ),
+      queryPublished(
+        `select control.id,
+                control.cockpit_area_id,
+                control.slug,
+                control.canonical_name,
+                control.control_type,
+                control.what_it_does,
+                control.when_used,
+                coalesce(to_jsonb(control)->'search_aliases', '[]'::jsonb) as search_aliases,
+                system.id as system_id,
+                system.slug as system_slug,
+                system.title as system_title
+         from cockpitpath_published.controls control
+         left join cockpitpath_published.aircraft_systems system on system.id = control.aircraft_system_id
+         where control.aircraft_implementation_id = $1
+         order by control.canonical_name`,
+        [context.id],
+      ),
+      queryPublished(
+        `select id,
+                cockpit_view_id,
+                target_cockpit_area_id,
+                target_control_id,
+                x,
+                y,
+                width,
+                height,
+                shape,
+                label,
+                sort_order
+         from cockpitpath_published.hotspots
+         where aircraft_implementation_id = $1
+         order by sort_order`,
+        [context.id],
+      ),
+      queryPublished(
+        `select component_control.control_id,
+                concept.id,
+                concept.title,
+                concept.short_definition,
+                concept.why_it_matters
+         from cockpitpath_published.system_component_controls component_control
+         join cockpitpath_published.system_components component
+           on component.id = component_control.system_component_id
+         join cockpitpath_published.system_component_concepts component_concept
+           on component_concept.system_component_id = component.id
+         join cockpitpath_published.concepts concept on concept.id = component_concept.concept_id
+         where component_control.aircraft_implementation_id = $1
+         order by component_control.control_id, component_concept.sort_order, concept.title`,
+        [context.id],
+      ),
+      queryPublished(
+        `select distinct step_control.control_id,
+                journey.slug as journey_slug,
+                journey.title as journey_title,
+                procedure.slug as procedure_slug,
+                procedure.title as procedure_title,
+                step.id as step_id,
+                step.sequence as step_sequence,
+                step.title as step_title
+         from cockpitpath_published.procedure_step_controls step_control
+         join cockpitpath_published.procedure_steps step on step.id = step_control.procedure_step_id
+         join cockpitpath_published.procedures procedure on procedure.id = step.procedure_id
+         join cockpitpath_published.journey_sections section on section.procedure_id = procedure.id
+         join cockpitpath_published.journeys journey on journey.id = section.journey_id
+         where step_control.aircraft_implementation_id = $1
+         order by step_control.control_id, journey.title, procedure.title, step.sequence`,
+        [context.id],
+      ),
+    ]);
+
+  const viewsByArea = groupBy(viewsResult.rows, "cockpit_area_id");
+  const hotspotsByView = groupBy(hotspotsResult.rows, "cockpit_view_id");
+  const conceptsByControl = groupBy(conceptsResult.rows, "control_id");
+  const proceduresByControl = groupBy(proceduresResult.rows, "control_id");
+
+  return {
+    implementation: {
+      id: context.id,
+      slug: context.slug,
+      name: context.display_name,
+      supportStatus: context.support_status,
+      aircraftSlug: context.aircraft_slug,
+      aircraftName: context.aircraft_name,
+      addonDeveloper: context.developer_name,
+      addonName: context.product_name,
+      simulatorName: context.simulator_name,
+    },
+    areas: areasResult.rows.map((area) => ({
+      id: area.id,
+      parentId: area.parent_area_id,
+      type: area.area_type,
+      slug: area.slug,
+      title: area.title,
+      sortOrder: area.sort_order,
+      views: (viewsByArea.get(area.id) || []).map((view) => ({
+        id: view.id,
+        role: view.view_role,
+        title: view.title,
+        primary: view.is_primary,
+        media: {
+          id: view.media_id,
+          storageKey: view.storage_key,
+          mimeType: view.mime_type,
+          width: view.width,
+          height: view.height,
+          alt: view.accessible_description,
+          rightsStatus: view.rights_status,
+          verificationStatus: view.verification_status,
+          url: null,
+        },
+        hotspots: (hotspotsByView.get(view.id) || []).map((hotspot) => ({
+          id: hotspot.id,
+          targetAreaId: hotspot.target_cockpit_area_id,
+          targetControlId: hotspot.target_control_id,
+          x: numberOrZero(hotspot.x),
+          y: numberOrZero(hotspot.y),
+          width: numberOrZero(hotspot.width),
+          height: numberOrZero(hotspot.height),
+          shape: hotspot.shape,
+          label: hotspot.label,
+        })),
+      })),
+    })),
+    controls: controlsResult.rows.map((control) => ({
+      id: control.id,
+      areaId: control.cockpit_area_id,
+      slug: control.slug,
+      name: control.canonical_name,
+      type: control.control_type,
+      whatItDoes: control.what_it_does,
+      whenUsed: control.when_used,
+      aliases: Array.isArray(control.search_aliases) ? control.search_aliases : [],
+      system: control.system_id
+        ? { id: control.system_id, slug: control.system_slug, title: control.system_title }
+        : null,
+      concepts: (conceptsByControl.get(control.id) || []).map((concept) => ({
+        id: concept.id,
+        title: concept.title,
+        definition: concept.short_definition,
+        whyItMatters: concept.why_it_matters,
+      })),
+      procedures: (proceduresByControl.get(control.id) || []).map((procedure) => ({
+        journeySlug: procedure.journey_slug,
+        journeyTitle: procedure.journey_title,
+        procedureSlug: procedure.procedure_slug,
+        procedureTitle: procedure.procedure_title,
+        stepId: procedure.step_id,
+        stepSequence: procedure.step_sequence,
+        stepTitle: procedure.step_title,
+      })),
+    })),
+  };
+}
+
 export async function getGuideProcedure(journeySlug, procedureSlug) {
   const contextResult = await queryPublished(
     `select journey.id as journey_id,
             journey.slug as journey_slug,
             journey.title as journey_title,
             journey.description as journey_description,
+            implementation.slug as implementation_slug,
             implementation.display_name as implementation_name,
             section.id as section_id,
             section.sequence as section_sequence,
@@ -70,6 +284,7 @@ export async function getGuideProcedure(journeySlug, procedureSlug) {
               relation.role,
               relation.sequence,
               control.id,
+              control.slug,
               control.canonical_name,
               control.control_type,
               control.what_it_does,
@@ -153,6 +368,7 @@ export async function getGuideProcedure(journeySlug, procedureSlug) {
       title: context.journey_title,
       description: context.journey_description,
       implementationName: context.implementation_name,
+      implementationSlug: context.implementation_slug,
     },
     section: {
       id: context.section_id,
@@ -188,6 +404,7 @@ export async function getGuideProcedure(journeySlug, procedureSlug) {
         waitHint: step.wait_hint,
         controls: stepControls.map((control) => ({
           id: control.id,
+          slug: control.slug,
           name: control.canonical_name,
           type: control.control_type,
           role: control.role,

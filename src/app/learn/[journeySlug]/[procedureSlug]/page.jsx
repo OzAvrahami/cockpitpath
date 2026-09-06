@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import GuideMode from "../../../../components/guide/guide-mode";
-import { getSignInPath } from "../../../../lib/auth/redirects";
+import { getSafeReturnPath, getSignInPath } from "../../../../lib/auth/redirects";
 import { auth } from "../../../../lib/auth/server";
 import { getGuideProcedure } from "../../../../lib/content/repository";
 import {
@@ -11,8 +11,9 @@ import {
 
 export const dynamic = "force-dynamic";
 
-export default async function GuideProcedurePage({ params }) {
+export default async function GuideProcedurePage({ params, searchParams }) {
   const { journeySlug, procedureSlug } = await params;
+  const query = await searchParams;
   const { data: sessionData } = await auth.getSession();
   if (!sessionData?.user) {
     redirect(
@@ -58,6 +59,7 @@ export default async function GuideProcedurePage({ params }) {
           progress.steps.map(({ stepId, status }) => [stepId, status]),
         ),
       }}
+      returnPath={getSafeReturnPath(query?.from, null)}
     />
   );
 }

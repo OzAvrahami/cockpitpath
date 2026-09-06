@@ -16,9 +16,15 @@ import GuideMode, {
 } from "./guide-mode";
 
 const guide = {
-  journey: { id: "journey", title: "Synthetic Journey", implementationName: "Synthetic Test Implementation" },
+  journey: {
+    id: "journey",
+    slug: "synthetic-journey",
+    title: "Synthetic Journey",
+    implementationName: "Synthetic Test Implementation",
+    implementationSlug: "synthetic-wp2",
+  },
   section: { title: "Synthetic Section" },
-  procedure: { title: "Synthetic Procedure" },
+  procedure: { slug: "synthetic-procedure", title: "Synthetic Procedure" },
   steps: [{
     id: "step-one",
     sequence: 1,
@@ -32,7 +38,7 @@ const guide = {
     warning: null,
     optional: false,
     waitHint: null,
-    controls: [{ id: "control", name: "Synthetic Control", area: "Synthetic Panel" }],
+    controls: [{ id: "control", slug: "synthetic-control", name: "Synthetic Control", area: "Synthetic Panel" }],
     concepts: [],
     visual: {
       title: "Synthetic View",
@@ -59,6 +65,22 @@ describe("GuideMode", () => {
     expect(markup).toContain('aria-valuetext="0 of 1 steps complete, 0 skipped. Step 1 is current."');
     expect(markup).toContain('aria-label="Step navigation"');
     expect(markup).toContain('aria-controls="guide-stage"');
+    expect(markup).toContain("Explore control");
+    expect(markup).toContain("/app/cockpit/synthetic-wp2?control=synthetic-control");
+  });
+
+  it("returns to an originating Explorer context", () => {
+    const returnPath = "/app/cockpit/synthetic-wp2?area=synthetic-panel&control=synthetic-control";
+    const markup = renderToStaticMarkup(
+      <GuideMode
+        guide={guide}
+        progress={{ currentStepId: "step-one", mode: "LEARN", status: "IN_PROGRESS", stepStatuses: {} }}
+        returnPath={returnPath}
+      />,
+    );
+
+    expect(markup).toContain(`href="${returnPath.replaceAll("&", "&amp;")}"`);
+    expect(markup).toContain("Back to Explorer");
   });
 
   it("keeps required-step Skip visibly unavailable", () => {

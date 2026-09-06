@@ -6,6 +6,7 @@ import { getGuideProgress } from "../../lib/progress/data-api";
 
 const JOURNEY_PATH = "/learn/cold-dark-to-takeoff";
 const JOURNEY_SLUG = "cold-dark-to-takeoff";
+const COCKPIT_EXPLORER_PATH = "/app/cockpit/ifly-737-max-8-msfs-2024";
 
 export const metadata = {
   title: "CockpitPath App | Boeing 737 MAX 8",
@@ -78,6 +79,7 @@ const futureAreas = [
   {
     name: "Cockpit Explorer",
     description: "Visual discovery for cockpit panels, areas, and controls.",
+    href: COCKPIT_EXPLORER_PATH,
   },
   {
     name: "Aircraft Systems",
@@ -150,12 +152,18 @@ export default async function ApplicationHomePage() {
                 <h3>{area.name}</h3>
                 <p>{area.description}</p>
               </div>
-              <span
-                aria-label={`${area.name} coming soon`}
-                className="app-coming-soon"
-              >
-                Coming soon
-              </span>
+              {area.href ? (
+                <Link className="app-future__link" href={area.href}>
+                  Open Explorer <span aria-hidden="true">→</span>
+                </Link>
+              ) : (
+                <span
+                  aria-label={`${area.name} coming soon`}
+                  className="app-coming-soon"
+                >
+                  Coming soon
+                </span>
+              )}
             </article>
           ))}
         </div>

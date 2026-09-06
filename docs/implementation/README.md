@@ -35,7 +35,7 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 - ✅ [Phase 4 — Guide Mode](phase-4-guide-mode.md)
   - ▶ [Target-device layout validation — Issue #1](phase-4-guide-mode.md#target-layout-validation) — local refinement and user-performed manual validation approved; commit and deployment verification pending
 - ✅ Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation
-- ▶ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
+- ▶ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md) — Issue #3 local vertical slice implemented and user-performed manual review approved; commit and Railway deployment verification pending
 - ⬜ [Phase 6 — Aircraft Systems](phase-6-aircraft-systems.md)
 - ⬜ [Phase 7 — Aircraft Page](phase-7-aircraft-page.md)
 - ⬜ [Phase 8 — Content Expansion](phase-8-content-expansion.md)

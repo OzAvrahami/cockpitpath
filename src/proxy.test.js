@@ -39,4 +39,21 @@ describe("protected route proxy", () => {
     });
     expect(middlewareHandler).toHaveBeenCalledWith(request);
   });
+
+  it("preserves the complete protected Explorer return destination", () => {
+    const request = {
+      nextUrl: {
+        pathname: "/app/cockpit/ifly-737-max-8-msfs-2024",
+        search: "?area=overhead&control=battery-switch",
+      },
+    };
+
+    expect(getProtectedReturnPath(request)).toBe(
+      "/app/cockpit/ifly-737-max-8-msfs-2024?area=overhead&control=battery-switch",
+    );
+    proxy(request);
+    expect(middlewareMock).toHaveBeenCalledWith({
+      loginUrl: "/auth/sign-in?returnTo=%2Fapp%2Fcockpit%2Fifly-737-max-8-msfs-2024%3Farea%3Doverhead%26control%3Dbattery-switch",
+    });
+  });
 });

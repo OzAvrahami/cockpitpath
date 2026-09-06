@@ -2,12 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { signOutAction } from "../../app/auth/actions";
 import SubmitButton from "../auth/submit-button";
 import Brand from "../public/brand";
 
 const LEARNING_PATH = "/learn/cold-dark-to-takeoff";
+export const COCKPIT_EXPLORER_PATH = "/app/cockpit/ifly-737-max-8-msfs-2024";
+
+export function getCurrentAppPage(pathname, currentPage) {
+  if (currentPage) return currentPage;
+  if (pathname?.startsWith("/app/cockpit/")) return "cockpit";
+  return "app";
+}
 
 export function closeAppMenuAndRestoreFocus({
   menuButton,
@@ -38,7 +46,9 @@ function AccountLinks({ currentPage, onNavigate }) {
   );
 }
 
-export default function AppShell({ children, currentPage = "app" }) {
+export default function AppShell({ children, currentPage }) {
+  const pathname = usePathname();
+  const resolvedCurrentPage = getCurrentAppPage(pathname, currentPage);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const firstMobileLinkRef = useRef(null);
@@ -88,20 +98,26 @@ export default function AppShell({ children, currentPage = "app" }) {
 
           <nav className="app-header__nav" aria-label="Application navigation">
             <Link
-              aria-current={currentPage === "app" ? "page" : undefined}
+              aria-current={resolvedCurrentPage === "app" ? "page" : undefined}
               href="/app"
             >
               App home
+            </Link>
+            <Link
+              aria-current={resolvedCurrentPage === "cockpit" ? "page" : undefined}
+              href={COCKPIT_EXPLORER_PATH}
+            >
+              Cockpit Explorer
             </Link>
             <Link href={LEARNING_PATH}>Continue learning</Link>
           </nav>
 
           <details className="app-account-menu">
-            <summary aria-current={currentPage === "account" ? "page" : undefined}>
+            <summary aria-current={resolvedCurrentPage === "account" ? "page" : undefined}>
               Account
             </summary>
             <div className="app-account-menu__panel">
-              <AccountLinks currentPage={currentPage} />
+              <AccountLinks currentPage={resolvedCurrentPage} />
             </div>
           </details>
 
@@ -130,16 +146,23 @@ export default function AppShell({ children, currentPage = "app" }) {
           >
             <Link
               ref={firstMobileLinkRef}
-              aria-current={currentPage === "app" ? "page" : undefined}
+              aria-current={resolvedCurrentPage === "app" ? "page" : undefined}
               href="/app"
               onClick={closeMenu}
             >
               App home
             </Link>
+            <Link
+              aria-current={resolvedCurrentPage === "cockpit" ? "page" : undefined}
+              href={COCKPIT_EXPLORER_PATH}
+              onClick={closeMenu}
+            >
+              Cockpit Explorer
+            </Link>
             <Link href={LEARNING_PATH} onClick={closeMenu}>
               Continue learning
             </Link>
-            <AccountLinks currentPage={currentPage} onNavigate={closeMenu} />
+            <AccountLinks currentPage={resolvedCurrentPage} onNavigate={closeMenu} />
           </nav>
         ) : null}
       </header>

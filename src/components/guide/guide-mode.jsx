@@ -15,6 +15,7 @@ import {
   resolvedStepStatuses,
   stepIndexById,
 } from "../../lib/guide/model";
+import { explorerContextPath } from "../../lib/cockpit/explorer";
 
 export function guideMediaAspectRatio(media) {
   const width = Number(media?.width);
@@ -84,7 +85,7 @@ function Visual({ step }) {
   );
 }
 
-export default function GuideMode({ guide, progress }) {
+export default function GuideMode({ guide, progress, returnPath }) {
   const router = useRouter();
   const actionHeadingRef = useRef(null);
   const focusButtonRef = useRef(null);
@@ -273,7 +274,9 @@ export default function GuideMode({ guide, progress }) {
           >
             {focusMode ? "Exit Focus" : "Focus"}
           </button>
-          <Link href="/account" className="guide-exit">Exit</Link>
+          <Link href={returnPath || "/account"} className="guide-exit">
+            {returnPath?.startsWith("/app/cockpit/") ? "Back to Explorer" : "Exit"}
+          </Link>
         </div>
       </header>
 
@@ -338,7 +341,21 @@ export default function GuideMode({ guide, progress }) {
             {step.controls.length ? (
               <details>
                 <summary>Controls in this step</summary>
-                <ul>{step.controls.map((control) => <li key={control.id}>{control.name} · {control.area}</li>)}</ul>
+                <ul>{step.controls.map((control) => (
+                  <li key={control.id}>
+                    {control.name} · {control.area}{" "}
+                    {guide.journey.implementationSlug && control.slug ? (
+                      <Link href={explorerContextPath(
+                        guide.journey.implementationSlug,
+                        null,
+                        control.slug,
+                        `/learn/${guide.journey.slug}/${guide.procedure.slug}`,
+                      )}>
+                        Explore control
+                      </Link>
+                    ) : null}
+                  </li>
+                ))}</ul>
               </details>
             ) : null}
             {step.concepts.length ? (

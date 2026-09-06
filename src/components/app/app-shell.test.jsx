@@ -2,8 +2,9 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("../../app/auth/actions", () => ({ signOutAction: vi.fn() }));
+vi.mock("next/navigation", () => ({ usePathname: () => "/app" }));
 
-import AppShell, { closeAppMenuAndRestoreFocus } from "./app-shell";
+import AppShell, { closeAppMenuAndRestoreFocus, getCurrentAppPage } from "./app-shell";
 
 describe("AppShell", () => {
   it("renders the shared signed-in navigation and closed mobile disclosure", () => {
@@ -18,6 +19,7 @@ describe("AppShell", () => {
     expect(markup).toContain('aria-label="Application navigation"');
     expect(markup).toContain('aria-current="page"');
     expect(markup).toContain('href="/learn/cold-dark-to-takeoff"');
+    expect(markup).toContain('href="/app/cockpit/ifly-737-max-8-msfs-2024"');
     expect(markup).toContain('href="/account"');
     expect(markup).toContain('href="/"');
     expect(markup).toContain("Sign out");
@@ -26,6 +28,15 @@ describe("AppShell", () => {
     expect(markup).toContain('aria-label="Open application menu"');
     expect(markup).toContain('aria-label="Active aircraft: Boeing 737 MAX 8"');
     expect(markup).not.toContain('id="app-mobile-menu"');
+  });
+
+  it("marks Cockpit Explorer as the current application destination", () => {
+    const markup = renderToStaticMarkup(
+      <AppShell currentPage="cockpit"><p>Explorer content</p></AppShell>,
+    );
+
+    expect(markup).toContain('aria-current="page" href="/app/cockpit/ifly-737-max-8-msfs-2024"');
+    expect(getCurrentAppPage("/app/cockpit/ifly-737-max-8-msfs-2024")).toBe("cockpit");
   });
 
   it("closes the mobile menu and restores focus after Escape", () => {
