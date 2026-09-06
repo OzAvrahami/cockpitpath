@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+import {
+  AuthDestination,
+  AuthMessage,
+} from "../../../components/auth/auth-frame";
 import SubmitButton from "../../../components/auth/submit-button";
 import { getSafeReturnPath } from "../../../lib/auth/redirects";
 import { signInAction } from "../actions";
@@ -12,31 +16,60 @@ const errorMessages = {
 export default async function SignInPage({ searchParams }) {
   const { error, reset, returnTo, verification } = await searchParams;
   const safeReturnPath = getSafeReturnPath(returnTo);
+  const signUpQuery = new URLSearchParams({ returnTo: safeReturnPath });
+  const errorMessage = errorMessages[error];
 
   return (
-    <main>
-      <section className="auth-panel" aria-labelledby="sign-in-title">
-        <p className="auth-panel__eyebrow">Application authentication</p>
+    <section className="auth-panel" aria-labelledby="sign-in-title">
+      <div className="auth-panel__intro">
+        <p className="auth-panel__eyebrow">Welcome back</p>
         <h1 id="sign-in-title">Sign in</h1>
-        {errorMessages[error] ? (
-          <p className="auth-message auth-message--error" role="alert">
-            {errorMessages[error]}
-          </p>
-        ) : null}
-        {reset === "complete" ? (
-          <p className="auth-message" role="status">
-            Password updated. Sign in with your new password.
-          </p>
-        ) : null}
-        {verification === "required" ? (
-          <p className="auth-message" role="status">
-            Check your email to verify the account before signing in.
-          </p>
-        ) : null}
-        <form action={signInAction} className="auth-form">
-          <input name="returnTo" type="hidden" value={safeReturnPath} />
+        <p className="auth-panel__lead">
+          Continue your learning path through the Boeing 737 MAX 8.
+        </p>
+      </div>
+
+      <AuthDestination id="sign-in-destination" returnTo={safeReturnPath} />
+
+      {errorMessage ? (
+        <AuthMessage id="sign-in-error" variant="error">
+          {errorMessage}
+        </AuthMessage>
+      ) : null}
+      {reset === "complete" ? (
+        <AuthMessage title="Password updated">
+          Sign in with your new password.
+        </AuthMessage>
+      ) : null}
+      {verification === "required" ? (
+        <AuthMessage title="Check your email">
+          Verify your account using the message we sent, then sign in to
+          continue.
+        </AuthMessage>
+      ) : null}
+
+      <form
+        action={signInAction}
+        aria-describedby={
+          errorMessage
+            ? "sign-in-error sign-in-destination"
+            : "sign-in-destination"
+        }
+        className="auth-form"
+      >
+        <input name="returnTo" type="hidden" value={safeReturnPath} />
+        <div className="auth-field">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" autoComplete="email" required />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            required
+          />
+        </div>
+        <div className="auth-field">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -45,15 +78,20 @@ export default async function SignInPage({ searchParams }) {
             autoComplete="current-password"
             required
           />
-          <SubmitButton pendingLabel="Signing in…">Sign in</SubmitButton>
-        </form>
-        <p>
-          <Link href="/auth/forgot-password">Forgot your password?</Link>
-        </p>
-        <p>
-          Need an account? <Link href="/auth/sign-up">Create one</Link>.
-        </p>
-      </section>
-    </main>
+        </div>
+        <Link className="auth-form__support-link" href="/auth/forgot-password">
+          Forgot your password?
+        </Link>
+        <SubmitButton pendingLabel="Signing in…">Sign in</SubmitButton>
+      </form>
+
+      <p className="auth-panel__alternate">
+        New to CockpitPath?{" "}
+        <Link href={`/auth/sign-up?${signUpQuery}`}>Create an account</Link>
+      </p>
+      <p className="auth-panel__assurance">
+        CockpitPath does not store a separate copy of your password.
+      </p>
+    </section>
   );
 }

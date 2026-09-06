@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { AuthMessage } from "../../../components/auth/auth-frame";
 import SubmitButton from "../../../components/auth/submit-button";
 import { requestPasswordResetAction } from "../actions";
 
@@ -10,37 +11,56 @@ const errorMessages = {
 
 export default async function ForgotPasswordPage({ searchParams }) {
   const { error, sent } = await searchParams;
+  const errorMessage = errorMessages[error];
 
   return (
-    <main>
-      <section className="auth-panel" aria-labelledby="forgot-password-title">
-        <p className="auth-panel__eyebrow">Application authentication</p>
+    <section className="auth-panel" aria-labelledby="forgot-password-title">
+      <div className="auth-panel__intro">
+        <p className="auth-panel__eyebrow">Account access</p>
         <h1 id="forgot-password-title">Reset your password</h1>
-        <p>
-          Enter your email address. If an account can receive a reset message,
-          Neon Auth will send one.
+        <p className="auth-panel__lead">
+          Enter your email address and we will send reset instructions when the
+          account is eligible.
         </p>
-        {errorMessages[error] ? (
-          <p className="auth-message auth-message--error" role="alert">
-            {errorMessages[error]}
-          </p>
-        ) : null}
-        {sent === "1" ? (
-          <p className="auth-message" role="status">
-            If the account is eligible, a password-reset message has been sent.
-          </p>
-        ) : null}
-        <form action={requestPasswordResetAction} className="auth-form">
+      </div>
+
+      {errorMessage ? (
+        <AuthMessage id="password-reset-error" variant="error">
+          {errorMessage}
+        </AuthMessage>
+      ) : null}
+      {sent === "1" ? (
+        <AuthMessage title="Check your email">
+          If the account is eligible, password-reset instructions have been
+          sent.
+        </AuthMessage>
+      ) : null}
+
+      <form
+        action={requestPasswordResetAction}
+        aria-describedby={errorMessage ? "password-reset-error" : undefined}
+        className="auth-form"
+      >
+        <div className="auth-field">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" autoComplete="email" required />
-          <SubmitButton pendingLabel="Requesting reset…">
-            Send reset link
-          </SubmitButton>
-        </form>
-        <p>
-          <Link href="/auth/sign-in">Back to sign in</Link>
-        </p>
-      </section>
-    </main>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            required
+          />
+        </div>
+        <SubmitButton pendingLabel="Requesting reset…">
+          Send reset link
+        </SubmitButton>
+      </form>
+
+      <p className="auth-panel__alternate">
+        Remembered your password?{" "}
+        <Link href="/auth/sign-in">Back to sign in</Link>
+      </p>
+    </section>
   );
 }

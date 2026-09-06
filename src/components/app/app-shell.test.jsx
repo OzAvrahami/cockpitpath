@@ -43,4 +43,17 @@ describe("AppShell", () => {
     expect(schedule).toHaveBeenCalledOnce();
     expect(focus).toHaveBeenCalledOnce();
   });
+
+  it("marks the account destination as current without changing shell navigation", () => {
+    const markup = renderToStaticMarkup(
+      <AppShell currentPage="account">
+        <p>Account content</p>
+      </AppShell>,
+    );
+
+    expect(markup).toContain('aria-current="page" href="/account"');
+    expect(markup).toContain('<a href="/app">App home</a>');
+    expect(markup).toContain('aria-label="Open application menu"');
+    expect(markup).toContain("Sign out");
+  });
 });

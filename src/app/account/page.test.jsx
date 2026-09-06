@@ -27,7 +27,7 @@ describe("AccountPage", () => {
     });
 
     await expect(AccountPage({ searchParams: Promise.resolve({}) })).rejects.toThrow(
-      "redirect:/auth/sign-in",
+      "redirect:/auth/sign-in?returnTo=%2Faccount",
     );
   });
 
@@ -50,7 +50,15 @@ describe("AccountPage", () => {
       await AccountPage({ searchParams: Promise.resolve({}) }),
     );
 
-    expect(markup).toContain("Signed in as Test Learner.");
+    expect(markup).toContain("Your account");
+    expect(markup).toContain("Signed in as Test Learner");
+    expect(markup).toContain("learner@example.com");
+    expect(markup).toContain('href="/app"');
+    expect(markup).toContain('href="/"');
+    expect(markup).toContain('aria-current="page"');
+    expect(markup).toContain("Sign out");
+    expect(markup).not.toContain("Protected server route");
+    expect(markup).not.toContain("Authenticated account");
     expect(markup).not.toContain("Data API token path:");
     expect(markup).not.toContain("internal-session-id");
     expect(markup).not.toContain("internal-user-id");

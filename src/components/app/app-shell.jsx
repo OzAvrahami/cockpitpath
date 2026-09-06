@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 import { signOutAction } from "../../app/auth/actions";
+import SubmitButton from "../auth/submit-button";
 import Brand from "../public/brand";
 
 const LEARNING_PATH = "/learn/cold-dark-to-takeoff";
@@ -17,23 +18,27 @@ export function closeAppMenuAndRestoreFocus({
   schedule(() => menuButton?.focus());
 }
 
-function AccountLinks({ onNavigate }) {
+function AccountLinks({ currentPage, onNavigate }) {
   return (
     <>
-      <Link href="/account" onClick={onNavigate}>
+      <Link
+        aria-current={currentPage === "account" ? "page" : undefined}
+        href="/account"
+        onClick={onNavigate}
+      >
         Account
       </Link>
       <Link href="/" onClick={onNavigate}>
         Back to public site
       </Link>
       <form action={signOutAction}>
-        <button type="submit">Sign out</button>
+        <SubmitButton pendingLabel="Signing out…">Sign out</SubmitButton>
       </form>
     </>
   );
 }
 
-export default function AppShell({ children }) {
+export default function AppShell({ children, currentPage = "app" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const firstMobileLinkRef = useRef(null);
@@ -82,16 +87,21 @@ export default function AppShell({ children }) {
           </div>
 
           <nav className="app-header__nav" aria-label="Application navigation">
-            <Link aria-current="page" href="/app">
+            <Link
+              aria-current={currentPage === "app" ? "page" : undefined}
+              href="/app"
+            >
               App home
             </Link>
             <Link href={LEARNING_PATH}>Continue learning</Link>
           </nav>
 
           <details className="app-account-menu">
-            <summary>Account</summary>
+            <summary aria-current={currentPage === "account" ? "page" : undefined}>
+              Account
+            </summary>
             <div className="app-account-menu__panel">
-              <AccountLinks />
+              <AccountLinks currentPage={currentPage} />
             </div>
           </details>
 
@@ -120,7 +130,7 @@ export default function AppShell({ children }) {
           >
             <Link
               ref={firstMobileLinkRef}
-              aria-current="page"
+              aria-current={currentPage === "app" ? "page" : undefined}
               href="/app"
               onClick={closeMenu}
             >
@@ -129,7 +139,7 @@ export default function AppShell({ children }) {
             <Link href={LEARNING_PATH} onClick={closeMenu}>
               Continue learning
             </Link>
-            <AccountLinks onNavigate={closeMenu} />
+            <AccountLinks currentPage={currentPage} onNavigate={closeMenu} />
           </nav>
         ) : null}
       </header>

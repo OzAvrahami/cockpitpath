@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 
 import { resetPasswordAction } from "../../app/auth/actions";
+import { AuthMessage } from "./auth-frame";
 import SubmitButton from "./submit-button";
 
 const initialState = { error: null };
@@ -21,28 +22,36 @@ export default function ResetPasswordForm({ token }) {
   return (
     <>
       {message ? (
-        <p className="auth-message auth-message--error" role="alert">
+        <AuthMessage id="new-password-error" variant="error">
           {message}
-        </p>
+        </AuthMessage>
       ) : null}
-      <form action={formAction} className="auth-form">
+      <form
+        action={formAction}
+        aria-describedby={message ? "new-password-error" : undefined}
+        className="auth-form"
+      >
         <input name="token" type="hidden" value={token} />
-        <label htmlFor="password">New password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="new-password"
-          required
-        />
-        <label htmlFor="password-confirmation">Confirm new password</label>
-        <input
-          id="password-confirmation"
-          name="passwordConfirmation"
-          type="password"
-          autoComplete="new-password"
-          required
-        />
+        <div className="auth-field">
+          <label htmlFor="password">New password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            required
+          />
+        </div>
+        <div className="auth-field">
+          <label htmlFor="password-confirmation">Confirm new password</label>
+          <input
+            id="password-confirmation"
+            name="passwordConfirmation"
+            type="password"
+            autoComplete="new-password"
+            required
+          />
+        </div>
         <SubmitButton pendingLabel="Updating password…">
           Update password
         </SubmitButton>

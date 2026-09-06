@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { AuthMessage } from "../../../components/auth/auth-frame";
 import ResetPasswordForm from "../../../components/auth/reset-password-form";
 
 export default async function ResetPasswordPage({ searchParams }) {
@@ -7,20 +8,24 @@ export default async function ResetPasswordPage({ searchParams }) {
   const usableToken = typeof token === "string" && token.length > 0;
 
   return (
-    <main>
-      <section className="auth-panel" aria-labelledby="reset-password-title">
-        <p className="auth-panel__eyebrow">Application authentication</p>
+    <section className="auth-panel" aria-labelledby="reset-password-title">
+      <div className="auth-panel__intro">
+        <p className="auth-panel__eyebrow">Account access</p>
         <h1 id="reset-password-title">Choose a new password</h1>
-        {!usableToken ? (
-          <p className="auth-message auth-message--error" role="alert">
-            This password-reset link is missing or invalid.
-          </p>
-        ) : null}
-        {usableToken ? <ResetPasswordForm token={token} /> : null}
-        <p>
-          <Link href="/auth/forgot-password">Request a new reset link</Link>
+        <p className="auth-panel__lead">
+          Set a new password, then return to your CockpitPath learning path.
         </p>
-      </section>
-    </main>
+      </div>
+
+      {!usableToken ? (
+        <AuthMessage title="Request a new link" variant="error">
+          This password-reset link is missing or invalid.
+        </AuthMessage>
+      ) : null}
+      {usableToken ? <ResetPasswordForm token={token} /> : null}
+      <p className="auth-panel__alternate">
+        <Link href="/auth/forgot-password">Request a new reset link</Link>
+      </p>
+    </section>
   );
 }

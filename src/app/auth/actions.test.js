@@ -39,7 +39,51 @@ describe("authentication server actions", () => {
     vi.clearAllMocks();
   });
 
-  it("signs up through Neon Auth and uses only the fixed account redirect", async () => {
+  it("sends an authenticated registration to the application by default", async () => {
+    authMock.signUp.email.mockResolvedValue({
+      data: { token: "present-but-never-rendered" },
+      error: null,
+    });
+
+    await expect(
+      signUpAction(
+        formData({
+          name: "Test Learner",
+          email: "learner@example.com",
+          password: "not-a-real-password",
+        }),
+      ),
+    ).rejects.toThrow("redirect:/app");
+
+    expect(authMock.signUp.email).toHaveBeenCalledWith({
+      name: "Test Learner",
+      email: "learner@example.com",
+      password: "not-a-real-password",
+    });
+    expect(redirectMock).toHaveBeenCalledWith("/app");
+  });
+
+  it("preserves a safe registration return destination", async () => {
+    authMock.signUp.email.mockResolvedValue({
+      data: { token: "present-but-never-rendered" },
+      error: null,
+    });
+
+    await expect(
+      signUpAction(
+        formData({
+          name: "Test Learner",
+          email: "learner@example.com",
+          password: "not-a-real-password",
+          returnTo: "/learn/cold-dark-to-takeoff?mode=learn",
+        }),
+      ),
+    ).rejects.toThrow(
+      "redirect:/learn/cold-dark-to-takeoff?mode=learn",
+    );
+  });
+
+  it("rejects an unsafe registration return destination", async () => {
     authMock.signUp.email.mockResolvedValue({
       data: { token: "present-but-never-rendered" },
       error: null,
@@ -54,14 +98,61 @@ describe("authentication server actions", () => {
           returnTo: "https://attacker.example",
         }),
       ),
-    ).rejects.toThrow("redirect:/account");
+    ).rejects.toThrow("redirect:/app");
+  });
 
-    expect(authMock.signUp.email).toHaveBeenCalledWith({
-      name: "Test Learner",
-      email: "learner@example.com",
-      password: "not-a-real-password",
+  it("routes registration without a session to the verification state", async () => {
+    authMock.signUp.email.mockResolvedValue({ data: {}, error: null });
+
+    await expect(
+      signUpAction(
+        formData({
+          name: "Test Learner",
+          email: "learner@example.com",
+          password: "not-a-real-password",
+          returnTo: "/account",
+        }),
+      ),
+    ).rejects.toThrow(
+      "redirect:/auth/sign-in?verification=required&returnTo=%2Faccount",
+    );
+  });
+
+  it("preserves a safe destination when registration fields are missing", async () => {
+    await expect(
+      signUpAction(
+        formData({
+          name: "",
+          email: "learner@example.com",
+          password: "not-a-real-password",
+          returnTo: "/learn/cold-dark-to-takeoff",
+        }),
+      ),
+    ).rejects.toThrow(
+      "redirect:/auth/sign-up?error=required&returnTo=%2Flearn%2Fcold-dark-to-takeoff",
+    );
+
+    expect(authMock.signUp.email).not.toHaveBeenCalled();
+  });
+
+  it("preserves a safe destination when registration fails", async () => {
+    authMock.signUp.email.mockResolvedValue({
+      data: null,
+      error: { message: "sensitive provider detail" },
     });
-    expect(redirectMock).toHaveBeenCalledWith("/account");
+
+    await expect(
+      signUpAction(
+        formData({
+          name: "Test Learner",
+          email: "learner@example.com",
+          password: "not-a-real-password",
+          returnTo: "/account",
+        }),
+      ),
+    ).rejects.toThrow(
+      "redirect:/auth/sign-up?error=failed&returnTo=%2Faccount",
+    );
   });
 
   it("signs in through Neon Auth and rejects an unsafe return URL", async () => {

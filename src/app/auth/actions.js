@@ -8,8 +8,8 @@ import {
   getSafeReturnPath,
 } from "../../lib/auth/redirects";
 
-const ACCOUNT_PATH = "/account";
 const SIGN_IN_PATH = "/auth/sign-in";
+const SIGN_UP_PATH = "/auth/sign-up";
 
 function textField(formData, name) {
   const value = formData.get(name);
@@ -21,8 +21,13 @@ function passwordField(formData, name) {
   return typeof value === "string" ? value : "";
 }
 
-function authPage(path, parameter, value = "1") {
+function authPage(path, parameter, value = "1", returnTo) {
   const query = new URLSearchParams({ [parameter]: value });
+
+  if (returnTo) {
+    query.set("returnTo", getSafeReturnPath(returnTo));
+  }
+
   return `${path}?${query}`;
 }
 
@@ -46,9 +51,13 @@ export async function signUpAction(formData) {
   const name = textField(formData, "name");
   const email = textField(formData, "email");
   const password = passwordField(formData, "password");
+  const returnTo = getSafeReturnPath(
+    textField(formData, "returnTo"),
+    DEFAULT_AUTH_DESTINATION,
+  );
 
   if (!name || !email || !password) {
-    redirect(authPage("/auth/sign-up", "error", "required"));
+    redirect(authPage(SIGN_UP_PATH, "error", "required", returnTo));
   }
 
   const result = await callAuth(() =>
@@ -56,14 +65,14 @@ export async function signUpAction(formData) {
   );
 
   if (result.error) {
-    redirect(authPage("/auth/sign-up", "error", "failed"));
+    redirect(authPage(SIGN_UP_PATH, "error", "failed", returnTo));
   }
 
   if (!result.data?.token) {
-    redirect(authPage(SIGN_IN_PATH, "verification", "required"));
+    redirect(signInPage("verification", "required", returnTo));
   }
 
-  redirect(ACCOUNT_PATH);
+  redirect(returnTo);
 }
 
 export async function signInAction(formData) {
@@ -91,7 +100,7 @@ export async function signOutAction() {
   const result = await callAuth(() => auth.signOut());
 
   if (result.error) {
-    redirect(authPage(ACCOUNT_PATH, "error", "sign-out"));
+    redirect(authPage("/account", "error", "sign-out"));
   }
 
   redirect(SIGN_IN_PATH);

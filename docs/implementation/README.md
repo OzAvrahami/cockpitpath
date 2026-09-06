@@ -65,7 +65,7 @@ This workstream does not renumber or replace the Phase 5–7 product-feature pat
 
 ### Application Shell v1
 
-**Status:** Implemented locally; automated verification complete; browser inspection pending<br>
+**Status:** ✅ Complete — deployed staging implementation and authenticated flow received manual approval<br>
 **GitHub:** [Issue #7 — Implement CockpitPath Application Shell v1](https://github.com/OzAvrahami/cockpitpath/issues/7)<br>
 **Design handoff:** [Public Site and Application Shell Handoff](../design/public-site-shell-handoff.md)
 
@@ -75,7 +75,19 @@ Successful sign-in now defaults to `/app`. Valid explicit internal destinations 
 
 Aircraft Page, Cockpit Explorer, and Aircraft Systems remain unavailable until their existing Phase 5–7 work items are implemented. The shell presents them only as non-link coming-soon states and does not establish their final route slugs. Guide Mode retains its separate Focus Mode chrome on the existing learning route and is not wrapped in the application shell. Verified real cockpit media remains deferred and does not block the shell.
 
-The automated route, component, authentication, full-suite, lint, and production-build checks pass. A controllable local browser was unavailable for the required desktop, tablet, narrow-width, keyboard, zoom, reflow, and visual inspection, so Issue #7 remains In Progress until that review is completed.
+The automated route, component, authentication, full-suite, lint, and production-build checks passed. The deployed staging implementation and authenticated sign-in, `/app`, account, public “Open app,” and sign-out flow received manual approval. Issue #7 is complete.
+
+### Authentication and Account Experience v1
+
+**Status:** Implemented locally; automated verification complete; manual browser review pending<br>
+**GitHub:** [Issue #8 — Redesign the authentication and account experience](https://github.com/OzAvrahami/cockpitpath/issues/8)<br>
+**Design handoff:** [Public Site and Application Shell Handoff](../design/public-site-shell-handoff.md)
+
+Authentication and Account Experience v1 applies one shared Route & Fix presentation to the existing sign-in, account-creation, password-reset request, password-reset completion, verification-required, authentication-error, and reset-error states. The protected `/account` route now uses the Application Shell v1 identity and navigation foundation while exposing only the current session’s supported name, email, signed-in status, application access, public-site access, and sign-out action.
+
+Successful sign-in continues to default to `/app`. Registration that creates an authenticated session now also defaults to `/app`; when verification is required, the existing sign-in route presents a designed check-email state. Valid internal return destinations under `/app`, `/account`, and `/learn` are preserved through sign-in and registration, while external, unknown, looping, or otherwise unsafe destinations fall back to `/app`.
+
+The existing Neon Auth provider, credentials, session contract, callback handler, route protection, password-reset behavior, and database schema remain unchanged. Social authentication, new authentication methods, editable profile settings, subscriptions, billing, user preferences, and additional account-management capabilities remain deferred. Manual browser review is still required across desktop, tablet, and approximately 400 px layouts before Issue #8 moves to Verify.
 
 ## Major Delivery Path
 
