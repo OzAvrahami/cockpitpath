@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { auth } from "../../../lib/auth/server";
+import { getSignInPath } from "../../../lib/auth/redirects";
 import {
   getGuideRouteForStep,
   getJourneyOutline,
@@ -10,10 +11,12 @@ import { getGuideProgress } from "../../../lib/progress/data-api";
 export const dynamic = "force-dynamic";
 
 export default async function JourneyResumePage({ params }) {
-  const { data: sessionData } = await auth.getSession();
-  if (!sessionData?.user) redirect("/auth/sign-in");
-
   const { journeySlug } = await params;
+  const { data: sessionData } = await auth.getSession();
+  if (!sessionData?.user) {
+    redirect(getSignInPath(`/learn/${encodeURIComponent(journeySlug)}`));
+  }
+
   const journey = await getJourneyOutline(journeySlug);
   if (!journey?.sections.length) notFound();
 

@@ -33,6 +33,7 @@ Implementation phase numbers are technical checkpoints, not product-roadmap rele
 - ✅ [Phase 2 — Content Platform engineering foundation](phase-2-content-platform.md) — verified aircraft-content gate remains open
 - ✅ [Phase 3 — Learning State & Progress](phase-3-progress.md)
 - ✅ [Phase 4 — Guide Mode](phase-4-guide-mode.md)
+  - ▶ [Target-device layout validation — Issue #1](phase-4-guide-mode.md#target-layout-validation) — local refinement and user-performed manual validation approved; commit and deployment verification pending
 - ✅ Work Package 3.5 — Staging Deployment + Real-Device Validation Foundation
 - ▶ [Phase 5 — Cockpit Explorer](phase-5-cockpit-explorer.md)
 - ⬜ [Phase 6 — Aircraft Systems](phase-6-aircraft-systems.md)

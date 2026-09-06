@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 import {
   recordStepProgressAction,
@@ -15,6 +15,28 @@ import {
   resolvedStepStatuses,
   stepIndexById,
 } from "../../lib/guide/model";
+
+export function guideMediaAspectRatio(media) {
+  const width = Number(media?.width);
+  const height = Number(media?.height);
+  return width > 0 && height > 0 ? `${width} / ${height}` : "16 / 9";
+}
+
+export function focusGuideTarget(target, schedule = requestAnimationFrame) {
+  if (!target) return;
+  schedule(() => target.focus({ preventScroll: false }));
+}
+
+export function guideShortcutAction(event, state) {
+  if (event.key === "Escape" && state.focusMode) return "EXIT_FOCUS";
+  if (event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.interactive) {
+    return null;
+  }
+  if (event.key === "ArrowLeft" && state.stepIndex > 0) return "PREVIOUS";
+  if (event.key === "ArrowRight" && state.stepIndex < state.stepCount - 1) return "NEXT";
+  if (event.code === "Space") return "COMPLETE";
+  return null;
+}
 
 function Visual({ step }) {
   const { visual } = step;
@@ -31,24 +53,29 @@ function Visual({ step }) {
   }
 
   return (
-    <figure className="guide-visual">
-      <Image
-        src={visual.media.url}
-        alt={visual.media.alt || visual.title || "Cockpit view for the current step"}
-        fill
-        sizes="(max-width: 550px) 100vw, 60vw"
-        className="guide-visual__image"
-        unoptimized
-        priority
-      />
-      {visual.hotspot ? (
-        <span
-          className="guide-hotspot"
-          style={hotspotStyle(visual.hotspot)}
-          role="note"
-          aria-label={`Current target: ${visual.hotspot.label}`}
+    <figure className="guide-visual guide-visual--available">
+      <div
+        className="guide-visual__canvas"
+        style={{ aspectRatio: guideMediaAspectRatio(visual.media) }}
+      >
+        <Image
+          src={visual.media.url}
+          alt={visual.media.alt || visual.title || "Cockpit view for the current step"}
+          fill
+          sizes="(max-width: 900px) calc(100vw - 2rem), 60vw"
+          className="guide-visual__image"
+          unoptimized
+          priority
         />
-      ) : null}
+        {visual.hotspot ? (
+          <span
+            className="guide-hotspot"
+            style={hotspotStyle(visual.hotspot)}
+            role="note"
+            aria-label={`Current target: ${visual.hotspot.label}`}
+          />
+        ) : null}
+      </div>
       <figcaption className="guide-visual__caption">
         {visual.title || "Current cockpit view"}
         {visual.hotspot ? ` · Target: ${visual.hotspot.label}` : ""}
@@ -59,6 +86,8 @@ function Visual({ step }) {
 
 export default function GuideMode({ guide, progress }) {
   const router = useRouter();
+  const actionHeadingRef = useRef(null);
+  const focusButtonRef = useRef(null);
   const [mode, setMode] = useState(progress.mode || "LEARN");
   const [focusMode, setFocusMode] = useState(false);
   const [stepIndex, setStepIndex] = useState(() =>
@@ -74,6 +103,14 @@ export default function GuideMode({ guide, progress }) {
     () => Object.values(statuses).filter((status) => status === "COMPLETED").length,
     [statuses],
   );
+  const skippedCount = useMemo(
+    () => Object.values(statuses).filter((status) => status === "SKIPPED").length,
+    [statuses],
+  );
+
+  const focusCurrentAction = useCallback(() => {
+    focusGuideTarget(actionHeadingRef.current);
+  }, []);
 
   const persistPosition = useCallback(
     (targetIndex, nextMode = null) => {
@@ -92,6 +129,7 @@ export default function GuideMode({ guide, progress }) {
         }
         setStepIndex(targetIndex);
         setComplete(result.progress.status === "COMPLETED");
+        if (targetIndex !== stepIndex) focusCurrentAction();
         if (result.nextPath && result.nextPath !== window.location.pathname) {
           router.push(result.nextPath);
         } else {
@@ -99,7 +137,7 @@ export default function GuideMode({ guide, progress }) {
         }
       });
     },
-    [guide.journey.id, guide.steps, isPending, router],
+    [focusCurrentAction, guide.journey.id, guide.steps, isPending, router, stepIndex],
   );
 
   const recordOutcome = useCallback(
@@ -129,6 +167,7 @@ export default function GuideMode({ guide, progress }) {
           stepIndex,
         );
         setStepIndex(nextIndex);
+        if (nextIndex !== stepIndex) focusCurrentAction();
         setMessage(
           result.progress.stalePosition
             ? "Your position changed in another session. The latest saved position is shown."
@@ -142,7 +181,7 @@ export default function GuideMode({ guide, progress }) {
         }
       });
     },
-    [guide.journey.id, guide.steps, isPending, router, step, stepIndex],
+    [focusCurrentAction, guide.journey.id, guide.steps, isPending, router, step, stepIndex],
   );
 
   const changeMode = (nextMode) => {
@@ -167,19 +206,31 @@ export default function GuideMode({ guide, progress }) {
 
   useEffect(() => {
     function onKeyDown(event) {
-      if (event.target instanceof HTMLElement && event.target.closest("button, a, input, textarea, select")) {
-        return;
-      }
-      if (event.key === "Escape" && focusMode) {
+      const action = guideShortcutAction(
+        {
+          key: event.key,
+          code: event.code,
+          altKey: event.altKey,
+          ctrlKey: event.ctrlKey,
+          metaKey: event.metaKey,
+          repeat: event.repeat,
+          interactive:
+            event.target instanceof HTMLElement &&
+            Boolean(event.target.closest("button, a, input, textarea, select, summary, [contenteditable='true']")),
+        },
+        { focusMode, stepIndex, stepCount: guide.steps.length },
+      );
+      if (!action) return;
+
+      event.preventDefault();
+      if (action === "EXIT_FOCUS") {
         setFocusMode(false);
-      } else if (event.key === "ArrowLeft" && stepIndex > 0) {
-        event.preventDefault();
+        focusGuideTarget(focusButtonRef.current);
+      } else if (action === "PREVIOUS") {
         persistPosition(stepIndex - 1);
-      } else if (event.key === "ArrowRight" && stepIndex < guide.steps.length - 1) {
-        event.preventDefault();
+      } else if (action === "NEXT") {
         persistPosition(stepIndex + 1);
-      } else if (event.code === "Space") {
-        event.preventDefault();
+      } else if (action === "COMPLETE") {
         recordOutcome("COMPLETED");
       }
     }
@@ -215,7 +266,9 @@ export default function GuideMode({ guide, progress }) {
           <button
             type="button"
             className="guide-focus-button"
+            ref={focusButtonRef}
             aria-pressed={focusMode}
+            aria-controls="guide-stage"
             onClick={() => setFocusMode((value) => !value)}
           >
             {focusMode ? "Exit Focus" : "Focus"}
@@ -224,21 +277,34 @@ export default function GuideMode({ guide, progress }) {
         </div>
       </header>
 
-      <div className="guide-progress" aria-label={`${completedCount} of ${guide.steps.length} steps complete`}>
-        {guide.steps.map((candidate, index) => (
-          <span
-            key={candidate.id}
-            className={[
-              "guide-progress__tick",
-              index === stepIndex ? "is-current" : "",
-              statuses[candidate.id] ? "is-resolved" : "",
-            ].filter(Boolean).join(" ")}
-            title={`Step ${index + 1}: ${statuses[candidate.id] || "not complete"}`}
-          />
-        ))}
+      <div
+        className="guide-progress"
+        role="progressbar"
+        aria-label="Procedure progress"
+        aria-valuemin={0}
+        aria-valuemax={guide.steps.length}
+        aria-valuenow={completedCount}
+        aria-valuetext={`${completedCount} of ${guide.steps.length} steps complete, ${skippedCount} skipped. Step ${stepIndex + 1} is current.`}
+      >
+        {guide.steps.map((candidate, index) => {
+          const status = statuses[candidate.id];
+          return (
+            <span
+              key={candidate.id}
+              className={[
+                "guide-progress__tick",
+                index === stepIndex ? "is-current" : "",
+                status === "COMPLETED" ? "is-completed" : "",
+                status === "SKIPPED" ? "is-skipped" : "",
+              ].filter(Boolean).join(" ")}
+              title={`Step ${index + 1}: ${index === stepIndex ? "current, " : ""}${status?.toLowerCase() || "not complete"}`}
+              aria-hidden="true"
+            />
+          );
+        })}
       </div>
 
-      <section className="guide-stage" aria-labelledby="guide-action-title">
+      <section id="guide-stage" className="guide-stage" aria-labelledby="guide-action-title">
         <div className="guide-copy">
           <div className="guide-step-meta">
             <span>Step {stepIndex + 1} / {guide.steps.length}</span>
@@ -246,7 +312,7 @@ export default function GuideMode({ guide, progress }) {
             {step.optional ? <span>Optional</span> : null}
           </div>
           <p className="guide-kicker">Do</p>
-          <h1 id="guide-action-title">{step.action || step.title}</h1>
+          <h1 id="guide-action-title" ref={actionHeadingRef} tabIndex={-1}>{step.action || step.title}</h1>
           {step.location ? (
             <p className="guide-location"><span>Location</span>{step.location}</p>
           ) : null}
@@ -291,7 +357,7 @@ export default function GuideMode({ guide, progress }) {
         ) : null}
       </section>
 
-      <footer className="guide-navigation">
+      <footer className="guide-navigation" aria-label="Step navigation">
         <button
           type="button"
           className="guide-navigation__previous"
@@ -314,10 +380,11 @@ export default function GuideMode({ guide, progress }) {
           onClick={() => recordOutcome("SKIPPED")}
           disabled={!step.optional || isPending}
           title={step.optional ? "Skip this optional step" : "Required steps cannot be skipped"}
+          aria-label={step.optional ? "Skip this optional step" : "Skip unavailable: this step is required"}
         >
           Skip
         </button>
-        <p className={message.includes("not") || message.includes("cannot") ? "guide-save guide-save--error" : "guide-save"} aria-live="polite">
+        <p className={message.includes("not") || message.includes("cannot") ? "guide-save guide-save--error" : "guide-save"} aria-live="polite" aria-atomic="true">
           {message || "Progress saves automatically."}
         </p>
       </footer>

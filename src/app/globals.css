@@ -2902,17 +2902,24 @@ input {
 
 .guide-shell {
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--guide-bg);
   color: var(--guide-text);
   display: grid;
   grid-template-rows: auto auto 1fr auto;
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+  font-family: var(--font-public-sans), Arial, Helvetica, sans-serif;
 }
 
 .guide-header {
+  position: sticky;
+  top: 0;
+  z-index: 6;
   min-width: 0;
-  padding: 0.9rem clamp(1rem, 3vw, 2.5rem);
+  padding: 0.9rem max(clamp(1rem, 3vw, 2.5rem), env(safe-area-inset-right)) 0.9rem max(clamp(1rem, 3vw, 2.5rem), env(safe-area-inset-left));
   border-bottom: 1px solid var(--guide-line);
+  background: rgba(8, 9, 11, 0.96);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2940,7 +2947,7 @@ input {
 .guide-mode-switch button,
 .guide-focus-button,
 .guide-exit {
-  min-height: 2.5rem;
+  min-height: 2.75rem;
   border: 0;
   border-radius: 0.3rem;
   padding: 0.5rem 0.75rem;
@@ -2963,7 +2970,7 @@ input {
 .guide-step-meta,
 .guide-location span,
 .guide-save {
-  font-family: "IBM Plex Mono", Consolas, monospace;
+  font-family: var(--font-public-mono), Consolas, monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.68rem;
@@ -2972,6 +2979,7 @@ input {
 
 .guide-progress {
   display: flex;
+  align-items: center;
   gap: 0.3rem;
   padding: 0.5rem clamp(1rem, 3vw, 2.5rem);
 }
@@ -2981,16 +2989,24 @@ input {
   flex: 1;
   min-width: 0.35rem;
   border-radius: 999px;
+  border: 1px solid transparent;
   background: #283039;
 }
 
-.guide-progress__tick.is-resolved {
+.guide-progress__tick.is-completed {
   background: var(--guide-accent-dim);
 }
 
+.guide-progress__tick.is-skipped {
+  border-color: #7f8994;
+  background: transparent;
+}
+
 .guide-progress__tick.is-current {
+  height: 0.65rem;
+  border-color: var(--guide-accent);
   background: var(--guide-accent);
-  box-shadow: 0 0 0 1px #0d3134;
+  box-shadow: 0 0 0 2px #0d3134;
 }
 
 .guide-stage {
@@ -3016,6 +3032,12 @@ input {
   font-size: clamp(1.75rem, 3vw, 3.7rem);
   line-height: 1.05;
   text-wrap: balance;
+  overflow-wrap: anywhere;
+  scroll-margin-block-start: 7rem;
+}
+
+.guide-copy h1:focus {
+  outline: none;
 }
 
 .guide-step-meta {
@@ -3046,6 +3068,18 @@ input {
   border: 1px solid #303943;
   border-radius: 0.65rem;
   background: #0d1014;
+}
+
+.guide-visual--available {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.guide-visual__canvas {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .guide-visual__image {
@@ -3093,6 +3127,7 @@ input {
   background: rgba(4, 6, 8, 0.88);
   color: #dce3e9;
   font-size: 0.8rem;
+  overflow-wrap: anywhere;
 }
 
 .guide-expect {
@@ -3105,6 +3140,7 @@ input {
   margin: 0.35rem 0;
   font-size: clamp(1.05rem, 1.5vw, 1.45rem);
   line-height: 1.35;
+  overflow-wrap: anywhere;
 }
 
 .guide-expect > p:last-child {
@@ -3124,6 +3160,7 @@ input {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.08rem;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .guide-learning details {
@@ -3145,7 +3182,7 @@ input {
   position: sticky;
   bottom: 0;
   z-index: 5;
-  padding: 0.8rem clamp(1rem, 3vw, 2.5rem);
+  padding: 0.8rem max(clamp(1rem, 3vw, 2.5rem), env(safe-area-inset-right)) max(0.8rem, env(safe-area-inset-bottom)) max(clamp(1rem, 3vw, 2.5rem), env(safe-area-inset-left));
   border-top: 1px solid var(--guide-line);
   background: rgba(8, 9, 11, 0.96);
   backdrop-filter: blur(12px);
@@ -3236,8 +3273,11 @@ input {
 
 @media (max-width: 550px) {
   .guide-header {
-    align-items: flex-start;
-    padding: 0.7rem 0.75rem;
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.65rem max(0.75rem, env(safe-area-inset-right)) 0.65rem max(0.75rem, env(safe-area-inset-left));
+    gap: 0.55rem;
   }
 
   .guide-header__context {
@@ -3252,14 +3292,14 @@ input {
   }
 
   .guide-header__tools {
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    width: 100%;
+    justify-content: space-between;
   }
 
   .guide-focus-button,
   .guide-exit {
-    min-height: 2rem;
-    padding: 0.3rem 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.45rem 0.6rem;
     font-size: 0.75rem;
   }
 
@@ -3285,14 +3325,18 @@ input {
     min-height: min(42vh, 22rem);
   }
 
+  .guide-visual--available {
+    min-height: 0;
+  }
+
   .guide-expect {
     padding-top: 0.7rem;
   }
 
   .guide-navigation {
-    padding: 0.65rem 0.75rem;
-    grid-template-columns: minmax(4.8rem, 0.5fr) minmax(10rem, 1.5fr) minmax(4.3rem, 0.45fr);
-    gap: 0.45rem;
+    padding: 0.65rem max(0.75rem, env(safe-area-inset-right)) max(0.65rem, env(safe-area-inset-bottom)) max(0.75rem, env(safe-area-inset-left));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.55rem;
   }
 
   .guide-navigation button {
@@ -3302,7 +3346,24 @@ input {
   }
 
   .guide-navigation__done {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 3.75rem !important;
     font-size: 0.98rem !important;
+  }
+
+  .guide-navigation__previous {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .guide-navigation__skip {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .guide-save {
+    grid-row: 3;
   }
 }
 
@@ -3312,7 +3373,14 @@ input {
   }
 
   .guide-header__tools {
-    width: 100%;
-    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .guide-mode-switch {
+    flex: 1 0 100%;
+  }
+
+  .guide-mode-switch button {
+    flex: 1;
   }
 }

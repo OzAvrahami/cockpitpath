@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import GuideMode from "../../../../components/guide/guide-mode";
+import { getSignInPath } from "../../../../lib/auth/redirects";
 import { auth } from "../../../../lib/auth/server";
 import { getGuideProcedure } from "../../../../lib/content/repository";
 import {
@@ -11,10 +12,16 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function GuideProcedurePage({ params }) {
-  const { data: sessionData } = await auth.getSession();
-  if (!sessionData?.user) redirect("/auth/sign-in");
-
   const { journeySlug, procedureSlug } = await params;
+  const { data: sessionData } = await auth.getSession();
+  if (!sessionData?.user) {
+    redirect(
+      getSignInPath(
+        `/learn/${encodeURIComponent(journeySlug)}/${encodeURIComponent(procedureSlug)}`,
+      ),
+    );
+  }
+
   const guide = await getGuideProcedure(journeySlug, procedureSlug);
   if (!guide) notFound();
 

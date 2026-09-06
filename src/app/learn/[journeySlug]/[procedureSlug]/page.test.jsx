@@ -41,7 +41,9 @@ describe("GuideProcedurePage", () => {
 
   it("enforces a real server session", async () => {
     authMock.getSession.mockResolvedValue({ data: { user: null } });
-    await expect(GuideProcedurePage({ params })).rejects.toThrow("redirect:/auth/sign-in");
+    await expect(GuideProcedurePage({ params })).rejects.toThrow(
+      "redirect:/auth/sign-in?returnTo=%2Flearn%2Fsynthetic-journey%2Fsynthetic-procedure",
+    );
     expect(getGuideMock).not.toHaveBeenCalled();
   });
 
