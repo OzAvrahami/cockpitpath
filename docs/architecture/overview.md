@@ -184,23 +184,25 @@ The application should contain both:
 
 within one application.
 
-Conceptual route structure:
+The canonical route matrix is defined by [ADR-0013 — Aircraft and Implementation Route Scopes](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md):
 
-```text
-/
-├── aircraft
-├── aircraft/[aircraftSlug]
-├── learn/[journeySlug]
-├── procedure/[procedureSlug]
-├── cockpit/[aircraftSlug]
-├── systems/[aircraftSlug]/[systemSlug]
-├── progress
-├── account
-├── sign-in
-└── sign-up
-```
+| Experience | Canonical route | Content scope | Chrome |
+| --- | --- | --- | --- |
+| Public site | `/` | Public product presentation | Public site |
+| Application home | `/app` | Signed-in active-aircraft context | Application shell |
+| Account | `/account` | Signed-in account context | Application shell |
+| Aircraft Page | `/app/aircraft/[aircraftSlug]` | Aircraft | Application shell |
+| Guide journey entry | `/learn/[aircraftSlug]/[journeySlug]` | Aircraft-level guide content | Guide Mode Focus Mode |
+| Guide procedure | `/learn/[aircraftSlug]/[journeySlug]/[procedureSlug]` | Aircraft-level guide content with an implementation binding | Guide Mode Focus Mode |
+| Cockpit Explorer | `/app/cockpit/[implementationSlug]` | Aircraft Implementation | Application shell |
+| Aircraft Systems index | `/app/systems/[aircraftSlug]` | Aircraft | Application shell |
+| Aircraft System detail | `/app/systems/[aircraftSlug]/[systemSlug]` | Aircraft | Application shell |
 
-Exact routing will be defined during implementation.
+Aircraft Page, Cockpit Explorer, and Aircraft Systems live under `/app` because they use the authenticated Application Shell. Guide Mode remains under `/learn` because it retains dedicated Focus Mode chrome. Public-site routes and same-page marketing anchors are separate from these authenticated application routes.
+
+For the current supported content, the identifiers are `boeing-737-max-8` for the Aircraft and `ifly-737-max-8-msfs-2024` for the Aircraft Implementation. Explorer URLs use the implementation slug because media, Cockpit Views, Hotspots, simulator behavior, and implementation-specific control bindings cannot be inferred safely from an aircraft slug alone.
+
+The current `/learn/[journeySlug]` and `/learn/[journeySlug]/[procedureSlug]` patterns are legacy routes. They must remain as backward-compatible redirects to the aircraft-scoped Guide routes until callers, saved links, authentication return destinations, and tests have migrated. The migration must complete before canonical Guide content is published.
 
 ---
 

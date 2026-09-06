@@ -102,10 +102,12 @@ These translate the design into maintainable UI but are not new product requirem
 - Initial implementation may use neutral placeholders or current approved synthetic content without changing section dimensions or hierarchy.
 - Real iFly 737 MAX 8 cockpit captures are deferred. Their absence must not block the public shell structure, responsive implementation, accessibility work, or integration testing.
 
-### Unresolved decisions requiring product approval
+### Resolved navigation decisions
 
-- **Successful sign-in destination:** v2 introduces `/app` and says sign-in lands there, while the current implementation redirects to `/account`; v2 also says an authenticated visit to `/` must remain on the public page. Confirm the migration rule and any return-to behavior before changing auth actions.
-- **Feature route slugs:** architecture examples for Aircraft Page, Cockpit Explorer, and Aircraft Systems are conceptual. Confirm the final URLs before wiring public or app-shell CTAs.
+- **Successful sign-in destination:** successful sign-in defaults to `/app`; valid internal return destinations remain supported, `/account` remains intentional account management, and authenticated visits to `/` remain on the public page.
+- **Feature route scopes:** [ADR-0013](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md) defines aircraft-scoped Aircraft Page, Guide Mode, and Aircraft Systems routes plus the implementation-scoped Cockpit Explorer route. Public and application-shell links must use that canonical matrix.
+
+### Remaining decisions requiring product approval
 - **Public navigation targets:** confirm whether “Aircraft” and “How it works” are homepage anchors, public routes, or a mix.
 - **CTA behavior:** confirm the signed-out and signed-in destinations for “Start learning” and “Explore the 737 MAX,” including whether progress changes the destination.
 - **Account menu:** avatar fallback, menu contents, and compact-navigation behavior are not fully specified by the artifacts.
@@ -123,13 +125,16 @@ These translate the design into maintainable UI but are not new product requirem
 | `/auth/sign-up` | Public | Existing route; v2 visual treatment | Focused auth layout. |
 | `/auth/forgot-password` | Public | Existing route; v2 visual treatment | Focused auth layout. |
 | `/auth/reset-password` | Public | Existing route; v2 visual treatment | Focused auth layout. |
-| `/app` | Signed in | Designed in v2; not currently implemented | Compact app-home shell, showing the single supported aircraft and either no-progress or continue-learning state. |
+| `/app` | Signed in | Implemented | Compact app-home shell, showing the single supported aircraft and either no-progress or continue-learning state. |
 | `/account` | Signed in | Existing protected route | Account destination; it is not a substitute for the designed app home. |
-| `/learn/[journeySlug]` | Signed in | Existing protected resume/entry route | Resolves learning progress; not a general product-shell page. |
-| `/learn/[journeySlug]/[procedureSlug]` | Signed in | Existing protected Guide Mode route | Guide Mode Focus Mode chrome only. |
-| Aircraft Page | Signed in | Approved product area; exact route unresolved | Shared product shell. |
-| Cockpit Explorer | Signed in | Current implementation phase; exact route unresolved | Shared product shell. |
-| Aircraft Systems | Signed in | Planned product area; exact route unresolved | Shared product shell. |
+| `/app/aircraft/[aircraftSlug]` | Signed in | Approved canonical route; Phase 7 implementation pending | Shared product shell; aircraft-scoped. |
+| `/learn/[aircraftSlug]/[journeySlug]` | Signed in | Approved canonical route; migration pending | Resolves shared aircraft-level learning progress; Guide Mode chrome only. |
+| `/learn/[aircraftSlug]/[journeySlug]/[procedureSlug]` | Signed in | Approved canonical route; migration pending | Shared guide plus implementation binding; Guide Mode Focus Mode chrome only. |
+| `/app/cockpit/[implementationSlug]` | Signed in | Approved canonical route; Phase 5 implementation pending | Shared product shell; implementation-scoped imagery, hotspots, and controls. |
+| `/app/systems/[aircraftSlug]` | Signed in | Approved canonical route; Phase 6 implementation pending | Shared product shell; aircraft-scoped. |
+| `/app/systems/[aircraftSlug]/[systemSlug]` | Signed in | Approved canonical route; Phase 6 implementation pending | Shared product shell; aircraft-scoped. |
+| `/learn/[journeySlug]` | Signed in | Legacy compatibility route | Redirects to the canonical aircraft-scoped Guide entry before canonical publication. |
+| `/learn/[journeySlug]/[procedureSlug]` | Signed in | Legacy compatibility route | Redirects to the canonical aircraft-scoped Guide procedure before canonical publication. |
 
 Authentication, entitlement, progress, and publication checks remain server-enforced. Visual hiding is not access control.
 
@@ -337,7 +342,7 @@ Do not bake hotspots, labels, progress, or explanatory copy into source images. 
 - Do not create simulator telemetry, aircraft control, native-app, billing, AI, or multi-aircraft behavior from the public visuals.
 - Do not make unverified procedures, controls, systems, versions, dates, or attribution visible as authoritative content.
 - Do not duplicate Guide Mode inside public preview components or wrap Guide Mode in the product shell.
-- Do not invent final routes where this handoff marks them unresolved.
+- Use the canonical route and content-scope contract in [ADR-0013](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md); do not introduce alternate feature URLs or duplicate guide content per implementation.
 - Do not block shell work on deferred real captures; use stable media-slot contracts and explicitly non-authoritative placeholders.
 
 ## 15. Measurable acceptance criteria
@@ -361,7 +366,7 @@ An implementation following this handoff is acceptable when:
 
 ## 16. Recommended implementation sequence
 
-1. **Resolve navigation contracts:** approve sign-in landing/return behavior, public anchor targets, CTA destinations, feature-route slugs, and legal-link handling.
+1. **Apply navigation contracts:** use the approved sign-in and feature-route matrix; resolve the remaining public anchor, CTA, and legal-link decisions before wiring any still-unapproved destination.
 2. **Establish shared presentation primitives:** semantic tokens, font loading, Route & Fix identity, focus styles, buttons/links, surface primitives, and media-slot contract.
 3. **First implementation slice — public frame and hero:** implement the public header's signed-out state, hero content hierarchy, media fallback, primary/secondary actions with approved destinations, footer shell, and the approximately 400 px recomposition. Verify keyboard access, contrast, reflow, and reduced motion before expanding the page.
 4. **Complete the public narrative:** add Fly, Find, Understand, connected loop, simulator companion, supported aircraft, final CTA, and signed-in public-header state using placeholders that cannot be mistaken for verified aircraft content.

@@ -22,6 +22,8 @@ Cockpit Explorer should reuse proven cockpit entities, views, hotspots, and Guid
 
 Cockpit Explorer explicitly reuses the same Control, CockpitArea, CockpitView, and Hotspot graph used by Guide Mode. Screen-specific copies of these entities are not part of the architecture.
 
+The canonical protected entry route is `/app/cockpit/[implementationSlug]`. It belongs to the authenticated Application Shell namespace and is implementation-scoped because the selected simulator/add-on implementation owns the cockpit hierarchy, Controls, Views, media, and Hotspots. For the initial vertical slice, the route is `/app/cockpit/ifly-737-max-8-msfs-2024`. Route and shared-content ownership follow [ADR-0013 — Aircraft and Implementation Route Scopes](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md).
+
 Implementation details remain governed by the [Cockpit Explorer UX](../ux/cockpit-explorer.md) and its existing [design brief](../ai/claude-design/cockpit-explorer/design-brief.md).
 
 ## Exit Criteria

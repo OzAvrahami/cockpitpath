@@ -31,6 +31,8 @@ Implementation must follow the existing [Guide Mode UX](../ux/guide-mode.md) and
 
 The committed checkpoint implements the authenticated published-content route, action-first layout, Quick/Learn density, Expected Result confirmation, normalized dynamic hotspots, Done/Next, permitted Skip, autosave, exact resume, Focus Mode, missing-content/media states, and responsive companion-window behavior. The complete service chain was verified with synthetic test-only content because no verified operational aircraft procedure or approved cockpit media is currently available.
 
+[ADR-0013 — Aircraft and Implementation Route Scopes](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md) defines the canonical aircraft-scoped Guide routes and shared aircraft-level Guide content. The currently implemented `/learn/[journeySlug]` and `/learn/[journeySlug]/[procedureSlug]` routes remain compatibility routes until the required schema, query, progress, link, and safe-redirect migration is completed before canonical content publication. Guide Mode continues to use its dedicated Focus Mode chrome.
+
 ## Target-layout validation
 
 **Status:** Local refinement, automated verification, and user-performed manual validation complete; commit and deployment verification pending

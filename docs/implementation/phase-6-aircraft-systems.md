@@ -24,6 +24,8 @@ Aircraft Systems becomes useful after the shared Procedure, Control, Hotspot, Sy
 
 Implementation details remain governed by the [Aircraft Systems UX](../ux/aircraft-systems.md) and its existing [design brief](../ai/claude-design/aircraft-systems/design-brief.md). System explanations and diagrams require the same source and verification discipline as procedures.
 
+The canonical routes are `/app/systems/[aircraftSlug]` and `/app/systems/[aircraftSlug]/[systemSlug]`. They belong to the authenticated Application Shell namespace. Aircraft Systems content is aircraft-scoped; implementation-specific simulator behavior belongs in narrow verified bindings or overrides rather than duplicated system content. Route and ownership rules follow [ADR-0013 — Aircraft and Implementation Route Scopes](../decisions/ADR-0013-aircraft-and-implementation-route-scopes.md).
+
 ## Exit Criteria
 
 - The vertical-slice AircraftSystem, SystemComponent, relationships, learning sections, and Concept render from published structured content.
